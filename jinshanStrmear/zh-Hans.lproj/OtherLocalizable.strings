@@ -1,0 +1,87 @@
+/* 
+  OtherLocalizable.strings
+  jinshanStrmear
+
+  Created by panhongliu on 2018/3/19.
+  Copyright © 2018年 王森. All rights reserved.
+*/
+"Sunday" = "周日";
+"Saturday" = "周六";
+"Friday" = "周五";
+"Thursday" = "周四";
+"Wednesday" = "周三";
+"Tuesday" = "周二";
+"Monday" = "周一";
+
+"January" = "一月";
+"February" = "二月";
+"March" = "三月";
+"April" = "四月";
+"May" = "五月";
+"June" = "六月";
+"July" = "七月";
+"August" = "八月";
+"September" = "九月";
+"October" = "十月";
+"November" = "十一月";
+"December" = "十二月";
+
+"Fetter" = "图集";
+"SignRules" = "签到规则";
+"loading..." = "正在加载";
+"error" = "数据错误";
+"downloading..." = "正在下载";
+"success" = "下载成功";
+"fail" = "下载失败";
+"just now" = "刚刚";
+"Minutes ago" = "分钟前";
+"Hours ago" = "小时前";
+"Days ago" = "天前";
+"Months ago" = "个月前";
+"Years ago" = "年前";
+"Around" = "周边";
+"ExChange" = "交易所";
+"NotAddIssuer" = "暂无发行人  点击添加";
+"Activity" = "活动";
+
+"Depth" = "深度";
+"Clinch" = "成交";
+"Introduction" = "简介";
+"Hight" = "高";
+"Low" = "低";
+"Buy" = "买";
+"Sell" = "卖";
+"Price" = "价格";
+"Number" = "数量";
+"To customize" = "加入自选";
+"Delate" = "删除自选";
+"Volume" = "成交量";
+"Closed" = "收";
+"Indicators" = "指标";
+"Time" = "分时";
+"1m" = "1分";
+"5m" = "5分";
+"30m" = "30分";
+"60m" = "60分";
+"Day line" = "日线";
+"Weekly" = "周线";
+"Artists" = "艺人";
+"Optional" = "自选";
+
+"Sign in" = "签到";
+"Following" = "关注";
+"Stars in focus" = "关注明星";
+"Personal information" = "个人信息";
+"Purchasing list" = "购物清单";
+"APP settings" = "设置";
+"About Idol" = "关于Idol";
+"Head portrait" = "头像";
+"Date of birth" = "出生日期";
+"Gender" = "性别";
+"Mobile phone no" = "绑定手机";
+"Done" = "确定";
+
+"The person's image" = "个人头像";
+"Person Center" = "个人中心";
+
+"Log out" = "退出登录";

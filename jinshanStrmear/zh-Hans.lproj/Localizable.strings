@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  jinshanStrmear
+
+  Created by panhongliu on 2016/11/23.
+  Copyright © 2016年 王森. All rights reserved.
+*/
+"button_Test" = "测试";
+"Follow" = "关注";
+"Dynamic" = "动态";
+"TV" = "视频";
+"CityTitle" = "选择城市或者国家";
+"sayThing" = "说点什么吧";
+"SendButton" = "发送";
+"Done" = "完成";
+"NoData" = "无数据";
+"NetWorkError" = "网络连接错误";
+"Comment" = "评论成功";
+"uploadAvatar"="请选择头像";
+"numberdeals"="成交数量必须大于1";
+"availableCoins"="可用余币不足";
+"LowPriceLimit"="买入价必须低于最新价的110%";
+"HighPHriceLimit"="卖出价必须高于最新价的90%";
+"Buyingsuccess"="买入成功";
+"Sellsuccess"="卖出成功";
+"FailedjoinChart"="加入群聊失败";
+"Handicap"="盘口";
+"Available" = "可用";
+"TradeAmount" = "交易额";
+"Commissionedcurrent"="当前委托";
+"All"="全部";
+"APPSettings"="APP设置";
+"MultilingualSettings"="多语言设置";
+"MessageToRemind"="消息提醒";
+"ClearCache"="清除缓存";
+"ReportSuccess"="举报成功";
+"Cancel"="取消";
+"Confirm"="确定";
+"Report"="举报";
+"Login"="登录";
+"Register"="注册";
+"PrivacyPolicy"="服务条款和隐私政策";
+"SelectedCity"="请选择国家";
+

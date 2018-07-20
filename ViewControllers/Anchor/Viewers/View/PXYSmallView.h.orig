@@ -1,0 +1,36 @@
+//
+//  PXYSmallView.h
+//  例子
+//
+//  Created by 裴雪阳 on 16/7/18.
+//  Copyright © 2016年 裴雪阳. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "KKProgressTimer.h"
+@interface PXYSmallView : UIView<KKProgressTimerDelegate>
++(id)inPutView;
+
+@property (weak, nonatomic) IBOutlet UIImageView *BigGiftImage;
+@property (strong, nonatomic) UILabel *lableTime;
+@property(nonatomic,strong)KKProgressTimer *timer2 ;
+@property(nonatomic,strong)UIButton *ButtonClick;
+//@property(nonatomic,strong)PXYGiftView *GiftView;
+@property (weak, nonatomic) IBOutlet UIImageView *Lianjibeijing;
+@property(strong,nonatomic)NSTimer *CountDownTimer;
+@property(strong,nonatomic)NSString *Index;
+@property (weak, nonatomic) IBOutlet UILabel *GuzhangLable;
+@property (weak, nonatomic) IBOutlet UIButton *Xingbi;
+@property (weak, nonatomic) IBOutlet UIButton *LianjiButton;
+
+<<<<<<< HEAD
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *left;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *right;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonweath;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *buttonHight;
+=======
+-(void)postServiceReturn;
+-(void)postServiceBefore;
+>>>>>>> 3406afd246f0add5db127a4d4115c3af3dfcc6b6
+
+@end

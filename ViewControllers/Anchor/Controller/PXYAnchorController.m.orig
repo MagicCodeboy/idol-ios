@@ -1,0 +1,2738 @@
+//
+//  PXYAnchorController.m
+//  jinshanStrmear
+//
+//  Created by 裴雪阳 on 16/6/16.
+//  Copyright © 2016年 王森. All rights reserved.
+//
+#import <CoreLocation/CoreLocation.h>
+
+#import "DES3Util.h"
+#import "PXYAnchorController.h"
+#import "ViewersMaskView.h"
+#import "StarAnchorView.h"
+#import "MBProgressHUD+LJ.h"
+#import <GPUImage/GPUImage.h>
+#import "Reachability.h"//网络状态的判断的库
+
+#import "StartMyLiveView.h"
+//金山的推流的库
+#import <libksygpulive/libksygpulive.h>
+#import <libksygpulive/libksygpuimage.h>
+
+
+////网宿的推流的库
+//#import <CNCMobStreamFramework/CNCMobComDef.h>
+//#import <CNCMobStreamFramework/CNCMobStreamSDK.h>
+//#import <AVFoundation/AVFoundation.h>
+
+#import "StartViewController.h"
+#import "StarCountdownView.h"
+#import "CLNetworkingManager.h"
+#import "UIView+BlockGesture.h"
+#import "UIView+Toast.h"
+#import "UIImage+Capture.h"
+#import "NormalCategory.h"
+#import "JXTAlertTools.h"
+#import "ZantingView.h"
+#import "MJExtension.h"
+#import "UIImage+Blur.h"
+#import "AccountModel.h"
+#import "KLCPopup.h"
+
+
+#define AppId @"yjcy"
+#define AppKey @"3570B498B78145D29259D404E3FF963C"
+
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
+
+
+#import "PXYPensonView.h"//个人信息的弹框视图
+
+
+#import "MajorModel.h"
+
+#import "LshLiveStop.h"//明星直播结束的页面
+
+#import "AnchorModel.h"
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+
+typedef enum{
+    TellPhoneFive,
+    TellPhoneTen,
+    TellPhoneFifteen
+    
+}MyStatePhone;
+
+@interface PXYAnchorController ()<CLLocationManagerDelegate,UITextViewDelegate>
+{
+    //    ViewersMaskView * ViewersView;
+    //    StarAnchorView *staranchorView;
+    //
+    
+    UIView *videoLoading;
+    
+    KLCPopup *popup;//添加的蒙版的视图
+    
+    //    NSTimer *_timer;//定时器
+    UIImageView *_foucsCursor;
+    UIView   *_controlView;
+    UIButton *_btnCamera;//摄像头按钮
+    UIButton *_button;//开始直播按钮（推流按钮）
+    UIButton *_btnFlash;//闪光灯按钮
+    UIButton *_btnExit;//退出直播的按钮
+    UILabel *_label;//直播时间显示的标签
+    UIButton *_btnFilters1;//美颜的原始效果
+    UIButton *_btnFilters2;//美颜
+    UIButton *_btnFilters3;//美白++
+    
+    Reachability *reachNet;//网络的状态
+    
+    double    _lastSecond;
+    int       _lastByte;
+    int       _lastFrames;
+    int       _lastDroppedF;
+    int       _netEventCnt;
+    NSString *_netEventRaiseDrop;
+    int       _netTimeOut;
+    int       _raiseCnt;
+    int       _dropCnt;
+    double    _startTime;
+    
+    int pauseTimeNum;
+    
+    int isfirstEnter;//第一次进入明星直播页面
+    
+    BOOL isPauseStrme;//是否正在推流的状态
+    
+    NSString *cityNameString;//定位到的城市的名字
+    
+    //判断用户是否要显示城市
+    BOOL isNotLocation;
+    
+    double longitude;//经度
+    double latitude;//纬度
+    
+    CLLocationManager *_locationManager;//位置管理的类
+    CLLocation *_cllocation;//获取用户当前的位置
+    
+    UIImage *tempImg;
+    
+    BOOL isfirstLocation;//第一次定位之后 关闭定位
+    
+    UserLiveQuitResult *model;//直播结束的时候的ID
+    
+    int currentDial;//当前电话的状态
+    
+    BOOL isShare;
+    
+    UILabel * rateLable;//记录推流速率
+    
+    NSDate* startTime;
+    
+    int playInterNum;
+    NSInteger videoRate;
+    
+    UILabel * showLable;//展示的参数的lable
+}
+
+@property(nonatomic,strong)StartMyLiveView *startLiveIngView;//开始直播的页面
+
+@property(nonatomic,strong)NSTimer *dailPhoneTime;//打电话的定时器
+
+@property(nonatomic,assign)MyStatePhone myState;//当前选择的时间的状态
+
+@property(nonatomic,assign)BOOL isLivingExit;
+
+@property (nonatomic, strong) CTCallCenter *center;
+
+@property(nonatomic,strong)UIView *image;//添加的蒙版
+
+@property(nonatomic,strong)PXYPensonView *personView;//个人信息的弹框视图
+
+@property(nonatomic,assign)BOOL isPlaying;
+
+@property(nonatomic,assign)BOOL isJinyin;//判断是否打开静音按钮
+
+@property(nonatomic,assign)BOOL isFileter;//判断是否打开美颜效果
+
+@property(nonatomic,assign)BOOL isFlash;//判断是否可以打开闪关灯
+
+@property(nonatomic,assign)int backtime;
+
+@property(nonatomic,strong)NSTimer *pauseTimer;
+
+
+@property(nonatomic,strong)StarAnchorView *staranchorView;
+
+@property(nonatomic,strong)ZantingView *myZantingView;//点击暂停按钮的添加视图
+
+@property(nonatomic,strong)StartViewController *StrAnchorStartView;
+@property(nonatomic,strong)StarCountdownView *CountdownView;
+@property(nonatomic,strong)AtOnceCountDownView *OnceCountdownView;
+
+@property(nonatomic,strong)OrdinaryView *NormalAnchor;
+@property(nonatomic,strong)NormalCategory *NormalCategoryView;
+
+//@property(nonatomic,strong)AnchorModel *pxyAnchorModel;
+
+@property(nonatomic,strong)CreatLiveModel *CreatLiveModel;
+
+//@property(nonatomic,strong)PostModel *pxyPushModel;
+
+@property(nonatomic,strong)UIView *smallview;
+
+@property(nonatomic,strong)GPUImageFilter *filter;//美颜相关的类
+
+@property(nonatomic,strong)KSYGPUStreamerKit *kit;//推流相关的类
+
+@property(nonatomic,strong)GPUImageView *preview;
+
+@property(nonatomic, nonnull,strong)MBProgressHUD *hud;
+
+@property(nonatomic,strong)LshLiveStop *lshLiveStopView;//明星直播结束加载的页面
+
+@property(nonatomic,strong)NSDate *currentDate;//当前选择直播开始的时间
+
+@property(strong,nonatomic)UIView *viewPlayUI;
+
+@end
+
+@implementation PXYAnchorController
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    //设置屏幕常亮
+    [ [ UIApplication sharedApplication] setIdleTimerDisabled:YES ] ;
+    [[AppDelegate shareInstance]currentViewCOntroller:self];
+    
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    //关闭屏幕常亮
+    [ [ UIApplication sharedApplication] setIdleTimerDisabled:NO ] ;
+}
+
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    if ([text isEqualToString:@"\n"]) {
+        [_startLiveIngView.liveTitleLable resignFirstResponder];
+        [self.view endEditing:YES];
+        return NO;
+    }
+    return YES;
+}
+- (void)textViewDidChange:(UITextView *)textView
+{
+    if ([textView.text isEqualToString:@""])
+    {
+        [_startLiveIngView.placeholdLabel setHidden:NO];
+    }
+    else
+    {
+         [_startLiveIngView.placeholdLabel setHidden:YES];
+        
+       
+    }
+}
+-(void)textViewDidBeginEditing:(UITextView *)textView
+{
+
+}
+
+
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    
+    
+    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+    }
+    
+    
+    //创建一个展示的面板  展示相应的参数
+//    showLable = [[UILabel alloc]initWithFrame:CGRectMake(10, 100, 300, 200)];
+//    showLable.numberOfLines = 0;
+//    showLable.backgroundColor = [UIColor clearColor];
+//    showLable.textColor = [UIColor redColor];
+//    [self.view insertSubview:showLable atIndex:100];
+//    
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+    _dailPhoneTime = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(openDialObserver) userInfo:nil repeats:YES];
+    [_dailPhoneTime  setFireDate:[NSDate distantFuture]];
+    
+    currentDial = 0;
+    
+    isfirstEnter = 0;
+    
+    
+    
+    
+    //定位相关的方法
+    [self PXYLocation];
+    
+    //暂停展示的页面
+    if (_myZantingView == nil)
+    {
+        _myZantingView=[ZantingView inputPauseView];
+        _myZantingView.frame=self.view.bounds;
+        [_myZantingView.onExitLive addTarget:self action:@selector(onExits) forControlEvents:UIControlEventTouchUpInside];
+        [_myZantingView.keepLiving addTarget:self action:@selector(onKeepliving) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    //倒计时展示的页面
+    if (_controlView == nil)
+    {
+        _CountdownView = [StarCountdownView starAnchorCountDownView];
+        _CountdownView.hidden = NO;
+        _CountdownView.frame=self.view.bounds;
+        [_CountdownView.changePhotoBtn addTarget:self action:@selector(changeLivePhoto) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    //明星直播页面的创建  当直播结束的时候加载这个页面
+    if (_lshLiveStopView == nil)
+    {
+        _lshLiveStopView=[LshLiveStop inputEndLiveView];
+        _lshLiveStopView.frame=CGRectMake(0, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+        //直播结束页面的分享按钮的点击事件
+        [_lshLiveStopView.shareButton addTarget:self action:@selector(onshareLive) forControlEvents:UIControlEventTouchUpInside];
+        //直播结束页面的返回按钮的点击事件
+        [_lshLiveStopView.comeBackBUtton addTarget:self action:@selector(comeBack) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    
+    
+    if (_startLiveIngView == nil)
+    {
+        _startLiveIngView = [StartMyLiveView  startMyLiveView];
+        _startLiveIngView.frame = self.view.bounds;
+        
+        if (ISNULL([AccountModel read].bigAvatar))
+        {
+            _startLiveIngView.livePicImage.image = [UIImage imageNamed:@"xingqiuliebiao"];
+        }
+        else
+        {
+            [_startLiveIngView.livePicImage  sd_setImageWithURL:[NSURL URLWithString:[AccountModel read].bigAvatar] placeholderImage:IMAGE(@"xingqiuliebiao")];
+        }
+        
+        [_startLiveIngView.livePicImage addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            //点击直播的头像 选择照片
+            [self makePhoto];
+            
+        }];
+       
+        _startLiveIngView.liveTitleLable.delegate = self;
+      
+        [_startLiveIngView.takePhotoBtn addTarget:self action:@selector(changeLivePhoto) forControlEvents:UIControlEventTouchUpInside];
+        [_startLiveIngView.deleteCityBtn addTarget:self action:@selector(deleteDingweiStar) forControlEvents:UIControlEventTouchUpInside];
+        [_startLiveIngView.closeLiveBtn addTarget:self action:@selector(onExits) forControlEvents:UIControlEventTouchUpInside];
+        [_startLiveIngView.startLiveBtn addTarget:self action:@selector(onNormalLive) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if (_NormalAnchor == nil)
+    {
+        _NormalAnchor = [OrdinaryView OrdinaryViewStart];
+        _NormalAnchor.frame = self.view.bounds;
+        
+        if ( ISNULL([AccountModel read].avatar) )
+        {
+            _NormalAnchor.LiveImageView.image = [UIImage imageNamed:@"xingqiuliebiao"];
+        }
+        else
+        {
+            [_NormalAnchor.LiveImageView sd_setImageWithURL:[NSURL URLWithString:[AccountModel read].avatar] placeholderImage:IMAGE(@"xingqiuliebiao")];
+        }
+        
+        [_NormalAnchor.LiveImageView addTapActionWithBlock:^(UIGestureRecognizer *gestureRecoginzer) {
+            //点击直播的头像 选择照片
+            [self makePhoto];
+        }];
+        //普通直播页面的开始直播按钮的点击事件
+        [_NormalAnchor.MskeSureButton addTarget:self action:@selector(onNormalLive) forControlEvents:UIControlEventTouchUpInside];
+        //普通主播切换摄像头的按钮
+        [_NormalAnchor.takePhoto addTarget:self action:@selector(changeLivePhoto) forControlEvents:UIControlEventTouchUpInside];
+        //普通主播删除定位的方法
+        [_NormalAnchor.deleteLocationBtn addTarget:self action:@selector(deleteDingweiStar) forControlEvents:UIControlEventTouchUpInside];
+        //闪光灯
+        [_NormalAnchor.flashBtn addTarget:self action:@selector(onFlash) forControlEvents:UIControlEventTouchUpInside];
+        //退出直播 没有调用直播的接口之前退出
+        [_NormalAnchor.combackBtn addTarget:self action:@selector(onExits) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if (_NormalCategoryView == nil) {
+        _NormalCategoryView =[NormalCategory NormalCategoryView];
+        _NormalCategoryView.frame=self.view.bounds;
+        
+    }
+    
+    if (_StrAnchorStartView == nil) {
+        _StrAnchorStartView =[StartViewController starAnchorStartViewView];
+        _StrAnchorStartView.frame=self.view.bounds;
+        
+    }
+    
+    pauseTimeNum=0;
+    _pauseTimer=[NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(timeadd) userInfo:nil repeats:YES];
+    [_pauseTimer setFireDate:[NSDate distantFuture]];
+    
+    _CreatLiveModel = [[CreatLiveModel alloc]init];
+    self.CreatLiveModel.PostModel=[[PostModel alloc]init];
+    //普通主播初始化
+    self.CreatLiveModel.PostModel.liveType = 0;
+    self.CreatLiveModel.PostModel.delaymin = 0;
+    self.CreatLiveModel.PostModel.longitude = 0;
+    self.CreatLiveModel.PostModel.latitude = 0;
+    longitude = 0;
+    latitude = 0;
+    self.CreatLiveModel.PostModel.category = 0;
+    self.CreatLiveModel.PostModel.vipUserId = 0;
+    self.CreatLiveModel.PostModel.relationStar = @"";
+    _NormalAnchor.selectIndex = 0;
+    _NormalAnchor.searchText = @"";
+    _NormalAnchor.searchStarId = 0;
+    self.isJump = false;
+    
+    self.CreatLiveModel.PostModel.isHavePic = NO;
+    
+    
+    //创建
+    if (self.pander == true) {
+        [self setAnchorPlay];
+    }
+    //继续上次
+    else
+    {
+        self.isJump=true;
+        [self setAnchorPlay];
+        [CLNetworkingManager getNetworkRequestWithUrlString:@"/rest/userlive/rein" parameters:nil isCache:NO succeed:^(id data) {
+            [self addData:data];
+        } fail:^(NSString *error) {
+            
+            [self dismissViewControllerAnimated:YES completion:^{
+                    [self.view makeToast:@"服务器忙，请稍后再试"];
+            }];
+        }];
+        
+    }
+    //添加系统的电话的监测
+    [self dailPhoneState];
+    
+    //添加系统进入后台的观测者
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(stopStringNotification:)
+                                                 name:@"stopstrmingNotification"
+                                               object:nil];
+    //添加系统进入前台的观测者
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(doneShareNotification:)
+                                                 name:@"doneShare"
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(enterForent:)
+                                                 name:@"enterFore"
+                                               object:nil];
+}
+
+-(void)changeLivePhoto
+{
+    [self MobClickEventWithID:@"zhibo_shexiangzhuanhuan	"];
+    
+    if ( [_kit switchCamera ] == NO) {
+        NSLog(@"切换失败 当前采集参数 目标设备无法支持");
+        [self toast:@"请您开始直播后再切换摄像头"];
+    }
+    BOOL backCam = (_kit.cameraPosition == AVCaptureDevicePositionBack);
+    if ( backCam ) {
+        //后摄像头
+        
+        [_NormalAnchor.flashBtn setEnabled:YES];
+        [_staranchorView.flashStar setEnabled: YES];
+        self.isFlash=NO;
+        
+    }
+    else {
+        //前摄像头
+        [_NormalAnchor.flashBtn setImage:[UIImage imageNamed:@"shanguangdeng2"] forState:UIControlStateNormal];
+        [_staranchorView.flashStar setImage:[UIImage imageNamed:@"shanguangdeng2"] forState:UIControlStateNormal];
+        [_NormalAnchor.flashBtn setEnabled:NO];
+        [_staranchorView.flashStar setEnabled: NO];
+        self.isFlash=YES;
+        
+    }
+    [_btnFlash  setEnabled:backCam];
+    backCam = backCam && (_kit.captureState == KSYCaptureStateCapturing);
+    
+}
+
+//打电话状态的监测的定时器
+-(void)openDialObserver
+{
+    
+<<<<<<< HEAD
+    
+    //获取当前时间
+    NSDate *date = [NSDate date];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: date];
+    NSDate *localeDate = [date  dateByAddingTimeInterval: interval];
+    
+    double marginTime=[localeDate timeIntervalSinceReferenceDate] - [_currentDate timeIntervalSinceReferenceDate];
+=======
+//    __weak typeof(self) weakSelf = self;
+//    
+//    //获取当前时间
+//    NSDate *date = [NSDate date];
+//    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+//    NSInteger interval = [zone secondsFromGMTForDate: date];
+//    NSDate *localeDate = [date  dateByAddingTimeInterval: interval];
+//    
+//    double marginTime=[localeDate timeIntervalSinceReferenceDate] - [_currentDate timeIntervalSinceReferenceDate];
+>>>>>>> 8d33859a8eee0706e52880188d8f9734377e9a03
+//    long lTime = (long)marginTime;
+    
+//    if (_myState==TellPhoneFive)
+//    {
+//        if ((lTime/60)%60 >= 5) {
+//            [weakSelf changeStrmeState];
+//        }
+//    }
+//    else if (_myState==TellPhoneTen)
+//    {
+//        if ((lTime/60)%60 >= 10) {
+//            [weakSelf changeStrmeState];
+//        }
+//        
+//    }
+//    else
+//    {
+//        if ((lTime/60)%60 >= 15) {
+//            [weakSelf changeStrmeState];
+//        }
+//        
+//    }
+}
+
+//电话监测的方法
+-(void)dailPhoneState
+{
+    __weak typeof(self) weakSelf = self;
+    
+    _center = [[CTCallCenter alloc] init];
+    _center.callEventHandler = ^(CTCall* call) {
+        if ([call.callState isEqualToString:CTCallStateDisconnected])
+        {
+            NSLog(@"Call has been disconnected");
+            //呼叫已经断开
+            currentDial = 1;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //监测到有电话打进来  改变推流的状态
+                [weakSelf onKeepliving];
+            });
+        }
+        else if ([call.callState isEqualToString:CTCallStateConnected])
+        {
+            NSLog(@"Call has just been connected");
+            //电话刚刚被连接
+            currentDial = 2;
+            
+            [weakSelf.dailPhoneTime setFireDate:[NSDate distantPast]];
+            
+            
+        }
+        else if([call.callState isEqualToString:CTCallStateIncoming])
+        {
+            //监测到有电话打进来了
+            NSLog(@"Call is incoming");
+            currentDial = 3;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                //监测到有电话打进来  改变推流的状态
+                [weakSelf changeStrmeState:YES];
+                
+            });
+            
+        }
+        else if ([call.callState isEqualToString:CTCallStateDialing])
+        {
+            NSLog(@"call is dialing");
+            //电话拨号
+            currentDial = 4;
+        }
+        else
+        {
+            NSLog(@"Nothing is done");
+            //什么都不做
+            currentDial = 5;
+        }
+    };
+}
+//明星直播结束页面的分享按钮的点击事件
+-(void)onshareLive
+{
+    
+    _CreatLiveModel.PostModel.btnTag=0;
+    for (UIButton *btn in _lshLiveStopView.ButtonArray)
+    {
+        if (btn.selected==YES)
+        {
+            _CreatLiveModel.PostModel.btnTag=btn.tag;
+            break;
+        }
+    }
+    
+    [self Allshare:_CreatLiveModel.PostModel.btnTag controller:self shareUrl:model.liveShare.url title:model.liveShare.title contentValue:model.liveShare.content picUrl:model.liveShare.picUrl isFirstShare:NO];
+    
+    //回到主页面
+    //[self dismissViewControllerAnimated:NO completion:nil];
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self toast:@"分享失败"];
+        
+    }];
+    
+    
+}
+
+//明星直播页面的返回按钮的点击事件
+-(void)comeBack
+{
+    //回到主页面
+    //[self dismissViewControllerAnimated:NO completion:nil];
+    [self dismissViewControllerAnimated:NO completion:^{
+        
+    }];
+    
+}
+
+//分享完成后调用
+-(void)doneShareNotification:(NSNotification*)notification
+{
+    if(isShare)
+    {
+        isShare=false;
+        [self startLiving];
+    }
+}
+//进入前台后调用
+-(void)enterForent:(NSNotification*)notification
+{
+    if (isShare)
+    {
+        isShare = false;
+        [self startLiving];
+    }
+}
+
+
+//收到通知的时候的事件  应用程序进入后台
+-(void)stopStringNotification:(NSNotification*)notification{
+    
+    //@{@"content":content,@"exitLogin":@"NO"}
+    
+    if(_CreatLiveModel!=NULL && ![StringWithFormat(_CreatLiveModel.userLive) isEqualToString:@"(null)"] )
+    {
+        NSDictionary *nameDictionary = [notification userInfo];
+        if ([[nameDictionary objectForKey:@"type"]isEqualToString:@"1"]) {
+            //判断直播的状态 直播中的时候改变用户的状态
+            [self changeStrmeState:false];
+            //如果主播选择的类型是计时开始直播 进入后台后关闭定时器
+        }
+        else
+        {
+            
+            if(![[nameDictionary objectForKey:@"content"] isEqualToString:@""])
+            {
+                [JXTAlertTools showAlertWith:self title:@"通知" message:[nameDictionary objectForKey:@"content"] callbackBlock:^(NSInteger btnIndex) {
+                    
+                    
+                    if ([[nameDictionary objectForKey:@"exitLogin"]isEqualToString:@"YES"])
+                    {
+                        //停止推流  退出到登录页面
+                        [_kit.streamerBase stopStream];
+                        
+                        Class class = NSClassFromString(@"Login_RegisController");
+                        UIViewController *controler=class.new;
+                        UINavigationController *na=[[UINavigationController alloc]initWithRootViewController:controler];
+                        [self presentViewController:na animated:YES completion:nil];
+                        
+                    }
+                    else
+                    {
+                        //停止推流 退出当前页面
+                        [self onExits];
+                        
+                    }
+                    
+                } cancelButtonTitle:nil destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            }
+        }
+        //self.textLabel.text = [nameDictionary objectForKey:@"content"];
+    }
+}
+//定时器的方法
+-(void)timeadd
+{
+    pauseTimeNum++;
+    double timeSj=[[NSDate date] timeIntervalSinceReferenceDate] - [startTime timeIntervalSinceReferenceDate];
+    int time1=timeSj>pauseTimeNum?(int)timeSj:pauseTimeNum;
+    _myZantingView.liveStopTime.text = [self timeFormatted:time1];
+    //离开时间超过30分钟 退出直播 发消息通知所有的观众退出观看页面
+    if(time1>=1800)
+    {
+        [self noNormalExitLive];
+    }
+}
+
+-(void)PXYLocation
+{
+    //定位相关的代码
+    _locationManager = [[CLLocationManager alloc]init];
+    if (![CLLocationManager locationServicesEnabled])
+    {
+        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:@"定位服务可能尚未打开，请设置打开" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
+        return;
+    }
+    if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusNotDetermined)
+    {
+        [_locationManager requestWhenInUseAuthorization];
+    }else if ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorizedWhenInUse)
+    {
+        //设置代理
+        _locationManager.delegate = self;
+        //设置定位的精确度
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        //设置定位的频率 每隔多少的距离定位一次
+        CLLocationDistance distance = 100.0;
+        _locationManager.distanceFilter = distance;
+        //启动跟踪定位
+        [_locationManager startUpdatingLocation];
+    }
+    
+    //地理编码的相关的类
+    // _geocoder=[[CLGeocoder alloc]init];
+    
+}
+
+//最后一次定位成功或者超出范围的时候获取的用户的位置
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray<CLLocation *> *)locations
+{
+    _cllocation=[locations lastObject];
+    
+    if (isfirstLocation)
+    {
+        return;
+    }
+    
+    
+    
+    latitude = self.CreatLiveModel.PostModel.latitude = _cllocation.coordinate.latitude;
+    longitude = self.CreatLiveModel.PostModel.longitude =_cllocation.coordinate.longitude;
+    
+    
+    NSLog(@"%f=====%f",self.CreatLiveModel.PostModel.latitude,self.CreatLiveModel.PostModel.longitude);
+    if(self.CreatLiveModel.PostModel.latitude>0 &&self.CreatLiveModel.PostModel.longitude>0)
+    {
+        isfirstLocation=YES;
+        NSDictionary *dic=nil;
+        dic=@{@"longitude":@(_cllocation.coordinate.longitude),@"latitude":@(_cllocation.coordinate.latitude)};
+        
+        [CLNetworkingManager getNetworkRequestWithUrlString:@"/rest/userlive/location" parameters:dic isCache:NO succeed:^(id data) {
+            
+            self.CreatLiveModel.PostModel.cityName = data[@"city"];
+            
+            //非明星用户的页面的定位
+            cityNameString = _StrAnchorStartView.cityNameLabel.text = self.CreatLiveModel.PostModel.cityName;
+            _NormalAnchor.cityLable.text = self.CreatLiveModel.PostModel.cityName;
+            _startLiveIngView.cityLable.text = self.CreatLiveModel.PostModel.cityName;
+            _NormalAnchor.deleteLocationBtn.hidden = NO;
+            
+            _startLiveIngView.deleteCityBtn.hidden = NO;
+            //明星直播页面的定位
+            //            _NormalAnchor.cityLable.text = self.CreatLiveModel.PostModel.cityName;
+            //            _StrAnchorStartView.cityClose.hidden = NO;
+        } fail:^(NSString *error) {
+            _StrAnchorStartView.cityNameLabel.text=@"定位失败";
+            _NormalAnchor.cityLable.text=@"定位失败";
+            _startLiveIngView.cityLable.text = @"定位失败";
+        }];
+    }
+}
+
+- (BOOL) isCameraAvailable
+{
+    return [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera];
+}
+
+-(void)makePhoto
+{
+    [JXTAlertTools showActionSheetWith:self title:nil message:nil callbackBlock:^(NSInteger btnIndex) {
+        if (btnIndex==1) {
+            [self paizhao];
+            
+        }
+        if (btnIndex==2) {
+            [self selectFromIphone];
+            
+        }
+        
+    } destructiveButtonTitle:nil cancelButtonTitle:@"取消" otherButtonTitles:@"拍照",@"本地选择", nil];
+}
+
+-(void)paizhao{
+    
+    
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    imagePicker.allowsEditing = YES;
+    imagePicker.delegate = self;
+    
+    if ([self isCameraAvailable])
+    {
+        imagePicker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [self presentViewController:imagePicker animated:YES completion:nil];
+    }else
+    {
+        NSLog(@"没有摄像头");
+    }
+    
+}
+
+-(void)selectFromIphone
+{
+    UIImagePickerController *imagePicker = [[UIImagePickerController alloc] init];
+    imagePicker.editing = YES;
+    imagePicker.allowsEditing = YES;
+    imagePicker.delegate = self;
+    
+    imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    [self presentViewController:imagePicker animated:YES completion:nil];
+}
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
+    //scale这个参数从0.1开始逐渐等比放大图片
+    //    UIImage *newimage = [self makeThumbnailFromImage:image scale:0.5];
+    
+    
+    
+    [NSThread detachNewThreadSelector:@selector(saveImage:) toTarget:self withObject:image];
+}
+
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)saveImage:(UIImage *)image
+{
+    //    _setUserImg.userHeaderImg.image=image;
+    
+    tempImg=image;
+    
+    //上传图像
+    //[self uploaduserImg:image];
+    
+    UIImage *image2=[UIImage makeThumbnailFromImage:image scale:0.5];
+    
+    NSData *imageData = UIImagePNGRepresentation(image2); //PNG格式
+    
+//    _NormalAnchor.LiveImageView.image=image2;
+    
+    _startLiveIngView.livePicImage.image = image2;
+    
+    self.CreatLiveModel.PostModel.cover =imageData;
+    self.CreatLiveModel.PostModel.image =image2;
+    self.CreatLiveModel.PostModel.isHavePic=YES;
+    
+}
+
+-(void)addData:(id)data
+{
+    
+//    _timer =  [NSTimer scheduledTimerWithTimeInterval:1.0
+//                                               target:self
+//                                             selector:@selector(updateStat:)
+//                                             userInfo:nil
+//                                              repeats:YES];
+    
+    // [self.view makeToast:data[@"message"]];
+    NSLog(@"---pxy-开始直播1---%@",data);
+    
+    NSLog(@"---开始直播-2---%@",data[@"liveShare"]);
+    PostModel *postmodel=[[PostModel alloc]init];
+    postmodel=_CreatLiveModel.PostModel;
+    _CreatLiveModel=[CreatLiveModel mj_objectWithKeyValues:data];
+    _CreatLiveModel.PostModel=postmodel;
+    _liveParameter=_CreatLiveModel.liveParameter;
+    postmodel=nil;
+    _CreatLiveModel.userLive.prize =data[@"prize"];
+    _CreatLiveModel.date =data[@"date"];
+    
+    //删除当前的页面的时间太早 要放到开始之后再删除
+    //[_StrAnchorStartView removeFromSuperview];
+    
+    
+    self.CreatLiveModel.liveGifts=[[NSMutableDictionary alloc]init];
+    LiveGift* liveGift=[[LiveGift alloc]init];
+    liveGift=[[LiveGift alloc]init];
+    liveGift.playId=@"5";
+    liveGift.giftId=5;
+    liveGift.picUrl=@"vote";
+    liveGift.price=10;
+    liveGift.title=@"投票";
+    liveGift.type=0;
+    [self.CreatLiveModel.liveGifts setValue:liveGift forKey:liveGift.playId];
+    liveGift=[[LiveGift alloc]init];
+    liveGift.playId=@"1";
+    liveGift.giftId=1;
+    liveGift.picUrl=@"guzhang";
+    liveGift.price=2;
+    liveGift.title=@"鼓掌";
+    liveGift.type=0;
+    [self.CreatLiveModel.liveGifts setValue:liveGift forKey:liveGift.playId];
+    liveGift=[[LiveGift alloc]init];
+    liveGift.playId=@"2";
+    liveGift.giftId=2;
+    liveGift.picUrl=@"aini";
+    liveGift.price=3;
+    liveGift.title=@"爱你";
+    liveGift.type=0;
+    [self.CreatLiveModel.liveGifts setValue:liveGift forKey:liveGift.playId];
+    liveGift=[[LiveGift alloc]init];
+    liveGift.playId=@"3";
+    liveGift.giftId=3;
+    liveGift.picUrl=@"huanhu";
+    liveGift.price=666;
+    liveGift.title=@"欢呼";
+    liveGift.type=1;
+    [self.CreatLiveModel.liveGifts setValue:liveGift forKey:liveGift.playId];
+    liveGift=[[LiveGift alloc]init];
+    liveGift.playId=@"4";
+    liveGift.giftId=4;
+    liveGift.picUrl=@"feiwen";
+    liveGift.price=5200;
+    liveGift.title=@"飞吻";
+    liveGift.type=1;
+    [self.CreatLiveModel.liveGifts setValue:liveGift forKey:liveGift.playId];
+    
+    
+    NSLog(@"我是按钮的标记的值 %ld",self.CreatLiveModel.PostModel.btnTag);
+    if (self.CreatLiveModel.PostModel.btnTag == 0)
+    {
+        [self startLiving];
+    }
+    else
+    {
+        isShare=true;
+        [self Allshare:_CreatLiveModel.PostModel.btnTag controller:self shareUrl:_CreatLiveModel.liveShare.url title:_CreatLiveModel.liveShare.title contentValue:_CreatLiveModel.liveShare.content picUrl:_CreatLiveModel.liveShare.picUrl isFirstShare:NO];
+    }
+}
+
+-(void)startLiving
+{
+    [_startLiveIngView removeFromSuperview];
+//    [_StrAnchorStartView removeFromSuperview];
+    [self.staranchorView UpdataAllinterface:(_CreatLiveModel)];
+//    if (self.CreatLiveModel.PostModel.delaymin==0)
+//    {
+//        [_NormalAnchor removeFromSuperview];
+        [self initAtOnceCountdownView];
+//    }else{
+//        //删除明星直播的选择的页面
+//        //[_StrAnchorStartView removeFromSuperview];
+//        [self initStarCountdownView:_CreatLiveModel.PostModel.delaymin];
+//    }
+    [self.staranchorView loadOnlineUserLive];
+    
+}
+
+//post上传
+-(void)PostAnchorDic:(NSDictionary *)dic
+{
+    NSLog(@"==========%@",dic);
+    
+    if (self.CreatLiveModel.PostModel.isHavePic)
+    {
+        CLImageModel *imageModel=[[CLImageModel alloc]init];
+        //NSLog(@"图片大小%lu",(unsigned long)imageData.length);
+        
+        imageModel.image=_CreatLiveModel.PostModel.image;
+        imageModel.field=@"cover";
+        
+        [MBProgressHUD showMessage:@"创建直播中"];
+        
+        [CLNetworkingManager uploadWithURLString:@"/rest/userlive/createhaspic" parameters:dic model:imageModel progress:^(float writeKB, float totalKB) {
+            
+        } succeed:^(id data) {
+            
+            NSLog(@"上传图片的请求的数据%@",data);
+            [self addData:data];
+            
+            [MBProgressHUD  hideHUD];
+            
+        } fail:^(NSString *error) {
+            
+            [self.view makeToast:@"创建直播失败"];
+            [MBProgressHUD  hideHUD];
+            
+        }];
+
+        
+//        [CLNetworkingManager postNetworkRequestWithUrlString:@"/rest/userlive/createhaspic" parameters:dic model:imageModel progress:^(float writeKB, float totalKB)
+//         {
+//             
+//         } succeed:^(id data) {
+//             
+//            
+//             
+//         }
+//                                            fail:^(NSString *error) {
+//                                                [self.view makeToast:@"创建直播失败"];
+//                                                [MBProgressHUD  hideHUD];
+//                                            }];
+    }
+    else
+    {
+        [CLNetworkingManager postNetworkRequestWithUrlString:@"/rest/userlive/createnopic" parameters:dic isCache:NO succeed:^(id data) {
+            NSLog(@"=====%@",data);
+            [self addData:data];
+            
+        } fail:^(NSString *error) {
+            [self.view makeToast:@"创建直播失败"];
+            
+            NSLog(@"--------------裴雪阳------没上传成功------%@",error);
+            
+        }];
+        
+    }
+}
+
+-(void)SetcoverView
+{
+    CGRect blurRect = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+    UIView *blackView = [[UIView alloc] initWithFrame:blurRect];
+    blackView.backgroundColor = [UIColor blackColor];
+    blackView.alpha = 0.7;
+    [self.view addSubview:blackView];
+}
+-(void)setAnchorPlay
+{
+    //添加观察者
+    [self addObservers];
+    _kit=[[KSYGPUStreamerKit alloc]initWithDefaultCfg];
+    
+    //添加蒙版
+    [self addControlView];
+    
+    //开启预览
+    [self onPreview];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(Anchortongzhi:) name:@"Anchortongzhi" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ViewsTongzhi:) name:@"ViewsTongzhi" object:nil];
+    
+    //dianjigeren
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(dianjigeren:) name:@"dianjigeren" object:nil];
+    
+}
+
+//添加观察者
+- (void) addObservers {
+    
+   
+    
+    //KSYStreamer state changes
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onCaptureStateChange:)
+                                                 name:KSYCaptureStateDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onStreamStateChange:)
+                                                 name:KSYStreamStateDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(onNetStateEvent:)
+                                                 name:KSYNetStateEventNotification
+                                               object:nil];
+}
+//删除
+- (void) rmObservers {
+    
+//    if (_timer) {
+//        [_timer setFireDate:[NSDate distantFuture]];
+//        [_timer invalidate];
+//        _timer = nil;
+//    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:KSYCaptureStateDidChangeNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:KSYStreamStateDidChangeNotification
+                                                  object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:KSYNetStateEventNotification
+                                                  object:nil];
+}
+
+#pragma mark - state machine (state transition)
+- (void) onCaptureStateChange:(NSNotification *)notification {
+    
+    if ( _kit.captureState == KSYCaptureStateIdle){
+        //_stat.text = @"idle";
+        NSLog(@"设备空闲中");
+        
+    }
+    else if (_kit.captureState == KSYCaptureStateCapturing ) {
+        // _stat.text = @"capturing";
+        NSLog(@"设备工作中");
+    }
+    else if (_kit.captureState == KSYCaptureStateClosingCapture ) {
+        //_stat.text = @"closing capture";
+        NSLog(@"关闭采集设备中");
+    }
+    else if (_kit.captureState == KSYCaptureStateDevAuthDenied ) {
+        //_stat.text = @"camera/mic Authorization Denied";
+        NSLog(@"设备授权被拒绝");
+    }
+    else if (_kit.captureState == KSYCaptureStateParameterError ) {
+        //_stat.text = @"capture devices ParameterError";
+        NSLog(@"参数错误，无法打开（比如设置的分辨率，码率当前设备不支持）");
+    }
+    else if (_kit.captureState == KSYCaptureStateDevBusy ) {
+        //_stat.text = @"device busy, try later";
+        NSLog(@"设备正忙，请稍后尝试 ( 该状态在发出通知0.5秒后被清除 ）");
+    }
+    NSLog(@"newCapState: %lu", (unsigned long)_kit.captureState);
+}
+
+//网络状态改变的时候的通知
+- (void) onNetStateEvent:(NSNotification *)notification {
+    KSYNetStateCode netEvent = _kit.streamerBase.netStateCode;
+    //NSLog(@"net event : %ld", (unsigned long)netEvent );
+    if ( netEvent == KSYNetStateCode_SEND_PACKET_SLOW ) {
+        _netEventCnt++;
+        if (_netEventCnt % 2 == 0) {
+            //[self toast:@"网络错误"];
+            //[self addHub:@"网络错误"];
+            [self.view makeToast:@"网络欠佳,连接中..."];
+        }
+        NSLog(@"bad network    发送包时间过长，( 单次发送超过 500毫秒 ）" );
+        
+        
+    }
+    else if ( netEvent == KSYNetStateCode_EST_BW_RAISE ) {
+        _netEventRaiseDrop = @"raising";
+        _raiseCnt++;
+        _netTimeOut = 5;
+        
+        //[self addHub:@"码率上调"];
+        NSLog(@"bitrate raising    估计带宽调整，上调");
+    }
+    else if ( netEvent == KSYNetStateCode_EST_BW_DROP ) {
+        _netEventRaiseDrop = @"dropping";
+        _dropCnt++;
+        _netTimeOut = 5;
+        //[self toast:@"估计带宽调整，下调"];
+        //[self addHub:@"带宽上调"];
+        NSLog(@"bitrate dropping   估计带宽调整，下调");
+    }
+    else if ( netEvent == KSYNetStateCode_KSYAUTHFAILED ) {
+        _netEventRaiseDrop = @"auth failed";
+        //[self toast:@"SDK 鉴权失败"];
+        //[self addHub:@"SDK 鉴权失败"];
+        NSLog(@"SDK auth failed, SDK will stop stream in a few minius     SDK 鉴权失败 (暂时正常推流5~8分钟后终止推流)" );
+    }
+}
+
+//推流的状态改变的时候的通知
+- (void) onStreamStateChange:(NSNotification *)notification {
+    
+    if ( _kit.streamerBase.streamState == KSYStreamStateIdle) {
+        
+        //kongixna
+    }
+    else if ( _kit.streamerBase.streamState == KSYStreamStateConnected){
+        
+    
+        if (_kit.streamerBase.streamErrorCode == KSYStreamErrorCode_KSYAUTHFAILED ) {
+            NSLog(@"Auth failed, stream would stop in 5~8 minute");
+            //_stat.text = @"connected(auth failed";
+            //[self toast:@"权限失败，稍后退出"];
+        }
+    }
+    else if (_kit.streamerBase.streamState == KSYStreamStateConnecting ) {
+        //_stat.text = @"connecting";
+        //[self toast:@"连接中..."];
+        [self addHub:@"连接中..."];
+    }
+    else if (_kit.streamerBase.streamState == KSYStreamStateDisconnecting ) {
+        // _stat.text = @"disconnecting";
+        //[self toast:@"断开连接"];
+    }
+    else if (_kit.streamerBase.streamState == KSYStreamStateError ) {
+        [self onStreamError];
+        return;
+    }
+    NSLog(@"newState: %lu", (unsigned long)_kit.streamerBase.streamState);
+    
+}
+
+//推流产生错误的时候的通知
+- (void) onStreamError {
+    KSYStreamErrorCode err = _kit.streamerBase.streamErrorCode;
+    
+    if ( KSYStreamErrorCode_FRAMES_THRESHOLD == err ) {
+        //_stat.text = @"SDK auth failed, \npls check ak/sk";
+        
+        //[self toast:@"鉴权失败"];
+    }
+    else if ( KSYStreamErrorCode_CODEC_OPEN_FAILED == err) {
+        //_stat.text = @"Selected Codec not supported \n in this version";
+        //[self toast:@"无法打开配置指示的CODEC"];
+    }
+    else if ( KSYStreamErrorCode_CONNECT_FAILED == err) {
+        //_stat.text = @"Connecting error, pls check host url \nor network";
+
+        [self.view makeToast:@"连接出错，请退出重连"];
+    }
+    else if ( KSYStreamErrorCode_CONNECT_BREAK == err) {
+        //_stat.text = @"Connection break";
+        [JXTAlertTools showAlertWith:self title:@"" message:@"网络连接中断，重新开启一个吧~" callbackBlock:^(NSInteger btnIndex) {
+            _isLivingExit = NO;
+            [self onExits];
+            
+        } cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+    }
+    else if (  KSYStreamErrorCode_RTMP_NonExistDomain   == err) {
+        //_stat.text = @"error: NonExistDomain";
+        //[self toast:@"rtmp 推流域名不存在 (KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_NonExistApplication   == err) {
+        //_stat.text = @"error: NonExistApplication";
+        //[self toast:@"rtmp 应用名不存在(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_AlreadyExistStreamName   == err) {
+        //_stat.text = @"error: AlreadyExistStreamName";
+        // [self toast:@"rtmp 流名已存在(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_ForbiddenByBlacklist   == err) {
+        //_stat.text = @"error: ForbiddenByBlacklist";
+        //[self toast:@"rtmp 被黑名单拒绝(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_InternalError   == err) {
+        //_stat.text = @"error: InternalError";
+        // [self toast:@" rtmp 内部错误(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_URLExpired   == err) {
+        //_stat.text = @"error: URLExpired";
+        //[self toast:@"rtmp URL 地址已过期(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_SignatureDoesNotMatch   == err) {
+        //_stat.text = @"error: SignatureDoesNotMatch";
+        //[self toast:@"rtmp URL 地址签名错误(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_InvalidAccessKeyId   == err) {
+        //_stat.text = @"error: InvalidAccessKeyId";
+        //[self toast:@"rtmp URL 中AccessKeyId非法(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_BadParams   == err) {
+        //_stat.text = @"error: BadParams";
+        //[self toast:@"rtmp URL 中参数错误(KSY 自定义)"];
+    }
+    else if (  KSYStreamErrorCode_RTMP_ForbiddenByRegion   == err) {
+        //_stat.text = @"error: ForbiddenByRegion";
+        //[self toast:@"rtmp URL 中的推流不在发布点内"];
+    }
+    else if ( KSYStreamErrorCode_NO_INPUT_SAMPLE   == err) {
+        //_stat.text = @"error: No input sample";
+        [self.view makeToast:@"没有输入的数据，无法开始直播"];
+    }
+    else {
+        //_stat.text = [[NSString alloc] initWithFormat:@"error: %lu",  (unsigned long)err];
+    }
+    NSLog(@"onErr: %lu ", (unsigned long) err);
+//    // 断网重连
+//    if ( KSYStreamErrorCode_CONNECT_BREAK == err &&/* DISABLES CODE */ (YES) ) {
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [_kit.streamerBase stopStream];
+//            //重新推流
+//            [self onRepeatStream];
+////            [self toast:@"断网,重新连接中..."];
+//            //[self.view makeToast:@"请检查网络..." duration:2 position:CSToastPositionCenter style:nil];
+//        });
+//        
+//    }
+}
+
+
+// 5 10 15 倒计时选项
+-(void)initStarAnchor
+{
+    //    _StrAnchorStartView =[StartViewController starAnchorStartViewView];
+    //    _StrAnchorStartView.frame=self.view.bounds;
+    _StrAnchorStartView.hidden = NO;
+    [self.view addSubview:_StrAnchorStartView];
+    _CreatLiveModel.PostModel.delaymin=0;
+    [_StrAnchorStartView.AtOnceButton setSelected:YES];
+    [_StrAnchorStartView.FiveMinuteButton setSelected:NO];
+    [_StrAnchorStartView.TenMinuteButton setSelected:NO];
+    [_StrAnchorStartView.FifteenButton setSelected:NO];
+    
+    //添加明星直播页面的按钮的点击事件
+    [self addClickStarButton];
+    //[StarAnchorView removeFromSuperview];
+}
+//添加明星直播页面的按钮的点击事件
+-(void)addClickStarButton
+{
+    
+    //_StrAnchorStartView.cityNameLabel
+    
+    [_StrAnchorStartView.MakeSureClick addTarget:self  action:@selector(onStartLive) forControlEvents:UIControlEventTouchUpInside];
+    [_StrAnchorStartView.changePhoto addTarget:self action:@selector(changeLivePhoto) forControlEvents:UIControlEventTouchUpInside];
+    [_StrAnchorStartView.cityClose addTarget:self action:@selector(deleteDingweiStar) forControlEvents:UIControlEventTouchUpInside];
+    [_StrAnchorStartView.closeLive addTarget:self action:@selector(onExits) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+}
+
+//删除明星直播页面定位的按钮的调用的方法
+-(void)deleteDingweiStar
+{
+    if (isNotLocation)
+    {
+        //点击的时候 调取定位的方法 定位主播当前所在的城市
+        _startLiveIngView.cityLable.text =ISNULL(self.CreatLiveModel.PostModel.cityName)?@"定位失败":self.CreatLiveModel.PostModel.cityName;
+        _StrAnchorStartView.cityNameLabel.text= ISNULL(self.CreatLiveModel.PostModel.cityName)?@"定位失败":self.CreatLiveModel.PostModel.cityName;
+        _NormalAnchor.cityLable.text= ISNULL(self.CreatLiveModel.PostModel.cityName)?@"定位失败":self.CreatLiveModel.PostModel.cityName;
+        isNotLocation=NO;
+    }
+    else
+    {
+        _startLiveIngView.cityLable.text = @"火星";
+        _StrAnchorStartView.cityNameLabel.text= @"火星";
+        _NormalAnchor.cityLable.text= @"火星";
+        isNotLocation=YES;
+    }
+}
+#pragma mark--明星直播按钮的点击事件
+-(void)onStartLive
+{
+    [_StrAnchorStartView.MakeSureClick setEnabled: NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_StrAnchorStartView.MakeSureClick setEnabled: YES];
+    });
+    
+    _CreatLiveModel.PostModel.btnTag = 0;
+    for (UIButton *btn in _StrAnchorStartView.ButtonArray)
+    {
+        if (btn.selected==YES)
+        {
+            _CreatLiveModel.PostModel.btnTag=btn.tag;
+            
+            break;
+        }
+    }
+    if (isNotLocation)
+    {
+        self.CreatLiveModel.PostModel.latitude=0;
+        self.CreatLiveModel.PostModel.longitude=0;
+        cityNameString = @"火星";
+    }
+    
+    [self PostAnchorDic:@{
+                          @"liveType":@1,
+                          @"delaymin":@(self.CreatLiveModel.PostModel.delaymin),
+                          @"longitude":@(longitude),
+                          @"latitude":@(latitude),
+                          @"cityName":cityNameString ==nil?@"":cityNameString,
+                          @"category":@0,
+                          @"vipUserId":@0, //[NSNumber numberWithInt:self.pxyPushModel.vipUserId]
+                          @"relationStar":@""}];
+    
+}
+#pragma mark -普通直播页面的开始直播按钮的点击事件
+-(void)onNormalLive
+{
+//    [_NormalAnchor.MskeSureButton setEnabled: NO];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [_NormalAnchor.MskeSureButton setEnabled: YES];
+//    });
+    [_startLiveIngView.startLiveBtn setEnabled:NO];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [_startLiveIngView.startLiveBtn setEnabled:YES];
+    });
+    _CreatLiveModel.PostModel.btnTag = 0;
+    for (UIButton * btn in _startLiveIngView.ButtonArray)
+    {
+        if (btn.selected == YES)
+        {
+           _CreatLiveModel.PostModel.btnTag=btn.tag;
+             break;
+        }
+       
+    }
+    
+    
+//    _CreatLiveModel.PostModel.btnTag=0;
+//    for (UIButton *btn in _NormalAnchor.ButtonArray)
+//    {
+//        if (btn.selected==YES)
+//        {
+//            _CreatLiveModel.PostModel.btnTag=btn.tag;
+//            break;
+//        }
+//    }
+    
+    if (isNotLocation)
+    {
+        self.CreatLiveModel.PostModel.latitude=0;
+        self.CreatLiveModel.PostModel.longitude=0;
+        cityNameString = @"火星";
+    }
+    
+    self.CreatLiveModel.PostModel.delaymin=0;
+    
+//    if (_CreatLiveModel.PostModel.liveType==0 )
+//    {
+//        if (_NormalAnchor.selectIndex == 0)
+//        {
+//            [self.view makeToast:@"请先选择直播的类型"];
+//        }else
+//        {
+    if (_startLiveIngView.liveTitleLable.text.length <=0 )
+    {
+        [self.view makeToast:@"请输入直播的主题"];
+    }
+    else
+    {
+        
+            if (self.CreatLiveModel.PostModel.isHavePic)
+            {
+                
+//                [self PostAnchorDic:@{
+//                                      @"liveType":@0,
+//                                      @"delaymin":@0,
+//                                      @"longitude":@(longitude),
+//                                      @"latitude":@(latitude),
+//                                      @"cityName":cityNameString ==nil?@"":cityNameString,
+//                                      @"category":@(_NormalAnchor.selectIndex-299>0?_NormalAnchor.selectIndex-299:0),
+//                                      @"vipUserId":@0, //[NSNumber numberWithInt:self.pxyPushModel.vipUserId]
+//                                      @"relationStar":@"",
+//                                      @"cover":[_CreatLiveModel.PostModel.cover isKindOfClass:[NSData class]]?_CreatLiveModel.PostModel.cover:@""}];
+                [self PostAnchorDic:@{
+                                      @"title":_startLiveIngView.liveTitleLable.text,
+                                      @"cover":[_CreatLiveModel.PostModel.cover isKindOfClass:[NSData class]]?_CreatLiveModel.PostModel.cover:@"",
+                                      @"longitude":@(longitude),
+                                      @"latitude":@(latitude),
+                                      @"cityName":cityNameString ==nil?@"":cityNameString,
+                                      @"platformType":@1
+                                      }];
+                
+                
+            }
+            else
+            {
+                
+                [self PostAnchorDic:@{
+                                      @"title":_startLiveIngView.liveTitleLable.text,
+                                      @"longitude":@(longitude),
+                                      @"latitude":@(latitude),
+                                      @"cityName":cityNameString ==nil?@"":cityNameString,
+                                      @"platformType":@1
+                                      }];
+                
+//                [self PostAnchorDic:@{
+//                                      @"liveType":@0,
+//                                      @"delaymin":@0,
+//                                      @"longitude":@(longitude),
+//                                      @"latitude":@(latitude),
+//                                      @"cityName":cityNameString ==nil?@"":cityNameString,
+//                                      @"category":@(_NormalAnchor.selectIndex-299>0?_NormalAnchor.selectIndex-299:0),
+//                                      @"vipUserId":@0, //[NSNumber numberWithInt:self.pxyPushModel.vipUserId]
+//                                      @"relationStar":@"",
+//                                      @"cover":[_CreatLiveModel.PostModel.cover isKindOfClass:[NSData class]]?_CreatLiveModel.PostModel.cover:@""}];
+            }
+    }
+    
+//        }
+        
+//    }
+//    else if(_CreatLiveModel.PostModel.liveType==1 )
+//    {
+//        //明星相关的直播类型
+//        if (_NormalAnchor.searchText.length>0)
+//        {
+//            if (_NormalAnchor.selectIndex == 0)
+//            {
+//                [self.view makeToast:@"请先选择直播的类型"];
+//            }
+//            else
+//            {
+//                if (self.CreatLiveModel.PostModel.isHavePic)
+//                {
+//                    [self PostAnchorDic:@{
+//                                          @"liveType":@1,
+//                                          @"delaymin":@0,
+//                                          @"longitude":@(longitude),
+//                                          @"latitude":@(latitude),
+//                                          @"cityName":cityNameString ==nil?@"":cityNameString,
+//                                          @"category":@(_NormalAnchor.selectIndex-290>0?_NormalAnchor.selectIndex-290:0),
+//                                          @"vipUserId":@([_NormalAnchor.searchStarId  integerValue]), //[NSNumber numberWithInt:self.pxyPushModel.vipUserId]
+//                                          @"relationStar":_NormalAnchor.searchText,
+//                                          @"cover":[_CreatLiveModel.PostModel.cover isKindOfClass:[NSData class]]?_CreatLiveModel.PostModel.cover:@""}];
+//                }
+//                else
+//                {
+//                    [self PostAnchorDic:@{
+//                                          @"liveType":@1,
+//                                          @"delaymin":@0,
+//                                          @"longitude":@(longitude),
+//                                          @"latitude":@(latitude),
+//                                          @"cityName":cityNameString ==nil?@"":cityNameString,
+//                                          @"category":@(_NormalAnchor.selectIndex-290>0?_NormalAnchor.selectIndex-290:0),
+//                                          @"vipUserId":@([_NormalAnchor.searchStarId  integerValue]), //[NSNumber numberWithInt:self.pxyPushModel.vipUserId]
+//                                          @"relationStar":_NormalAnchor.searchText}];
+//                    
+//                }
+//            }
+//        }else
+//        {
+//            //[self toast:@"请输入相关明星"];
+//            [self.view makeToast:@"请输入相关的明星"];
+//        }
+//        
+//    }
+    
+    
+}
+
+
+// 5 10 15 倒计时
+-(void)initStarCountdownView:(int )number
+{
+    
+    [self.view addSubview:_CountdownView];
+    
+    CGRect frame = CGRectMake(0, 200, 200, 200);
+    self.smallview.frame =frame;
+    
+    self.delegate =_CountdownView;
+    [self.delegate passValue:number];
+}
+
+//立刻直播  3  2  1
+-(void)initAtOnceCountdownView
+{
+    _OnceCountdownView = [AtOnceCountDownView CountDownView];
+    _OnceCountdownView.hidden = NO;
+    _OnceCountdownView.frame=self.view.bounds;
+    // _CreatLiveModel.PostModel=nil;
+    [self.view addSubview:_OnceCountdownView];
+}
+
+
+-(void)Anchortongzhi:(NSNotification *)text
+{
+    
+    if ([text.userInfo[@"textTwo"] isEqualToString:@"guanbi"]) {
+        
+        [self.staranchorView endEditing:YES];
+        self.staranchorView.custom.hidden = YES;
+        [self onExits];
+    }
+    
+    
+    //强行关闭的通知
+    if ([text.userInfo[@"textTwo"] isEqualToString:@"qiangexit"])
+    {
+        _isPlaying=false;
+        [self onExits];
+    }
+    
+    
+}
+//是否静音推流
+-(void)jinyinClick
+{
+    
+    [self MobClickEventWithID:@"zhibojian_maikefeng"];
+    
+    if (self.isJinyin==NO)
+    {
+        self.isJinyin=YES;
+        //非静音推流  打开静音推流
+        [_kit.streamerBase muteStreame:YES];
+        [_staranchorView.SoundButton setImage:[UIImage imageNamed:@"shengyinguanbi"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        self.isJinyin=NO;
+        //静音推流状态  关闭静音推流
+        [_kit.streamerBase muteStreame:NO];
+        [_staranchorView.SoundButton setImage:[UIImage imageNamed:@"shengyin"] forState:UIControlStateNormal];
+    }
+    
+}
+//主播页面的点击暂停按钮的点击事件
+-(void)changeStrmeState
+{
+    
+    [self MobClickEventWithID:@"zhibojian_zanting"];
+    
+    if (_isPlaying)
+    {
+        //调用暂停直播的接口
+        [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/pause" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+            
+            //停止推流
+            [_kit.streamerBase stopStream];
+            isPauseStrme=YES;
+            startTime=[NSDate date];
+            [self.pauseTimer setFireDate:[NSDate distantPast]];
+            [_dailPhoneTime setFireDate:[NSDate distantFuture]];
+            pauseTimeNum=0;
+            [_staranchorView addSubview:_myZantingView];
+            //添加暂停直播的显示页面
+            //[self.view insertSubview:_myZantingView belowSubview:_staranchorView];
+            ///停止推流 发出即时通讯自定义消息
+        } fail:^(NSString *error) {
+            
+            NSLog(@"打印暂停直播的错误的数据  %@",error);
+            
+            [self.view makeToast:error];
+        }];
+    }
+}
+//暂停直播
+-(void)changeStrmeState:(BOOL)isCall
+{
+    if (_isPlaying)
+    {
+        if(isCall)
+        {
+            //停止推流
+            [_kit.streamerBase stopStream];
+            //调用暂停直播的接口
+            [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/pause" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+                NSLog(@"请求成功");
+            } fail:^(NSString *error) {
+                NSLog(@"打印暂停直播的错误的数据%@",error);
+                //[self.view makeToast:error];
+            }];
+        
+        }else{
+        //调用暂停直播的接口
+        [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/pause" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+            
+            //停止推流
+            [_kit.streamerBase stopStream];
+            isPauseStrme=YES;
+            startTime=[NSDate date];
+            [self.pauseTimer setFireDate:[NSDate distantPast]];
+            [_dailPhoneTime setFireDate:[NSDate distantFuture]];
+            pauseTimeNum=0;
+            [_staranchorView addSubview:_myZantingView];
+            //添加暂停直播的显示页面
+            //[self.view insertSubview:_myZantingView belowSubview:_staranchorView];
+            ///停止推流 发出即时通讯自定义消息
+        } fail:^(NSString *error) {
+            
+            NSLog(@"打印暂停直播的错误的数据%@",error);
+            
+            [self.view makeToast:error];
+        }];
+        }
+    }
+}
+
+-(void)onKeepliving
+{
+    //调用继续直播的接口
+    [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/play" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+        
+        //play true,false   继续播放     假的时候。
+        
+        BOOL isChaoShi = [data[@"play"] integerValue];
+        
+        
+        if (!isChaoShi)
+        {
+            [_kit.streamerBase stopStream];
+            [self.view makeToast:data[@"message"]];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        else
+        {
+            //开启推流
+            [self onStream:false];
+            
+            [self.pauseTimer setFireDate:[NSDate distantFuture]];
+            
+            [_myZantingView removeFromSuperview];
+        }
+        
+        //重新开始推流 发出即时通信自定义消息
+    } fail:^(NSString *error) {
+        [self.view makeToast:error];
+    }];
+}
+//重新推流
+-(void)onRepeatStream
+{
+    
+    [CLNetworkingManager shareManager].isHideErrorTip=YES;
+    [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/again" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+        
+        //play true,false   继续播放     假的时候。
+       
+        [self videoLoadCloseUIView];
+        BOOL isChaoShi = [data[@"play"] integerValue];
+        
+        if (!isChaoShi)
+        {
+            [_kit.streamerBase stopStream];
+            [self.view makeToast:data[@"message"]];
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        else
+        {
+            //开启推流
+            [self onStream:false];
+            
+            [self.pauseTimer setFireDate:[NSDate distantFuture]];
+            
+            [_myZantingView removeFromSuperview];
+        }
+
+        
+        //重新开始推流 发出即时通信自定义消息
+    } fail:^(NSString *error) {
+        
+    }];
+    
+}
+
+-(void)image: (UIImage *) image didFinishSavingWithError: (NSError *) error contextInfo: (void *) contextInfo
+{
+    
+    NSString *msg = nil ;
+    
+    if(error != NULL){
+        
+        msg = @"保存图片失败" ;
+        
+    }else{
+        
+        msg = @"保存图片成功" ;
+        
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"保存图片结果提示"
+                          
+                                                    message:msg
+                          
+                                                   delegate:self
+                          
+                                          cancelButtonTitle:@"确定"
+                          
+                                          otherButtonTitles:nil];
+    
+    [alert show];
+    
+}
+
+#pragma mark--添加的关于直播的方法
+-(void)ViewsTongzhi:(NSNotification *)text
+{
+    if ([text.userInfo[@"number"] isEqualToString:@"0"]) {
+        NSLog(@"-----------------------立刻直播－－－－－－－－－－－－－");
+        
+        //调用接口
+        [CLNetworkingManager putRequestWithUrlString:@"/rest/userlive/readyok" parameters:@{@"liveId":_CreatLiveModel.userLive.liveId} succeed:^(id data) {
+            
+            [_CountdownView removeFromSuperview];
+            [self initAtOnceCountdownView];
+            
+        } fail:^(NSString *error) {
+            
+        }];
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"choose0"]) {
+        NSLog(@"-----------------------立刻直播－－－－－－－－－－－－－");
+        
+        self.CreatLiveModel.PostModel.delaymin=0;
+        self.backtime=0;
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"5"]) {
+        NSLog(@"-----------------------时间间隔直播－－－－－－－－－－－－－");
+        
+        NSLog(@"点击了5分钟按钮");
+        self.CreatLiveModel.PostModel.delaymin=5;
+        self.backtime=5;
+        
+        _currentDate=[NSDate dateWithTimeIntervalSinceNow:0];
+        
+        _myState=TellPhoneFive;
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"10"]) {
+        NSLog(@"-----------------------时间间隔直播－－－－－－－－－－－－－");
+        self.CreatLiveModel.PostModel.delaymin=10;
+        self.backtime=10;
+        NSLog(@"点击了10分钟按钮");
+        
+        _currentDate=[NSDate dateWithTimeIntervalSinceNow:0];
+        _myState=TellPhoneTen;
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"15"]) {
+        //[_StrAnchorStartView removeFromSuperview];// 选择框
+        //        [_OnceCountdownView removeFromSuperview]; // 3 2 1
+        //        [_staranchorView removeFromSuperview];//fasong
+        //   [self initStarCountdownView:(15)];
+        self.CreatLiveModel.PostModel.delaymin=15;
+        self.backtime=15;
+        NSLog(@"点击了15分钟按钮");
+        
+        _currentDate=[NSDate dateWithTimeIntervalSinceNow:0];
+        _myState=TellPhoneFifteen;
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"likezhibojieshu"]) {
+        [_OnceCountdownView removeFromSuperview];
+        [self initStarAnchorView];
+        //倒计时3 2 1 的时候 开始推流
+        
+        _isPlaying=YES;
+        [self onStream:true];
+        
+    } if ([text.userInfo[@"number"] isEqualToString:@"fanhui"]) {
+        [_CountdownView removeFromSuperview];
+        [self initStarAnchor];
+        //返回按钮
+        NSDictionary *dic=nil;
+        dic=@{@"liveId":_CreatLiveModel.userLive.liveId};
+        
+        [CLNetworkingManager postNetworkRequestWithUrlString:@"/rest/userlive/out" parameters:dic isCache:NO succeed:^(id data) {
+            
+        } fail:^(NSString *error) {
+            
+        }];
+    }
+//    }  if ([text.userInfo[@"number"] isEqualToString:@"My"]) {
+//        [_NormalCategoryView removeFromSuperview];
+//        [self initMyNormalAnchor];
+//        self.CreatLiveModel.PostModel.liveType = 0;
+//        
+//    } if ([text.userInfo[@"number"] isEqualToString:@"Star"]) {
+//        [_NormalCategoryView removeFromSuperview];
+//        self.CreatLiveModel.PostModel.liveType = 1;
+//        [self initStarNormalAnchor];
+//    }
+    if ([text.userInfo[@"number"] isEqualToString:@"Stardd"]) {
+        
+        self.CreatLiveModel.PostModel.liveType = 1;
+    }
+    if ([text.userInfo[@"number"] isEqualToString:@"Mydd"]) {
+        
+        self.CreatLiveModel.PostModel.liveType = 0;
+    }
+    //点击按钮的时候选择上传照片的方式
+    else if ([text.userInfo[@"number"] isEqualToString:@"chagephoto"]) {
+        
+        [self makePhoto];
+    }
+    
+    
+}
+
+#pragma mark--添加个人信息的弹框视图
+-(void)dianjigeren:(NSNotification *)text
+{
+    
+    //添加个人信息的弹框视图
+    _personView=[self customPersonViewWithUserId:text.userInfo[@"text"] withAdmin:_CreatLiveModel.userLive.user.admin  andLiveId:ISNULL(_CreatLiveModel.userLive.liveId)?@"0":_CreatLiveModel.userLive.liveId  isTrue:YES isSuccess:^{
+        
+        KLCPopupLayout layout = KLCPopupLayoutMake((KLCPopupHorizontalLayout)KLCPopupHorizontalLayoutCenter,
+                                                   (KLCPopupVerticalLayout)KLCPopupVerticalLayoutCenter);
+        popup = [KLCPopup popupWithContentView:_personView
+                                      showType:KLCPopupShowTypeFadeIn
+                                   dismissType:KLCPopupDismissTypeFadeOut
+                                      maskType:KLCPopupMaskTypeDimmed
+                      dismissOnBackgroundTouch:YES
+                         dismissOnContentTouch:NO];
+        
+        
+        [popup showWithLayout:layout duration:10.0];
+        
+        [popup show];
+    }];
+    
+    
+}
+//点击删除个人信息的弹框视
+-(void)tapgesture:(UITapGestureRecognizer *)state
+{
+    //[_image removeFromSuperview];
+    [_personView removeFromSuperview];
+    
+}
+
+//删除通知
+-(void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+-(StarAnchorView *)staranchorView
+
+{
+    if (!_staranchorView) {
+        _staranchorView=[StarAnchorView ViewersView];
+        
+    }
+    return _staranchorView;
+    
+}
+-(void)initStarAnchorView
+{
+    [_controlView removeFromSuperview];
+    
+    _staranchorView.hidden = NO;
+    _staranchorView.frame=self.view.bounds;
+    CGRect rectView =_staranchorView.addGestureView.frame;
+    rectView.origin.y = 0;
+    _staranchorView.addGestureView.frame =rectView;
+    [self.view addSubview:_staranchorView];
+    //直播页面的美颜的按钮的点击事件
+    [_staranchorView.filterBtn addTarget:self action:@selector(onChoseFilter) forControlEvents:UIControlEventTouchUpInside];
+    //明星直播页面的摄像头的按钮的点击
+    [_staranchorView.starChangebtn addTarget:self action:@selector(changeLivePhoto) forControlEvents:UIControlEventTouchUpInside];
+    //闪光灯
+    [_staranchorView.flashStar addTarget:self action:@selector(onFlash) forControlEvents:UIControlEventTouchUpInside];
+    //静音
+    [_staranchorView.SoundButton addTarget:self action:@selector(jinyinClick) forControlEvents:UIControlEventTouchUpInside];
+    //暂停
+    [_staranchorView.StopButton addTarget:self action:@selector(changeStrmeState) forControlEvents:UIControlEventTouchUpInside];
+    //截图
+    [_staranchorView.jietuBtn addTarget:self action:@selector(onJiequPic) forControlEvents:UIControlEventTouchUpInside];
+    //分享
+    [_staranchorView.starShare addTarget:self action:@selector(onStarshare) forControlEvents:UIControlEventTouchUpInside];
+    
+    _CloseButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 12 , 28, 30, 30)];
+    //关闭直播
+    [_CloseButton addTarget:self action:@selector(clickGuanbi) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_CloseButton setImage:[UIImage imageNamed:@"guanbi"] forState:UIControlStateNormal];
+    
+    [self.view addSubview:_CloseButton];
+    
+    
+    _StarID = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-130,_CloseButton.bottom+12 , 120, 17)];
+    // _StarID = [[UILabel alloc]initWithFrame:CGRectMake(280, 68, 78, 17)];
+    _StarID.shadowColor = [UIColor blackColor];
+    _StarID.textColor = [UIColor whiteColor];
+    _StarID.font = [UIFont systemFontOfSize:(12)];
+    _StarID.shadowOffset = CGSizeMake(1, 0);
+    _StarID.textAlignment = NSTextAlignmentRight;
+    _StarID.layer.shadowOpacity = 0.5;
+    [self.view addSubview:_StarID];
+    
+    [self addSwipeGesture];
+}
+
+//主播页面的截图
+-(void)onJiequPic
+{
+    UIImage *iage = [UIImage  captureWithView:(self.view)];
+    UIImageWriteToSavedPhotosAlbum(iage, self, @selector(image:didFinishSavingWithError:contextInfo:), NULL);
+}
+//主播页面的分享
+-(void)onStarshare
+{
+    [self MobClickEventWithID:@"zhibojian_fenxiang"];
+    
+    NSLog(@"content%@ pic%@  url%@  titleName%@",self.CreatLiveModel.liveShare.content,self.CreatLiveModel.liveShare.picUrl,self.CreatLiveModel.liveShare.url,self.CreatLiveModel.liveShare.title);
+    [self Allshare:5000 controller:self shareUrl:self.CreatLiveModel.liveShare.url title:self.CreatLiveModel.liveShare.title contentValue:self.CreatLiveModel.liveShare.content picUrl:self.CreatLiveModel.liveShare.picUrl isFirstShare:self.CreatLiveModel.userLive.user.vip];
+}
+
+
+-(void)clickGuanbi
+{
+    _isLivingExit = YES;
+    
+    [self.staranchorView endEditing:YES];
+    self.staranchorView.custom.hidden = YES;
+    [self onExits];
+    
+}
+//----------------------------------------------推流
+-(MBProgressHUD *)hud
+{
+    if (_hud==nil)
+    {
+        _hud=[[MBProgressHUD alloc]initWithView:self.view];
+        
+    }
+    return _hud;
+}
+-(void)addHub:(NSString *)message
+{
+    [self.view addSubview:self.hud];
+    [self.hud show:YES];
+    self.hud.labelText=message;
+    
+    [self.hud hide:YES afterDelay:2];
+}
+
+-(KSYGPUStreamerKit *)getStreamer
+{
+    return _kit;
+}
+
+
+
+
+//添加覆盖在页面上的View  view上可以添加各种按钮控件
+-(void)addControlView
+{
+    _controlView=[[UIView alloc]initWithFrame:self.view.bounds];
+    // _controlView.backgroundColor=[UIColor clearColor];
+    
+    _controlView.backgroundColor = [UIColor blackColor];
+    _controlView.alpha = 0.7;
+    
+    [self.view addSubview:_controlView];
+    [self addSwipeGesture];
+    [self configUI];
+}
+
+
+
+//添加上面的覆盖视图View  添加一个滑动手势 使其消失和出现
+- (void)addSwipeGesture{
+    UISwipeGestureRecognizer *swiptGestureToRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeController:)];
+    [self.view addGestureRecognizer:swiptGestureToRight];
+    
+    UISwipeGestureRecognizer *swiptGestureToLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(swipeController:)];
+    [self.view addGestureRecognizer:swiptGestureToLeft];
+    swiptGestureToLeft.direction = UISwipeGestureRecognizerDirectionLeft;
+    
+    
+}
+
+- (void)swipeController:(UISwipeGestureRecognizer *)state{
+    if (state.direction == UISwipeGestureRecognizerDirectionRight) {
+        [UIView animateWithDuration:0.5 animations:^{
+            _staranchorView.layer.frame = CGRectMake(self.view.frame.size.width, 0, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }else if (state.direction == UISwipeGestureRecognizerDirectionLeft){
+        [UIView animateWithDuration:0.5 animations:^{
+            _staranchorView.layer.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
+}
+
+//布局页面
+-(void)configUI
+{
+    //    _preview    = [[GPUImageView alloc] init];
+    [_preview setFillMode:kGPUImageFillModePreserveAspectRatioAndFill];
+    [self.view addSubview:_preview];
+    
+    
+    rateLable =[[UILabel alloc]initWithFrame:CGRectMake(20, 100, 300, 30)];
+    rateLable.numberOfLines=0;
+    rateLable.backgroundColor =[UIColor clearColor];
+    rateLable.textColor = [UIColor redColor];
+    [self.view insertSubview:rateLable atIndex:100];
+    
+    
+    NSLog(@"ddddddddd%@",[AccountModel read].vip);
+    
+    if(self.isJump)
+    {
+        
+    }else
+    {
+//        if ([[NSString stringWithFormat:@"%@",[AccountModel read].vip]  isEqualToString: @"1"])
+//        {
+//            
+//            [self initStarAnchor];
+//            
+//        }else
+//        {
+            [self initStarNormalAnchor];
+            
+//        }
+    }
+}
+-(void)initNormalCategor
+{
+    //添加第二层的视图
+    [self addBackGroundView];
+    
+    //    _NormalCategoryView =[NormalCategory NormalCategoryView];
+    //     _NormalCategoryView.frame=self.view.bounds;
+    _NormalCategoryView.hidden = NO;
+    
+    [self.view addSubview:_NormalCategoryView];
+    [_NormalCategoryView.Guanbi addTarget:self action:@selector(onExits) forControlEvents:UIControlEventTouchUpInside];
+    
+}
+-(void)addBackGroundView
+{
+    //    _NormalAnchor =[OrdinaryView OrdinaryViewStart];
+    //    _NormalAnchor.frame = self.view.bounds;
+    
+    _NormalAnchor.hidden = NO;
+    _NormalAnchor.LableButton.hidden = NO;
+    //    _NormalAnchor.takePhoto.hidden = NO;
+    //    _NormalAnchor.flashBtn.hidden = NO;
+    _NormalAnchor.lable2.hidden = YES;
+    //_NormalAnchor.Shurukuang.text=@"请输入明星姓名";
+    _NormalAnchor.Shurukuang.textColor = UIColorFromRGB(0xFFFFFF);
+    
+    
+    //给页面的城市lable赋值
+    _NormalAnchor.cityLable.text = cityNameString;
+    [self.view addSubview:_NormalAnchor];
+    _NormalAnchor.searchText = @"";
+    _NormalAnchor.searchStarId = 0;
+    _NormalAnchor.selectIndex = 0;
+    
+}
+
+-(void)initStarNormalAnchor
+{
+    //添加视图之前首先移除添加的第二层的视图
+    [_NormalAnchor removeFromSuperview];
+    
+    //    _NormalAnchor =[OrdinaryView OrdinaryViewStart];
+//    _NormalAnchor.hidden = NO;
+//    _NormalAnchor.LableButton.hidden = NO;
+    //     _NormalAnchor.frame = self.view.bounds;
+//    [ _NormalAnchor  StarLive];
+    
+    //给页面的城市lable赋值
+//    _NormalAnchor.cityLable.text = cityNameString;
+//    [self.view addSubview:_NormalAnchor];
+    
+    _startLiveIngView.cityLable.text =ISNULL(cityNameString)?@"定位失败":cityNameString;
+    [self.view addSubview:_startLiveIngView];
+    _NormalAnchor.searchText = @"";
+    _NormalAnchor.searchStarId = 0;
+    _NormalAnchor.selectIndex = 0;
+    
+}
+
+-(void)initMyNormalAnchor
+{
+    //添加视图之前首先移除添加的第二层的视图
+    [_NormalAnchor removeFromSuperview];
+    
+    //    _NormalAnchor = [OrdinaryView OrdinaryViewStart];
+    _NormalAnchor.hidden = NO;
+    _NormalAnchor.LableButton.hidden = YES;
+    //    [_NormalAnchor  MyLive];
+    //    _NormalAnchor.frame = self.view.bounds;
+    [_NormalAnchor  MyLive];
+    //给页面上的城市的label赋值
+    _NormalAnchor.cityLable.text = cityNameString;
+    [self.view addSubview:_NormalAnchor];
+    _NormalAnchor.searchText = @"";
+    _NormalAnchor.searchStarId = 0;
+    _NormalAnchor.selectIndex = 0;
+    //[StrAnchorStartView removeFromSuperview];
+    
+}
+
+-(void)onChoseFilter
+{
+    
+    [self MobClickEventWithID:@"zhibojian_meiyan"];
+    
+    if (_isFileter)
+    {
+        _filter = [[KSYGPUBeautifyFilter alloc] init]; //原始效果
+        [_kit setupFilter:_filter];
+        _isFileter=NO;
+        [_staranchorView.filterBtn setImage:[UIImage imageNamed:@"meifu-1"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        _filter = [[KSYGPUBeautifyPlusFilter alloc] init];//美颜＋＋
+        [_kit setupFilter:_filter];
+        _isFileter=YES;
+        [_staranchorView.filterBtn setImage:[UIImage imageNamed:@"meifuguanbi"] forState:UIControlStateNormal];
+    }
+    
+}
+
+//点击按钮退出直播
+-(void)onExits
+{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillChangeFrameNotification object:nil];
+    if (!_isLivingExit)
+    {
+        
+        [self MobClickEventWithID:@"zhibo_guanbi"];
+
+        [[[NIMSDK sharedSDK] chatroomManager] exitChatroom: _CreatLiveModel.userLive.userLiveBase.roomId completion:nil];
+        [[[NIMSDK sharedSDK] loginManager] logout:^(NSError *error){}];
+        //非直播状态退出界面 直接退出
+        [self removeNotifiction];
+        
+        [self dismissViewControllerAnimated:NO completion:^{
+            
+        }];
+    }
+    else
+    {
+        
+        [self MobClickEventWithID:@"zhibojian_guanbi"];
+
+        [JXTAlertTools showAlertWith:self title:@"确定结束直播?" message:@"" callbackBlock:^(NSInteger btnIndex) {
+            if (btnIndex==0)
+            {
+                //取消 不做任何操作 继续直播
+                
+            }
+            else
+            {
+                [[[NIMSDK sharedSDK] chatroomManager] exitChatroom: _CreatLiveModel.userLive.userLiveBase.roomId completion:nil];
+                [[[NIMSDK sharedSDK] loginManager] logout:^(NSError *error){}];
+                //确定 停止推流 退出直播页面
+                
+                //移除暂停页面
+                [_myZantingView removeFromSuperview];
+                //添加停止展示数据的页面
+                [self.view addSubview:_lshLiveStopView];
+                
+                //NSDictionary *liveStateUser = [[NSUserDefaults standardUserDefaults]objectForKey:@"myDictionary"];
+                
+                if (![StringWithFormat(_CreatLiveModel.userLive.liveId) isEqualToString:@"(null)"] && _isPlaying)
+                {
+                    NSDictionary *dic=nil;
+                    dic=@{@"liveId":_CreatLiveModel.userLive.liveId};
+                    [self hideBaseRequestMBProgress:YES];
+                    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                        
+                        [CLNetworkingManager postNetworkRequestWithUrlString:@"/rest/userlive/out" parameters:dic isCache:NO succeed:^(id data) {
+                            
+                            if(![StringWithFormat(_CreatLiveModel.userLive.userLiveBase.roomId) isEqualToString:@"(null)"] && ![StringWithFormat(_CreatLiveModel.userLive.userLiveBase.roomId) isEqualToString:@"0"])
+                            {
+                                [[[NIMSDK sharedSDK] chatroomManager] exitChatroom: _CreatLiveModel.userLive.userLiveBase.roomId completion:nil];
+                            }
+                            model=[UserLiveQuitResult  mj_objectWithKeyValues:data];
+                            
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                
+                                if (_CreatLiveModel.liveType == 1)
+                                {
+                                    _lshLiveStopView.receiveTapLabel.text =@"增长人气";
+                                }
+                                else
+                                {
+                                    _lshLiveStopView.receiveTapLabel.text =@"收到掌声";
+                                }
+                                //停止直播之后 添加直播结束的页面 给页面的属性赋值
+                                _lshLiveStopView.lookerNumber.text = ISNULL(model.liveHits)?@"0":model.liveHits;
+                                //                        [_lshLiveStopView.lookerNumber countFrom:0 to:[model.liveHits doubleValue] withDuration:0.3];
+                                _lshLiveStopView.tapMumber.text = ISNULL(model.applauseNum)?@"0":model.applauseNum;
+                                //                        [_lshLiveStopView.tapMumber countFrom:0 to:[model.applauseNum doubleValue] withDuration:0.3];
+                                //                        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+                                //                        formatter.numberStyle = kCFNumberFormatterDecimalStyle;
+                                //                        _lshLiveStopView.tapMumber.formatBlock = ^NSString* (CGFloat value)
+                                //                        {
+                                //                            NSString* formatted = [formatter stringFromNumber:@((int)value)];
+                                //                            return [NSString stringWithFormat:@"Score: %@",formatted];
+                                //                        };
+                                //                        _lshLiveStopView.tapMumber.method = UILabelCountingMethodEaseOut;
+                                //                        [_lshLiveStopView.tapMumber countFrom:0 to:10000 withDuration:2.5];
+                                
+                                _lshLiveStopView.fansNumbser.text =ISNULL(model.followNum)?@"0":model.followNum;
+                                //                        [_lshLiveStopView.fansNumbser countFrom:0 to:[model.followNum doubleValue] withDuration:0.3];
+                                _lshLiveStopView.liveTimer.text=ISNULL(model.playTimeStr)?@"0":model.playTimeStr;
+                                //[_lshLiveStopView.liveTimer countFrom:0 to:[model.playTimeStr integerValue] withDuration:1.0];
+                                //                        [self.view addSubview:_lshLiveStopView];
+                                [self hideBaseRequestMBProgress:NO];
+                                [self lshTuichuZhiBo];
+                            });
+                            
+                        
+                        } fail:^(NSString *error) {
+                            [self hideBaseRequestMBProgress:NO];
+                            [self.view makeToast:@"服务器忙，请稍后再试"];
+                        }];
+                        //                    [liveStateUser setValue:@"0" forKey:[AccountModel shareAccount].userId];
+                    });
+                    
+                    
+                    //非直播状态退出界面 直接退出
+                    [self removeNotifiction];
+                    
+                    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+                        _lshLiveStopView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+                    } completion:^(BOOL finished) {
+                        
+                    }];
+                    
+                    
+                }
+                else
+                {
+                    [self lshTuichuZhiBo];
+                    //回到主页面
+                    [self dismissViewControllerAnimated:NO completion:^{
+                        
+                    }];
+                    //移除通知
+                    [self removeNotifiction];
+                }
+            }
+        } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+    }
+}
+
+
+//时间超过设置的时间 自动
+-(void)noNormalExitLive
+{
+    NSDictionary *dic=nil;
+    dic=@{@"liveId":_CreatLiveModel.userLive.liveId};
+    [self hideBaseRequestMBProgress:YES];
+    [CLNetworkingManager postNetworkRequestWithUrlString:@"/rest/userlive/out" parameters:dic isCache:NO succeed:^(id data) {
+        
+        if([StringWithFormat(_CreatLiveModel.userLive.userLiveBase.roomId) isEqualToString:@"(null)"])
+        {
+            [[[NIMSDK sharedSDK] chatroomManager] exitChatroom: _CreatLiveModel.userLive.userLiveBase.roomId completion:nil];
+        }
+        
+        [self dismissViewControllerAnimated:NO completion:^{
+            
+            [self lshTuichuZhiBo];
+        }];
+        
+        [self hideBaseRequestMBProgress:NO];
+        
+    } fail:^(NSString *error) {
+        [self hideBaseRequestMBProgress:NO];
+        
+        [self.view makeToast:@"服务器忙,请稍后再试"];
+    }];
+    
+}
+
+//移除通知
+-(void)removeNotifiction
+{
+    
+    [self.staranchorView removeThreadTimer];
+    
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"Anchortongzhi" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"ViewsTongzhi" object:nil];
+    
+    //dianjigeren
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"dianjigeren" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"stopstrmingNotification" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"doneShare" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"enterFore" object:nil];
+    
+
+}
+-(void)lshTuichuZhiBo
+{
+    [AccountModel shareAccount].isStrming=NO;
+    
+    [_kit setTorchMode:AVCaptureTorchModeOff];
+    
+    [_pauseTimer setFireDate:[NSDate distantFuture]];
+    
+    [_myZantingView removeFromSuperview];
+    
+    //停止推流
+    [_kit.streamerBase stopStream];
+    //删除观测者
+    [self rmObservers];
+    
+}
+
+//个人直播页面的闪光灯按钮的点击事件
+-(void)onFlash
+{
+    if (self.isFlash == NO)
+    {
+        [_kit setTorchMode:AVCaptureTorchModeOn];
+        self.isFlash = YES;
+        [_NormalAnchor.flashBtn setImage:[UIImage imageNamed:@"shanguangdeng1"] forState:UIControlStateNormal];
+        [_staranchorView.flashStar setImage:[UIImage imageNamed:@"shanguangdeng1"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [_kit setTorchMode:AVCaptureTorchModeOff];
+        self.isFlash = NO;
+        [_NormalAnchor.flashBtn setImage:[UIImage imageNamed:@"shanguangdeng2"] forState:UIControlStateNormal];
+        [_staranchorView.flashStar setImage:[UIImage imageNamed:@"shanguangdeng2"] forState:UIControlStateNormal];
+    }
+}
+
+
+
+#pragma mark - add UIs to view
+- (UIButton *)addButton:(NSString*)title
+                 action:(SEL)action {
+    UIButton * button;
+    button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [button setTitle: title forState: UIControlStateNormal];
+    button.backgroundColor = [UIColor lightGrayColor];
+    [button addTarget:self action:action forControlEvents:UIControlEventTouchUpInside];
+    [_controlView addSubview:button];
+    return button;
+}
+
+//点击按钮开始推流
+- (void)onStream:(BOOL)IsFirst {
+    
+    //设置正在直播的状态
+    isPauseStrme=NO;
+    
+    [AccountModel shareAccount].isStrming=YES;
+    if(IsFirst)
+    {
+    
+        //设置推流的参数
+        [self setStreamerCfg];
+    
+//    //采集推流的参数
+//    [self setCaptureCfg];
+    //启动预览
+    [self onPreview];
+    
+    ///如果self.stream_cfg.has_video 设为NO时，可以不调用set_show_video_preview:
+    ///调用的话，会显示画面，但不会推视频帧
+    ///set_show_video_preview:参数可传nil；
+    //[self onPreview];
+    _btnCamera.hidden = NO;
+    _btnFlash.hidden = NO;
+    }
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
+    //开始推流
+    [_kit.streamerBase startStream:[NSURL URLWithString:[DES3Util decryptUseDES:_CreatLiveModel.userLive.userLiveBase.pushUrl key:KEY]]];
+    NSLog(@"=========pxy 推流======%@===============%@====",_CreatLiveModel.userLive.userLiveBase.pushUrl,[DES3Util decryptUseDES:_CreatLiveModel.userLive.userLiveBase.pushUrl key:KEY] );
+    
+    [self initStatData];
+}
+
+-(void)onPreview
+{
+    NSLog(@"开始预览画面，没有开始直播");
+    [self setCaptureCfg]; // update capture settings
+    [_kit startPreview: self.view];
+}
+#pragma mark - status monitor
+- (void) initStatData {
+    _lastByte    = 0;
+    _lastSecond  = [[NSDate date]timeIntervalSince1970];
+    _lastFrames  = 0;
+    _netEventCnt = 0;
+    _raiseCnt    = 0;
+    _dropCnt     = 0;
+    _startTime   =  [[NSDate date]timeIntervalSince1970];
+}
+
+#pragma mark - stream setup (采集推流参数设置)
+- (void) setCaptureCfg {
+    // capture settings
+    
+    //视频的分辨率
+    // _kit.videoDimension = KSYVideoDimension_16_9__960x540;
+    _kit.videoDimension = KSYVideoDimension_16_9__640x360;
+    //视频的帧率
+    //_kit.videoFPS = 20;
+    _kit.videoFPS = [self.CreatLiveModel.liveParameter.frames intValue];
+    //其他平台的音乐和本平台的音乐可以共存
+    _kit.bInterruptOtherAudio = YES;
+    //视频处理的回调函数fon
+    _kit.videoProcessingCallback = ^(CMSampleBufferRef sampleBuffer){
+        //        processVideo(sampleBuffer);
+    };
+    
+    //开始预览的时候打开美颜的效果
+    [self openfilterMeiyan];
+    
+    [self setVideoOrientation];
+}
+- (void) setStreamerCfg {
+    
+    // stream settings
+    //软件软解码
+    //_kit.streamerBase.videoCodec = KSYVideoCodec_X264;
+    
+    //视频编码器，默认为264编码  视频硬编码 iOS8.0以后支持
+    _kit.streamerBase.videoCodec = KSYVideoCodec_VT264;
+    //视频编码起始码率（单位:kbps, 默认:500）
+    
+    _kit.streamerBase.videoInitBitrate = [self.CreatLiveModel.liveParameter.currentRate intValue]; // k bit ps
+    //下面两个属性设置最高编码率和最低编码率 编码率越高 视频的显示效果就会越好
+    _kit.streamerBase.videoMinBitrate  =[self.CreatLiveModel.liveParameter.rate intValue]; // k bit ps
+    _kit.streamerBase.videoMinBitrate  = [self.CreatLiveModel.liveParameter.minRate intValue]; // k bit ps
+    
+    //音频编码率
+    _kit.streamerBase.audiokBPS        = 48; //k bit ps
+    //设置自动调整音频的编码率
+    _kit.streamerBase.enAutoApplyEstimateBW = YES;
+    //收集网络相关状态的日志，默认开启
+    _kit.streamerBase.shouldEnableKSYStatModule = YES;
+    _kit.streamerBase.logBlock = ^(NSString* str){
+        //NSLog(@"%@", str);
+    };
+    
+    
+    // rtmp server info
+    NSLog(@"------------------推流地址------%@------------%@--------",_CreatLiveModel.userLive.userLiveBase.pushUrl,[DES3Util decryptUseDES:_CreatLiveModel.userLive.userLiveBase.pushUrl key:KEY]);
+    if(_CreatLiveModel.userLive.userLiveBase.pushUrl!=NULL)
+    {
+        _streamerUrl =  [DES3Util decryptUseDES:_CreatLiveModel.userLive.userLiveBase.pushUrl key:KEY];//推流地址
+        
+    }
+    //设置视频的朝向
+//    [self setVideoOrientation];
+    
+}
+
+//设置视频界面的朝向
+- (void) setVideoOrientation {
+    //UIInterfaceOrientation orgin=UIDeviceOrientationPortrait;
+    UIInterfaceOrientation orien = [[UIApplication sharedApplication] statusBarOrientation];
+    [_kit setVideoOrientationBy:orien];
+    
+}
+
+
++ (NSString *) getUuid{
+    return [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+}
+//引用一个cmsamplebuffer，包含零个或多个压缩的比照对象（或压缩）一个特定的媒体类型（音频、视频、混合样品，等）。
+#pragma mark - image process
+void processVideo (CMSampleBufferRef sampleBuffer) {
+    CVPixelBufferRef imgBuf = CMSampleBufferGetImageBuffer(sampleBuffer);
+    CVPixelBufferLockBaseAddress(imgBuf, 0);
+    uint8_t * uSrc = CVPixelBufferGetBaseAddressOfPlane(imgBuf, 1);
+    int wdt = (int)CVPixelBufferGetBytesPerRowOfPlane(imgBuf, 1);
+    const int offset = 20*wdt;
+    for (int j = 0; j < 3; ++j){
+        uSrc += offset;
+        memset( uSrc, j*80, offset);
+    }
+    CVPixelBufferUnlockBaseAddress(imgBuf, 0);
+}
+
+
+//打开美颜的效果
+-(void)openfilterMeiyan
+{
+    _filter = [[KSYGPUBeautifyPlusFilter alloc] init];//美颜＋＋
+    [_kit setupFilter:_filter];
+    [_staranchorView.filterBtn setImage:[UIImage imageNamed:@"meifuguanbi"] forState:UIControlStateNormal];
+    _isFileter = YES;
+}
+
+
+
+
+
+
+
+//直播的时间的显示
+- (NSString *)timeFormatted:(int)totalSeconds
+{
+    int seconds = totalSeconds % 60;
+    
+    int minutes = (totalSeconds / 60) % 60;
+    
+    
+    if (isPauseStrme)
+    {
+        return [NSString stringWithFormat:@"%02d:%02d",minutes,seconds];
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%2d分钟%02d秒",minutes,seconds];
+    }
+    
+}
+//隔一段时间更新状态
+- (void)updateStat:(NSTimer *)theTimer{
+//    if (_kit.streamerBase.streamState == KSYStreamStateConnected ) {
+//        int    KB          = _kit.streamerBase.uploadedKByte;
+//        int    curFrames   = _kit.streamerBase.encodedFrames;
+//        int    droppedF    = _kit.streamerBase.droppedVideoFrames;
+//        
+//        int deltaKbyte = KB - _lastByte;
+//        double curTime = [[NSDate date]timeIntervalSince1970];
+//        double deltaTime = curTime - _lastSecond;
+//        double realKbps = deltaKbyte*8 / deltaTime;   // deltaByte / deltaSecond
+//        
+//        if(!showLable.isHidden)
+//        {
+//        double deltaFrames =(curFrames - _lastFrames);
+//        double fps = deltaFrames / deltaTime;
+//        
+//        double dropRate = (droppedF - _lastDroppedF ) / deltaTime;
+//        _lastByte     = KB;
+//        _lastSecond   = curTime;
+//        _lastFrames   = curFrames;
+//        _lastDroppedF = droppedF;
+//        NSString *uploadDateSize = [ self sizeFormatted:KB ];
+//        NSString* statekbps = [NSString stringWithFormat:@"realtime:%4.1fkbps %.2f%@\n", realKbps, 0.5, _netEventRaiseDrop];
+//        NSString* statefps  = [NSString stringWithFormat:@"%2.1f fps | %@  | %@ \n", fps, uploadDateSize, [self timeFormatted: (int)(curTime-_startTime)]];
+//        
+//        //设置直播的时间
+//        _label.text=[self timeFormatted:(int)(curTime-_startTime)];
+//        _label.font=[UIFont systemFontOfSize:12];
+//        _label.textColor=[UIColor redColor];
+//        
+//        NSString* statedrop = [NSString stringWithFormat:@"dropFrame %4d | %3.1f | %2.1f%% \n", droppedF, dropRate, droppedF * 100.0 / curFrames ];
+//        NSString* netEvent = [NSString stringWithFormat:@"netEvent %d notGood | %d raise | %d drop", _netEventCnt, _raiseCnt, _dropCnt];
+//        
+//        NSLog(@" statekbps:%@ stateFps:%@ statedrop:%@ netEvent:%@",statekbps,statefps,statedrop,netEvent);
+//
+//        showLable.text  = [NSString stringWithFormat:@" statekbps:%@ stateFps:%@  当前码率%f  平均视频帧率 %f",statekbps,statefps,_kit.streamerBase.encodeVKbps, _kit.streamerBase.encodingFPS];
+//       
+//        
+        if (_netTimeOut == 0) {
+            _netEventRaiseDrop = @" ";
+        }
+        else {
+            _netTimeOut--;
+        }
+//        }
+//        if(realKbps<=0)
+//        {
+//            if(!isInterBag)
+//            {
+//                isInterBag=true;
+//                [self videoLoadUIView:@"网络连接中断"];
+//            }
+//        }else if(isInterBag){
+//            isInterBag=false;
+//            [self videoLoadCloseUIView];
+//        }
+//    }
+//    if (_kit.streamerBase.streamState == KSYStreamStateDisconnecting || _kit.streamerBase.streamState == KSYStreamStateError){
+//        //重新推流
+//        [self onRepeatStream];
+//        //
+////        [self.view makeToast:@"断网，重新连接中..." duration:2 position:CSToastPositionCenter style:nil];
+//    }
+
+    
+}
+
+-(void)videoLoadUIView:(NSString *)title
+{
+    [videoLoading removeFromSuperview];
+    videoLoading = [self.view toastViewForMessage:(title.length>0?title: @"加载中...") title:nil image:nil style:nil];
+    [self.view addSubview:videoLoading];
+    CGRect frame = videoLoading.frame;
+    frame.origin.x=(ScreenWidth-videoLoading.width)/2;
+    frame.origin.y=(ScreenHeight-videoLoading.height)/2;
+    videoLoading.frame=frame;
+}
+-(void)videoLoadCloseUIView
+{
+    [videoLoading removeFromSuperview];
+}
+
+
+- (NSString*) sizeFormatted : (int )KB {
+    if ( KB > 1000 ) {
+        double MB   =  KB / 1000.0;
+        return [NSString stringWithFormat:@" %4.2f MB", MB];
+    }
+    else {
+        return [NSString stringWithFormat:@" %d KB", KB];
+    }
+}
+//弹出的提示框
+- (void) toast:(NSString*)message{
+    UIAlertView *toast = [[UIAlertView alloc] initWithTitle:nil
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:nil
+                                          otherButtonTitles:nil, nil];
+    [toast show];
+    //提示框显示的时间长
+    double duration = 1; // duration in seconds
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [toast dismissWithClickedButtonIndex:0 animated:YES];
+    });
+}
+//添加label
+- (UILabel *)addLable:(NSString*)title{
+    UILabel *  lbl = [[UILabel alloc] init];
+    lbl.text = title;
+    [_controlView addSubview:lbl];
+    return lbl;
+}
+//添加选择器
+- (UISwitch *)addSwitch:(BOOL) on{
+    UISwitch *sw = [[UISwitch alloc] init];
+    [_controlView addSubview:sw];
+    sw.on = on;
+    return sw;
+}
+
+
+-(void)didFinishGetUMSocialDataInViewController:(UMSocialResponseEntity *)response
+{
+    
+    //    [_NormalAnchor removeFromSuperview];
+    //    [self initStarAnchorView];
+    //
+    
+    //    NSDictionary *dic=[response mj_keyValues];
+    //    
+    //    
+    //    NSLog(@"分享返回hahha ：%@",dic);
+    //    
+    //    if ([StringWithFormat(dic[@"responseCode"]) isEqualToString:@"200"]) {
+    //        
+    //        [self.view makeToast:@"分享成功"];
+    //    }
+    //    else{
+    //        
+    //        [self.view makeToast:@"分享失败"];
+    //        
+    //    }
+    //    
+    //    
+    //    [self startLiving];
+    //    
+    //    NSLog(@"分享返回：%@",response);
+    //    
+    
+}
+
+
+
+
+@end

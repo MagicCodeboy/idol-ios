@@ -1,0 +1,103 @@
+//
+//  commanHeadView.m
+//  滚动的视图的测试
+//
+//  Created by lalala on 16/5/31.
+//  Copyright © 2016年 lalala. All rights reserved.
+//
+
+#import "commanHeadView.h"
+#import "UIImage+Blur.h"
+
+@implementation commanHeadView
+-(void)awakeFromNib
+{
+    self.userImage.layer.cornerRadius=self.userImage.frame.size.width/2;
+    self.userImage.layer.masksToBounds=YES;
+    
+    self.ruzhuView.layer.cornerRadius=self.ruzhuView.frame.size.height/2;
+    self.ruzhuView.layer.borderWidth=1;
+    self.ruzhuView.layer.borderColor = UIColorFromRGB(0xC2C2C2).CGColor;
+    self.ruzhuView.layer.masksToBounds=YES;
+    
+    self.changeView.layer.cornerRadius=self.changeView.frame.size.height/2;
+    self.changeView.layer.masksToBounds=YES;
+    
+    self.residentRedView.hidden=YES;
+    self.shopRedView.hidden=YES;
+    
+    self.starImage.image=[IMAGE(@"dapaishipin")lightImage];
+
+    
+    //[self insertSubview:self.starImage atIndex:0];
+    
+    
+}
++(id)inPutView
+{
+    return [[[NSBundle mainBundle]loadNibNamed:NSStringFromClass(self) owner:nil options:nil]lastObject];
+}
+-(void)cellFuzhiWithModel:(SearchModel *)model
+{
+        self.starBollName.text =model.title;
+        //NSLog(@"我是星球页面的数据标题%@",_searchModel.user.vip);
+        //    self.headerView = _headerView;
+        //    _segCtrl = _headerView.segView;
+        if(ISNULL(model.picUrl) || [model.picUrl isEqualToString:@""])
+        {
+<<<<<<< HEAD
+          self.starImage.image=[IMAGE(@"dapaishipin")lightImage];
+=======
+          self.starImage.image=IMAGE(@"quanjuxinglogo");
+>>>>>>> 8bde0bb1e4761a22d2dc7151c93e382cb3d9d203
+    
+        }
+        else
+        {
+            UIImage *image=[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:model.picUrl]]];
+            self.starImage.image=image;
+        }
+       //[_commandView.starImage sd_setImageWithURL:[NSURL URLWithString:_searchModel.bgPicUrl]];
+    
+        if ([model.userId integerValue]==0 )
+        {
+            self.userImage.hidden=YES;
+            self.vipImage.hidden=YES;
+            self.starName.hidden=YES;
+            self.ruzhuView.hidden=YES;
+    
+        }
+        else
+        {
+            self.userImage.hidden=NO;
+            self.vipImage.hidden=NO;
+            self.starName.hidden=NO;
+            self.ruzhuView.hidden=NO;
+        }
+    
+        if ([model.user.vip isEqualToString:@"1"])
+        {
+    
+            self.vipImage.image=[UIImage imageNamed:@"84x84mingxingrenzheng"];
+        }
+        else
+        {
+            self.vipImage.image=[UIImage imageNamed:@"Slice 1"];
+        }
+    
+        self.resignNumber.text=[NSString stringWithFormat:@"居民%@",UseSpaceReplaceNil(model.userNum)];
+        [self.userImage sd_setImageWithURL:[NSURL URLWithString:model.user.avatar] placeholderImage:IMAGE(@"gerenzhongxin－mongrentouxiang")];
+        self.starName.text=model.user.nickName;
+        
+        self.gaosiMohuImageView.backgroundColor=[UIColor colorWithPatternImage:IMAGE(@"gerenzhongxin－beijing")];
+
+}
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    if (_canNotResponseTapTouchEvent) {
+        return NO;
+    }
+    
+    return [super pointInside:point withEvent:event];
+}
+
+@end

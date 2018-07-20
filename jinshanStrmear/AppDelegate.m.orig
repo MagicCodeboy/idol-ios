@@ -1,0 +1,795 @@
+//
+//  AppDelegate.m
+//  jinshanStrmear
+//
+//  Created by mac on 16/5/15.
+//  Copyright © 2016年 mac. All rights reserved.
+//
+
+#import "AppDelegate.h"
+#import "JXTAlertTools.h"
+#import "AdvertiseView.h"//启动页广告的页面
+#import "Login_RegisController.h"//登录注册页面
+#import "MajorSuitViewController.h"//大牌页面
+#import "StarViewController.h"//星球的页面
+#import "LiveViewController.h"//直播
+//#import "StarController.h"//直播的xib的界面
+#import "NewStarViewController.h"//新星
+#import "PersonViewController.h"//个人中心
+#import "ViewController.h"
+#import "UIImage+Blur.h"
+#import "YYCache+Cache.h"
+#import "UMSocial.h"
+#import "UMSocialQQHandler.h"
+#import "UMSocialWechatHandler.h"
+#import "UMSocialSinaSSOHandler.h"
+#import "JPUSHService.h"
+#import <AudioToolbox/AudioToolbox.h>
+
+#import "PXYAnchorController.h"
+#import "PXYViewersViewController.h"
+#import "groupChatViewController.h"
+#import "AccountModel.h"
+#import "CustomizeDecoder.h"
+
+#import "YYCache+Cache.h"
+#import <CoreTelephony/CTCallCenter.h>
+#import <CoreTelephony/CTCall.h>
+#import "UMMobClick/MobClick.h"
+#import "TalkingData.h"
+#import <JSPatch/JSPatch.h>
+#import "UIImage+Extend.h"
+#import "TalkingData.h"
+#import "WebViewController.h"
+
+#import "MajorModel.h"
+#define USER_APP_PATH  @"/User/Applications/"
+#define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0])
+
+const char* jailbreak_tool_pathes[] = {
+    "/Applications/Cydia.app",
+    "/Library/MobileSubstrate/MobileSubstrate.dylib",
+    "/bin/bash",
+    "/usr/sbin/sshd",
+    "/etc/apt"
+};
+@interface AppDelegate ()
+
+@property (nonatomic, strong) CTCallCenter *center;
+
+@property(nonatomic,strong)NSMutableArray *picUrlArray;//保存启动图的数组
+
+@property(nonatomic,copy)StartUpPic *model;
+@end
+
+@implementation AppDelegate
+
+#pragma mark - 懒加载数组
+-(NSMutableArray *)picUrlArray
+{
+    if (_picUrlArray == nil)
+    {
+        _picUrlArray =[NSMutableArray array];
+    }
+    return _picUrlArray;
+}
+#pragma mark - 判断当前设备是否越狱
+- (BOOL)isJailBreak
+{
+    for (int i=0; i<ARRAY_SIZE(jailbreak_tool_pathes);i++)
+    {
+         if ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithUTF8String:jailbreak_tool_pathes[i]]])
+         {
+             NSLog(@"The device is jail broken!");
+             return YES;
+         }
+    }
+         NSLog(@"The device is NOT jail broken!");
+         return NO;
+}
+- (BOOL)isJailBreakOne
+{
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"cydia://"]]) {
+        NSLog(@"The device is jail broken!");
+        return YES;
+    }
+    else
+    {
+       NSLog(@"The device is NOT jail broken!");
+       return NO;
+    }
+}
+
+- (BOOL)isJailBreakTwo
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:USER_APP_PATH]) {
+        NSLog(@"The device is jail broken!");
+        NSArray *applist = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:USER_APP_PATH error:nil];
+        NSLog(@"applist = %@", applist);
+        return YES;
+    }
+    else
+    {
+        NSLog(@"The device is NOT jail broken!");
+        return NO;
+    }
+}
+
+
+
+
+ #pragma mark - 系统判断应用加载完成的方法
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+<<<<<<< HEAD
+
+=======
+>>>>>>> e506e87db8cee54d22c38d64844a8d10cc2bb792
+       [[NIMSDK sharedSDK] registerWithAppID:RONGYUNAPPKEY
+                                  cerName:nil];
+    
+//      NSArray *array = [NSArray arrayWithObject:@"there is only one objective in this arary,call index one, app will crash and throw an exception!"];
+//    NSLog(@"%@", [array objectAtIndex:1]);
+    
+#if DEBUG
+    
+    [JSPatch testScriptInBundle];
+    
+#else
+    
+    [JSPatch startWithAppKey:@"b8e4bc8afbe85c1e"];
+    
+#endif
+
+    [JSPatch sync];
+    
+    
+    
+    [NIMCustomObject registerCustomDecoder:[[CustomizeDecoder alloc]init]];
+    //[NIMCustomObject registerCustomDecoder:[[AwardsCustomizeDecoder alloc]init]];
+      //友盟统计功能
+    [self umengTrack];
+      //TalkingData统计
+    [self setTalkingData];
+    
+    self.window=[[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    self.window.backgroundColor=[UIColor whiteColor];
+    [self.window makeKeyAndVisible];
+
+//    
+//    if ([self isJailBreak])
+//    {
+//        //判断是否为越狱的手机 不让进入相应的页面
+//        
+//    }
+//    else
+//    {
+
+         //状态栏变白色
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+//    //设置导航条背景颜色
+//   UIImage *image=[UIImage getImageFromColor:UIColorFromRGB(0x333333)];
+//   
+//    
+//   [[ UINavigationBar appearance] setBackgroundImage:image forBarMetrics:UIBarMetricsDefault] ;
+
+        //友盟分享 三方登陆
+        [self setUmSocial];
+
+       /**
+        *   设置激光推送
+        */
+       if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
+            //可以添加自定义categories
+            [JPUSHService registerForRemoteNotificationTypes:(UIUserNotificationTypeBadge |UIUserNotificationTypeSound |UIUserNotificationTypeAlert)
+                                              categories:nil];
+          } else {
+        
+          }
+    
+          [JPUSHService setupWithOption:launchOptions appKey:@"bd618b3e805e1c5d0994d428"
+                                                     channel:@"ios"
+                                            apsForProduction:NO
+                                       advertisingIdentifier:nil];
+          NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+
+         [defaultCenter addObserver:self
+                           selector:@selector(networkDidReceiveMessage:)
+                               name:kJPFNetworkDidReceiveMessageNotification
+                             object:nil];
+
+         if ([[YYCache shareCache]objectForKey:@"loginOrMain"]==nil) {
+                    [self goLogin];
+            }
+        else{
+              NSString *userID=StringWithFormat([AccountModel read].userId);
+            if (!ISNULL(userID)) {
+                    [self gomain];
+               }
+              else{
+                    [self goLogin];
+              }
+         }
+
+    //主线程休眠特定的秒数之后进入主页面  启动图显示的时间与之匹配
+    [NSThread sleepForTimeInterval:0.5];
+
+    
+    // 1.判断沙盒中是否存在广告图片，如果存在，直接显示
+    NSString *filePath = [self getFilePathWithImageName:[kUserDefaults valueForKey:adImageName]];
+    NSLog(@"取出的文件的名字%@",filePath);
+    BOOL isExist = [self isFileExistWithFilePath:filePath];
+    if (isExist) {// 图片存在
+        
+        AdvertiseView *advertiseView = [[AdvertiseView alloc] initWithFrame:self.window.bounds];
+        advertiseView.filePath = filePath;
+        [advertiseView show];
+        
+    }
+    // 2.无论沙盒中是否存在广告图片，都需要重新调用广告接口，判断广告是否更新
+    [self getAdvertisingImage];
+    
+    return YES;
+}
+
+/**
+ *  判断文件是否存在
+ */
+- (BOOL)isFileExistWithFilePath:(NSString *)filePath
+{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    BOOL isDirectory = FALSE;
+    return [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
+}
+
+/**
+ *  初始化广告页面
+ */
+- (void)getAdvertisingImage
+{
+    
+    // TODO 请求广告接口
+    
+    //请求网络 获取新的图片
+    
+    [CLNetworkingManager shareManager].hideBaseMBProgress=YES;
+
+    [CLNetworkingManager getNetworkRequestWithUrlString:@"/rest/startup/down" parameters:nil isCache:NO succeed:^(id data) {
+        [CLNetworkingManager shareManager].hideBaseMBProgress=YES;
+
+        if (ISNULL(data[@"startUpPic"]))
+        {
+            
+        }
+        else
+        {
+            StartUpPic *model = [StartUpPic mj_objectWithKeyValues:data[@"startUpPic"]];
+            
+            [self.picUrlArray addObject:model.picUrl];
+
+            NSLog(@"数组中存放的图片的名字%@",model.picUrl);
+            
+            // 获取图片名:43-130P5122Z60-50.jpg
+            NSArray *stringArr = [model.picUrl componentsSeparatedByString:@"/"];
+            NSString *imageName = stringArr.lastObject;
+        
+            
+            if (ISNULL(imageName))
+            {
+                
+            }
+            else
+            {
+                // 拼接沙盒路径
+                NSString *filePath = [self getFilePathWithImageName:imageName];
+                BOOL isExist = [self isFileExistWithFilePath:filePath];
+                if (!isExist){// 如果该图片不存在，则删除老图片，下载新图片
+              
+                    [self downloadAdImageWithUrl:self.picUrlArray.lastObject imageName:imageName];
+                
+                }
+            }
+     
+        }
+        
+    } fail:^(NSString *error) {
+        [CLNetworkingManager shareManager].hideBaseMBProgress=YES;
+
+    }];
+    
+
+    
+}
+
+
+
+/**
+ *  下载新图片
+ */
+- (void)downloadAdImageWithUrl:(NSString *)imageUrl imageName:(NSString *)imageName
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+        UIImage *image = [UIImage imageWithData:data];
+        
+        NSString *filePath = [self getFilePathWithImageName:imageName]; // 保存文件的名称
+        
+        if ([UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES]) {// 保存成功
+            NSLog(@"保存成功");
+            [self deleteOldImage];
+            [kUserDefaults setValue:imageName forKey:adImageName];
+            [kUserDefaults synchronize];
+            // 如果有广告链接，将广告链接也保存下来
+        }else{
+            NSLog(@"保存失败");
+        }
+        
+    });
+}
+
+/**
+ *  删除旧图片
+ */
+- (void)deleteOldImage
+{
+    NSString *imageName = [kUserDefaults valueForKey:adImageName];
+    if (imageName) {
+        NSString *filePath = [self getFilePathWithImageName:imageName];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        [fileManager removeItemAtPath:filePath error:nil];
+    }
+}
+
+/**
+ *  根据图片名拼接文件路径
+ */
+- (NSString *)getFilePathWithImageName:(NSString *)imageName
+{
+    if (imageName) {
+        
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory,NSUserDomainMask, YES);
+        NSString *filePath = [[paths objectAtIndex:0] stringByAppendingPathComponent:imageName];
+        
+        return filePath;
+    }
+    
+    return nil;
+}
+
++ (AppDelegate *)shareInstance
+{
+    
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+    
+    
+}
+
+-(void)gomain
+{
+      
+    NSMutableArray * array = [[NSMutableArray alloc]initWithObjects:[UIImage imageNamed:@"shouye_Bar_dapai_weixuanzhong"],[UIImage imageNamed:@"shouye_Bar_xingqiu_weixuanzhong"],[UIImage imageNamed:@"shouye_Bar_xinxing_weixuanzhong"],[UIImage imageNamed:@"shouye_Bar_geren_weixuanzhong"], nil];
+    NSMutableArray * selectedArray = [[NSMutableArray alloc]initWithObjects:[UIImage imageNamed:@"shouye_Bar_dapai_xuanzhong"],[UIImage imageNamed:@"shouye_Bar_xingqiu_xuanzhong"],[UIImage imageNamed:@"shouye_Bar_xinxing_xuanzhong"],[UIImage imageNamed:@"shouye_Bar_geren_xuanzhong"], nil];
+    NSMutableArray * titles = [[NSMutableArray alloc]initWithObjects:@"大牌",@"星球",@"新星",@"个人", nil];
+    
+    MajorSuitViewController *majVc=[[MajorSuitViewController alloc]init];
+    //StarViewController *starVc=[[StarViewController alloc]init];
+    StarViewController *starVc=[[StarViewController alloc]init];
+    NewStarViewController *newStarVc=[[NewStarViewController alloc]init];
+    PersonViewController *personVc=[[PersonViewController alloc]init];
+    
+    
+    
+    
+    UINavigationController *majNa=[[UINavigationController alloc]initWithRootViewController:majVc];
+    UINavigationController *StarNa=[[UINavigationController alloc]initWithRootViewController:starVc];
+    UINavigationController *newNa=[[UINavigationController alloc]initWithRootViewController:newStarVc];
+    UINavigationController *perNa=[[UINavigationController alloc]initWithRootViewController:personVc];
+    
+    self.tabBar=[[XMTabBarController alloc]initWithTabBarSelectedImages:selectedArray normalImages:array titles:titles];
+    self.tabBar.showCenterItem = YES;
+    self.tabBar.textColor=[UIColor redColor];
+    self.tabBar.centerItemImage = [UIImage imageNamed:@"shouye_Bar_lijizhibo-1"];
+    
+    self.tabBar.viewControllers=@[majNa,StarNa ,newNa,perNa];
+    
+    
+
+    //登录注册页面，写在这里进行测试用的
+    ViewController *viewVc=[[ViewController alloc]init];
+    //UINavigationController *logNa=[[UINavigationController alloc]initWithRootViewController:loginVc];
+    self.tabBar.xm_centerViewController=[[UINavigationController alloc]initWithRootViewController:viewVc];
+    
+     //self.tabBar.xm_centerViewController=[[PXYAnchorController alloc]init];
+        AppDelegate *de=[AppDelegate shareInstance];
+    
+        de.window.rootViewController=self.tabBar;
+//    self.window.rootViewController=de.tabBar;
+    
+}
+-(void)goLogin
+{
+    Login_RegisController *login_regisVc=[[Login_RegisController alloc]init];
+    UINavigationController *navLogin=[[UINavigationController alloc]initWithRootViewController:login_regisVc];
+    
+    self.window.rootViewController=navLogin;
+    
+    
+    
+    
+    
+}
+
+-(void)setTalkingData
+
+{
+    // App ID: 在 App Analytics 创建应用后，进入数据报表页中，在“系统设置”-“编辑应用”页面里查看App ID。
+    // 渠道 ID: 是渠道标识符，可通过不同渠道单独追踪数据。
+    [TalkingData sessionStarted:@"549C40AAC13539061A8FD1D4A5D12D70" withChannelId:@"App Store TalkingData"];
+
+    [TalkingData trackEvent:@"App Store TalkingData"];
+
+}
+
+/**
+ *  @author 王森, 16-07-14 15:07:52
+ *
+ *  友盟的统计配置
+ */
+- (void)umengTrack {
+  
+    /**
+     *  @author 王森, 16-07-14 16:07:56
+     *
+     *  上线断言
+     */
+#ifdef DEBUG // 调试状态, 打开LOG功能
+    [MobClick setLogEnabled:YES];
+
+  #define BNBLog(...) NSLog(__VA_ARGS__)
+#else // 发布状态, 关闭LOG功能
+    
+//    raise(SIGSEGV); //改变友盟统计的log信息 为no  设置其他事项看备忘录
+    
+
+#define BNBLog(...)
+#endif
+    
+    
+    UMConfigInstance.appKey = @"57451d9e67e58eda3c000626";
+//    UMConfigInstance.secret = @"secretstringaldfkals";
+    UMConfigInstance.channelId = @"App Store";
+  //发送策略
+    UMConfigInstance.ePolicy=BATCH;
+    
+    [MobClick startWithConfigure:UMConfigInstance];
+}
+
+
+-(void)setUmSocial
+{
+    [UMSocialData setAppKey:@"57451d9e67e58eda3c000626"];
+
+//    //设置微信AppId、appSecret，分享url
+    [UMSocialWechatHandler setWXAppId:@"wx521aaf688057bcf1" appSecret:@"c5b7f9a6b10aa7bde0c3380df26d77a5" url:@"http://www.umeng.com/social"];
+    //设置手机QQ 的AppId，Appkey，和分享URL，需要#import "UMSocialQQHandler.h"
+    [UMSocialQQHandler setQQWithAppId:@"1105320395" appKey:@"KEYry9YWPR4ObSojYvk" url:@"http://www.umeng.com/social"];
+    //打开新浪微博的SSO开关，设置新浪微博回调地址，这里必须要和你在新浪微博后台设置的回调地址一致。需要 #import "UMSocialSinaSSOHandler.h"
+
+    [UMSocialSinaSSOHandler openNewSinaSSOWithAppKey:@"930133636"
+                                              secret:@"06eff32a7cb5628415e255bd776ee83d"
+                                         RedirectURL:@"http://sns.whalecloud.com/sina2/callback"];
+    /**
+     *  @author 王森, 16-07-08 15:07:55
+     *
+     *  隐藏没有安装的app
+     */
+    [UMSocialConfig hiddenNotInstallPlatforms:@[UMShareToQQ, UMShareToQzone, UMShareToWechatSession, UMShareToWechatTimeline]];
+
+    
+}
+
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    
+    
+    NSLog(@"%@\n%@",url,sourceApplication);
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"doneShare" object:self userInfo:nil];
+
+    
+    return result;
+
+    
+}
+
+-(void)currentViewCOntroller:(UIViewController *)controller
+{
+    
+    NSLog(@"当前的%@",controller);
+    
+    self.currentController=controller;
+    
+}
+
+/**
+ *  处理通知
+ *
+ */
+-(void)application:(UIApplication *)application
+didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+   
+    NSLog(@"%@", [NSString stringWithFormat:@"Device Token: %@", deviceToken]);
+    [JPUSHService registerDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication *)application
+didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    NSLog(@"did Fail To Register For Remote Notifications With Error: %@", error);
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    
+   
+    
+    
+    [JPUSHService handleRemoteNotification:userInfo];
+    completionHandler(UIBackgroundFetchResultNewData);
+    
+    self.messageDic = [NSDictionary dictionaryWithDictionary:userInfo];
+    
+    NSString *type= self.messageDic [@"type"];
+    
+    NSLog(@"通知类型：%@",type);
+    
+    NSString *content = [[ self.messageDic valueForKey:@"aps"]objectForKey:@"alert"];
+    
+    
+   
+    //程序当前正处于前台
+    if (application.applicationState == UIApplicationStateActive)
+    {
+        
+        //收到消息时，震动手机
+        SystemSoundID soundID = kSystemSoundID_Vibrate;
+        AudioServicesPlaySystemSound(soundID);
+
+        //播放声音
+        AudioServicesPlaySystemSound(1007);//其中1007是系统声音的编号，其他的可用编号：
+       
+        if ([type isEqualToString:@"5"]) {
+            
+           // 禁号，强制退出，无论什么状态都强制退出登录，弹出收到的消息,确定后强制
+            //特别注意是在直播的时候，要关闭直播等相应操作之后再强制退出？能作到？）
+            //发通知可以的 .先判断是否是在直播 如果是就注册监听
+
+            /**
+             *  @author 王森, 16-06-30 15:06:53
+             *
+             *  主播正在推流发通知使其停止推流并直接退出登录
+             */
+            if ([AccountModel shareAccount].isStrming==YES) {
+            
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"stopstrmingNotification" object:self userInfo:@{@"content":content,@"exitLogin":@"YES",@"type":@"0"}];
+  
+                
+            }
+            
+            [self exitLogin:content idStr:@""];
+
+        }
+        else if ([type isEqualToString:@"1"])
+              {   //   0	警告，弹出消息提示警告内容。
+
+                  [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                      
+                      } cancelButtonTitle:nil destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+             }
+        else if ([type isEqualToString:@"2"])
+        {   //  2禁播，弹出消息提示警告内容，直接关闭退出直播状态。//在此发通知去直播界面关闭直播
+
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"stopstrmingNotification" object:self userInfo:@{@"content":content,@"exitLogin":@"NO",@"type":@"0"}];
+            
+        }
+        else
+        {
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                
+            } cancelButtonTitle:@"确定" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+        }
+      
+        
+    }
+    
+    /**
+     *  处于后台进来
+     */
+    else{
+        if ([type isEqualToString:@"5"]) {
+            
+            // 禁号，强制退出，无论什么状态都强制退出登录，弹出收到的消息,确定后强制
+            //特别注意是在直播的时候，要关闭直播等相应操作之后再强制退出？能作到？）
+            //发通知可以的 .先判断是否是在直播 如果是就注册监听
+            
+            /**
+             *  @author 王森, 16-06-30 15:06:53
+             *
+             *  主播正在推流发通知使其停止推流并直接退出登录
+             */
+            if ([AccountModel shareAccount].isStrming==YES) {
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"stopstrmingNotification" object:self userInfo:@{@"content":content,@"exitLogin":@"YES",@"type":@"0"}];
+                
+                
+            }
+       
+            [self exitLogin:content idStr:@""];
+
+            
+        }
+    else if ([type isEqualToString:@"1"])
+        {   //   0	警告，弹出消息提示警告内容。
+            
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                
+            } cancelButtonTitle:nil destructiveButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        }
+
+    else if ([type isEqualToString:@"2"])
+        {   //  2禁播，弹出消息提示警告内容，直接关闭退出直播状态。//在此发通知去直播界面关闭直播
+            
+            
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"stopstrmingNotification" object:self userInfo:@{@"content":content,@"exitLogin":@"NO",@"type":@"0"}];
+            
+        }
+    else   if ([type isEqualToString:@"3"])
+        {  // 关注直播，你关注的某个直播开始了的推送提示，只在通知栏显示。单击通知栏的这个进来的时候。直接打开相应的直播
+            
+            
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                //进去直播界面
+                
+            } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+        }
+        
+    else if ([type isEqualToString:@"4"])
+        {  // 关注预告，你关注的某个预告开始了，推送提示消息给用户，只在通知栏显示，单击通知栏进入APP。直接打开相应的预告直播界面。
+
+            
+        
+            
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                //进去直播界面
+                
+            } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+        }
+
+
+        else
+        {
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+                //进去直播界面
+                
+            } cancelButtonTitle:@"确定" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+        }
+      
+    }
+    
+    /**
+     *  @author 王森, 16-07-15 18:07:48
+     *
+     *  不管是前台还是后台
+     */
+     if ([type isEqualToString:@"10"])
+    {
+        
+        
+        [self exitLogin:content idStr:@""];
+        
+    }
+
+    
+    
+    
+
+}
+
+
+
+
+//退出登录
+-(void)exitLogin:(NSString *)content idStr:(NSString *)strId
+{
+    
+    [JXTAlertTools showAlertWith:self.window.rootViewController title:@"通知" message:content callbackBlock:^(NSInteger btnIndex) {
+        
+        
+        Class class = NSClassFromString(@"Login_RegisController");
+        UIViewController *controler=class.new;
+        UINavigationController  *nav=[[UINavigationController alloc]initWithRootViewController:controler];
+        
+        [self.currentController presentViewController:nav animated:YES completion:nil];
+        
+        
+    } cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+}
+
+
+- (void)networkDidReceiveMessage:(NSNotification *)notification {
+    NSDictionary *userInfo = [notification userInfo];
+    NSString *content = [userInfo valueForKey:@"content"];
+
+    
+            [JXTAlertTools showAlertWith:self.window.rootViewController title:@"消息" message:content callbackBlock:^(NSInteger btnIndex) {
+        
+                    Class class = NSClassFromString(@"WSFansViewController");
+                UIViewController *controler=class.new;
+                [self.currentController.navigationController pushViewController:controler animated:YES];
+            } cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"前往", nil];
+    
+    
+  
+    
+}
+
+- (void)unObserveAllNotifications {
+    NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+  
+    [defaultCenter removeObserver:self
+                             name:kJPFNetworkDidReceiveMessageNotification
+                           object:nil];
+ 
+}
+
+
+- (void)dealloc
+{
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:kReachabilityChangedNotification object:nil];
+    
+    [self unObserveAllNotifications];
+    
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application {
+    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
+    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+}
+
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"stopstrmingNotification" object:self userInfo:@{@"content":@"",@"exitLogin":@"NO",@"type":@"1"}];
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+}
+
+- (void)applicationWillEnterForeground:(UIApplication *)application {
+    
+     [[NSNotificationCenter defaultCenter] postNotificationName:@"enterFore" object:self userInfo:nil];
+    
+    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    [UMSocialSnsService  applicationDidBecomeActive];
+    
+    
+
+    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+}
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+@end

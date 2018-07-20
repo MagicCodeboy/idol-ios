@@ -1,0 +1,44 @@
+/* 
+  Localizable.strings
+  jinshanStrmear
+
+  Created by panhongliu on 2016/11/23.
+  Copyright © 2016年 王森. All rights reserved.
+*/
+"button_Test" = "Test";
+"Follow" = "+Follow";
+"Dynamic" = "Dynamic";
+"TV" = "TV";
+"CityTitle" = "Select country or region";
+"sayThing" = "Say something";
+"SendButton" = "Send";
+"Done" = "Done";
+"NoData" = "No data";
+"NetWorkError" = "Network error";
+"Comment" = "Successful comment";
+"uploadAvatar"="Please choose avatar";
+"numberdeals"="The number of deals must be greater than 1";
+"availableCoins"="Insufficient available coins";
+"LowPriceLimit"="Buy price must be lower than 110% of latest price";
+"HighPHriceLimit"="Selling price must be higher than 90% of the latest price";
+"Buyingsuccess"="Buying success";
+"Sellsuccess"="Sell success";
+"FailedjoinChart"="Failed to join group chat";
+"Handicap"="Handicap";
+"Available" = "Available";
+"TradeAmount" = "Clinch";
+"Commissionedcurrent"="Commissioned current";
+"All"="All";
+"APPSettings"="APP settings";
+"MultilingualSettings"="Multilingual Settings";
+"MessageToRemind"="Message to remind";
+"ClearCache"="Clear the cache";
+"ReportSuccess"="Report success";
+"Cancel"="Cancel";
+"Confirm"="Confirm";
+"Report"="Report";
+"Login"="Login";
+"Register"="Register";
+"PrivacyPolicy"="Terms of service and privacy policy";
+"SelectedCity"="Please select a country";
+

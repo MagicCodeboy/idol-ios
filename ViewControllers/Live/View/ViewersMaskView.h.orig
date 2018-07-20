@@ -1,0 +1,83 @@
+//
+//  ViewersMaskView.h
+//  云信全聚星
+//
+//  Created by 裴雪阳 on 16/5/26.
+//  Copyright © 2016年 裴雪阳. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import "NIMSDK.h"
+#import "ProgressView.h"
+#import "CLNetworkingManager.h"
+#import "PXYViewersModel.h"
+#import "MJExtension.h"
+#import "AccountModel.h"
+#import "PXYRequestAllViewers.h"
+#import "LuckFansOwn.h"
+#import "LuckFansOthers.h"
+#import "customTf.h"
+
+#import "PXYNotification.h"
+
+@protocol viewTouch<NSObject>
+@required
+-(void)touchview;
+@end
+
+@interface ViewersMaskView : UIView
+
+<<<<<<< HEAD
+
+@property(nonatomic,strong)customTf *custom;
+=======
+@property(nonatomic,assign) id<viewTouch> delegatetouch;
+
+>>>>>>> e010db077f19a9cc20eb7b2db2019ad0a52e77a3
+
+@property (nonatomic, copy) NSArray *items;
+@property (weak, nonatomic) IBOutlet UIImageView *yanhuaView;
+@property (weak, nonatomic) IBOutlet UIImageView *vipUserimage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *viewcontent;
+
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *button1left;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *button2Left;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *button3Left;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *button4Left;
+@property (strong, nonatomic) IBOutlet UIImageView *GrayImageView;
+
+
+@property (weak, nonatomic) IBOutlet UIButton *GiftButton1;
+@property (weak, nonatomic) IBOutlet UIButton *GiftButton2;
+
+@property (weak, nonatomic) IBOutlet UIButton *GiftButton3;
+@property (weak, nonatomic) IBOutlet UIButton *GiftButton4;
+
+@property (weak, nonatomic) IBOutlet UIButton *GiftSendButton;
+@property (weak, nonatomic) IBOutlet UILabel *GiftSendLabel; //发送以及倒计时
+
+@property (nonatomic,strong) ProgressView *pxyProgressView;
+//体力值
+@property (weak, nonatomic) IBOutlet UILabel *TiliLable;
+
+-(void)UpdataViewers;
+
+//顶部
+@property (weak, nonatomic) IBOutlet UIView *HeadView;
+@property (weak, nonatomic) IBOutlet UIImageView *HeadImage;
+@property (weak, nonatomic) IBOutlet UILabel *HeadName;
+@property (weak, nonatomic) IBOutlet UILabel *HeadOnlineNumber;
+@property (weak, nonatomic) IBOutlet UIButton *HeadGuanzhu;
+
+@property(strong,nonatomic)PXYRequestAllViewers *pxyrequest;
+@property(strong,nonatomic)PXYViewersLiveModel *pxyViewersModel;
+@property(nonatomic,copy) void(^AnchorCloseBlock)();
+@property (weak, nonatomic) IBOutlet UILabel *StarID;
+
+@property (weak, nonatomic) IBOutlet UILabel *zhangsheng;
+
+@property(nonatomic,copy) void(^touchBlock)();
+
+
++ (instancetype)ViewersView;
+@end

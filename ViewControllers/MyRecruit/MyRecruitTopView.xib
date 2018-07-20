@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2555" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MyRecruitTopView">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="220"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuxingzuo1" translatesAutoresizingMaskIntoConstraints="NO" id="woa-q5-Qiy">
+                    <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="65" id="rOn-8R-yRX"/>
+                        <constraint firstAttribute="height" constant="65" id="zdM-bz-YWR"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuxingyou2" translatesAutoresizingMaskIntoConstraints="NO" id="oqR-3e-Xif">
+                    <rect key="frame" x="325" y="0.0" width="50" height="190"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="XuK-Y6-aWJ"/>
+                        <constraint firstAttribute="height" constant="190" id="kd0-l6-PTH"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VSc-os-9wA" customClass="NIMAttributedLabel">
+                    <rect key="frame" x="0.0" y="46" width="375" height="34"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="mNC-Bd-1OC"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zcz-9a-1N7" customClass="NIMAttributedLabel">
+                    <rect key="frame" x="0.0" y="90" width="375" height="34"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="34" id="L2o-PA-KDR"/>
+                    </constraints>
+                </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tuxingzhongjian3" translatesAutoresizingMaskIntoConstraints="NO" id="W6l-uB-ICd">
+                    <rect key="frame" x="79" y="154" width="218" height="15"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="15" id="UyH-Bh-jNX"/>
+                        <constraint firstAttribute="width" constant="218" id="ejW-YN-fb8"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="fensituangongxianbang" translatesAutoresizingMaskIntoConstraints="NO" id="ox6-37-Mnp">
+                    <rect key="frame" x="61" y="194" width="253" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="253" id="7Q5-7e-UaZ"/>
+                        <constraint firstAttribute="height" constant="20" id="vw5-tL-ndZ"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="oqR-3e-Xif" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="A7n-Tr-cRt"/>
+                <constraint firstAttribute="trailing" secondItem="VSc-os-9wA" secondAttribute="trailing" id="AHL-k4-cmb"/>
+                <constraint firstItem="Zcz-9a-1N7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="BuQ-ZR-xzO"/>
+                <constraint firstItem="Zcz-9a-1N7" firstAttribute="top" secondItem="VSc-os-9wA" secondAttribute="bottom" constant="10" id="Fui-gL-X3A"/>
+                <constraint firstAttribute="trailing" secondItem="Zcz-9a-1N7" secondAttribute="trailing" id="Gm8-bG-NEe"/>
+                <constraint firstItem="W6l-uB-ICd" firstAttribute="top" secondItem="Zcz-9a-1N7" secondAttribute="bottom" constant="30" id="RNu-HZ-1aH"/>
+                <constraint firstItem="woa-q5-Qiy" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Rhz-hZ-5jI"/>
+                <constraint firstItem="ox6-37-Mnp" firstAttribute="top" secondItem="W6l-uB-ICd" secondAttribute="bottom" constant="25" id="TbO-zW-Wzk"/>
+                <constraint firstItem="VSc-os-9wA" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="top" constant="80" id="VDf-UE-CYY"/>
+                <constraint firstItem="ox6-37-Mnp" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="ZVm-44-Wtn"/>
+                <constraint firstAttribute="trailing" secondItem="oqR-3e-Xif" secondAttribute="trailing" id="i69-Jr-pcx"/>
+                <constraint firstItem="VSc-os-9wA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mUK-WT-Jfc"/>
+                <constraint firstItem="VSc-os-9wA" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="oB2-IW-gyY"/>
+                <constraint firstItem="woa-q5-Qiy" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="tsp-He-qtJ"/>
+                <constraint firstItem="W6l-uB-ICd" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="wmx-zu-rjX"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="fansAttributeLabel" destination="VSc-os-9wA" id="wGk-JB-gym"/>
+                <outlet property="favourAttributeLabel" destination="Zcz-9a-1N7" id="rYx-XH-G5z"/>
+            </connections>
+            <point key="canvasLocation" x="32.5" y="89"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="fensituangongxianbang" width="253" height="20"/>
+        <image name="tuxingyou2" width="50" height="190"/>
+        <image name="tuxingzhongjian3" width="218" height="15"/>
+        <image name="tuxingzuo1" width="65" height="65"/>
+    </resources>
+</document>

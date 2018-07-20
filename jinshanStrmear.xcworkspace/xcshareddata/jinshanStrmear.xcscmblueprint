@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "D998C47124B107901D9AD8378CD0BAB9064AD51E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "bec23e03-1d49-4064-a525-efaab688bb00++6712" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "D998C47124B107901D9AD8378CD0BAB9064AD51E" : 9223372036854775807,
+    "bec23e03-1d49-4064-a525-efaab688bb00++6712" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "1A787F1C-7DA9-4F15-B842-0C2997A71F9A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "D998C47124B107901D9AD8378CD0BAB9064AD51E" : "live_wangsu\/",
+    "bec23e03-1d49-4064-a525-efaab688bb00++6712" : "live_wangsu\/Libs\/WCSiOS\/WCSiOS.framework\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "jinshanStrmear",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "jinshanStrmear.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "172.168.1.201:ios\/live_wangsu.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "D998C47124B107901D9AD8378CD0BAB9064AD51E"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "svn:\/\/10.8.216.43:8080\/wcs",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "bec23e03-1d49-4064-a525-efaab688bb00++6712"
+    }
+  ]
+}

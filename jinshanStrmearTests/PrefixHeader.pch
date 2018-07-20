@@ -1,0 +1,187 @@
+//
+//  PrefixHeader.pch
+//  jinshanStrmear
+//
+//  Created by 123 on 16/6/2.
+//  Copyright © 2016年 mac. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "UIView+Frame.h"
+#import "Masonry.h"
+#import "ReactiveObjC.h"
+#import "NSString+Cache.h"
+#import "UIView+BlockGesture.h"
+
+
+
+#define SYSTEM_VERSION_GE_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+#define  KEY_USERNAME_PASSWORD @"com.compand"
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* PrefixHeader_pch */
+#define KeyWindow       [[UIApplication sharedApplication] keyWindow]
+#define MainWindow      [[[UIApplication sharedApplication] delegate] window]
+//服务器图片资源
+static const NSString *picServerUrlPre = @"http://badidu.com/";
+
+#define iOS8Later ([UIDevice currentDevice].systemVersion.floatValue >= 8.0f)
+//DEBUG  模式下打印日志,当前 行
+
+#ifdef DEBUG // 调试状态, 打开LOG功能
+#define NSLog(FORMAT, ...) fprintf(stderr,"[%s:%d行]\n %s\n\n",__func__, __LINE__, [[NSString stringWithFormat:FORMAT, ##__VA_ARGS__] UTF8String]);
+#define BNBLog(...) NSLog(__VA_ARGS__)
+#else // 发布状态, 关闭LOG功能
+#define BNBLog(...)
+#endif
+
+
+/** 多线程GCD*/
+#define GlobalGCD(block) dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), block)
+#define MainGCD(block) dispatch_async(dispatch_get_main_queue(),block)
+
+//按照比例适配  实际的高度和宽度 按照6来适配
+#define SHIJI_HEIGHT SCREEN_HEIGHT/667
+#define  SHIJI_WIDTH SCREEN_WIDTH/375
+//获取屏幕 宽度、高度
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
+#define ISSELECT3X   [UIScreen mainScreen].nativeScale * SCREEN_WIDTH >750?@"3x":@"2x"
+#define SCREEN_SHIJI_WIDTH ([UIScreen mainScreen].nativeScale * SCREEN_WIDTH)
+#define SCREEN_SHIJI_HEIGHT ([UIScreen mainScreen].nativeScale * SCREEN_HEIGHT)
+
+#define ONESCREEN ([UIScreen mainScreen].bounds.size.height > [UIScreen mainScreen].bounds.size.width ? ([UIScreen mainScreen].bounds.size.height == 480) : ([UIScreen mainScreen].bounds.size.width == 480)) //1 判断是否为3.5inch      (640×960)         320×480
+#define TWOSCREEN ([UIScreen mainScreen].bounds.size.height > [UIScreen mainScreen].bounds.size.width ? ([UIScreen mainScreen].bounds.size.height == 568) : ([UIScreen mainScreen].bounds.size.width == 568)) //2 判断是否为4inch        (640×1136)        320×568
+#define THREESCREEN ([UIScreen mainScreen].bounds.size.height > [UIScreen mainScreen].bounds.size.width ? ([UIScreen mainScreen].bounds.size.height == 667) : ([UIScreen mainScreen].bounds.size.width == 667)) //3 判断是否为4.7inch   (750×1334)        375×667
+#define FOURSCREEN ([UIScreen mainScreen].bounds.size.height > [UIScreen mainScreen].bounds.size.width ? ([UIScreen mainScreen].bounds.size.height == 736) : ([UIScreen mainScreen].bounds.size.width == 736)) // 4 判断是否为5.5inch   (1080×1920)    414x736
+
+#define IS_iPhoneX (812 == [[UIScreen mainScreen] bounds].size.height ? YES : NO)
+
+#define TabbarHeight (([[UIScreen mainScreen] bounds].size.height-812)?49:83)
+
+#define TheTopMargin (([[UIScreen mainScreen] bounds].size.height-812)?34:50)
+//状态栏高度
+#define  NAVBARHEIGHT [[UIApplication sharedApplication] statusBarFrame].size.height
+//导航条高度 64或者84
+#define  NAVBARSTATUSBARHEIGHT ([[UIApplication sharedApplication] statusBarFrame].size.height+44)
+//自定义导航条标题中心距离下部高度
+#define  NAVBARTITLEBOTTOMHEIGHT 20
+//iPhoneX底部空余距离
+#define  iPhoneXBottomDistance 34
+//底部是否应该留空隙 留多少 34或者0
+#define iPhoneBottomDistance (IS_iPhoneX?iPhoneXBottomDistance:0)
+
+//头部是否应该留空隙 留多少 34或者0
+#define iPhoneTopDistance (IS_iPhoneX?20:0)
+
+
+//格式转化
+#define StringWithFormat(Object) [NSString stringWithFormat:@"%@",Object]
+
+//alloc
+#define ALLOC(Object,view) Object *view = [[Object alloc]init];
+//Frame
+#define FRAME(view,x,y,width,height) view.frame = CGRectMake(x, y, width, height);
+//Alloc,Frame
+#define ALLOC_FRAME(Object,view,x,y,width,height) ALLOC(Object,view)\
+FRAME(view,x,y,width,height)
+
+//定义一个避免引用循环的weakself
+#define  WeakSelf(name,className)  __weak typeof(className)name=className;
+
+#define  ISNULL(content) ([content isKindOfClass:[NSNull class]]||[StringWithFormat(content) isEqualToString:@"(null)"]||content==nil||[StringWithFormat(content) isEqualToString:@"<null>"]||[StringWithFormat(content) isEqualToString:@""]||[StringWithFormat(content) isEqualToString:@" "])
+
+//定义一个判断属性是否为空 是的的话赋值一个默认字符串  例子：IsNilString(model.sign,@"这个人还没有签名");
+ #define  UsePlaceHolderReplaceNil(property,placeHolderString)  ISNULL(property)?placeHolderString:StringWithFormat(property)
+//判断一个属性是否为空 如果是 用@"" 空来代替 避免出现 null的情况
+#define  UseSpaceReplaceNil(property)  ISNULL(property)?@"":StringWithFormat(property)
+
+
+//StringWithFormat
+#define StringWithFormat(Object) [NSString stringWithFormat:@"%@",Object]
+
+//定义UIImage对象
+#define IMAGE(imageName) [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageName]]
+
+//AddTargetInside
+#define ADD_TARGET_INSIDE(ButtonName,Selector) [ButtonName addTarget:self action:@selector(Selector) forControlEvents:UIControlEventTouchUpInside];
+//ButtonSetimage title
+#define BUTTON_SETIMAGE(ButtonName,imageName) [ButtonName setImage:[UIImage imageNamed:imageName] forState:UIControlStateNormal];
+#define BUTTON_SETIMAGESELECTED(ButtonName,imageName) [ButtonName setImage:[UIImage imageNamed:imageName] forState:UIControlStateSelected];
+
+#define BUTTON_SETTITLE(ButtonName,Title) [ButtonName setTitle:Title forState:UIControlStateNormal];
+#define BUTTON_TITLECOLOR(ButtonName,TitleColor)    [ButtonName setTitleColor:TitleColor forState:UIControlStateNormal];
+
+// rgb颜色转换（16进制->10进制）
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+
+//红色
+ #define REDCOLOR UIColorFromRGB(0xFF554C)
+//灰色
+#define  LIGHTGRAYCOLOR UIColorFromRGB(0xCCCCCC)
+//深灰色
+#define  SHENHUICOLOR UIColorFromRGB(0x999999)
+//中灰色666
+#define ZHONGHUIUICOLOR UIColorFromRGB(0x666666)
+//cell间隔线颜色
+#define CELLLINEUICOLOR UIColorFromRGB(0xF5F5F5)
+#define ZISECOLOR UIColorFromRGB(0x8C5FFF)
+
+
+// 获取RGB颜色
+#define RGBA(r,g,b,a) [UIColor colorWithRed:r/255.0f green:g/255.0f blue:b/255.0f alpha:a]
+#define RGB(r,g,b) RGBA(r,g,b,1.0f)
+#define randomColor RGBA(arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256), arc4random_uniform(256))
+
+//#define DefaultBackGroundColor UIColorFromRGB(0xf5f5f5)
+
+#define NAVBARCOLOR RGBA(0,0,0,0.82f)
+
+#define APPName [NSString getAppName]
+//旋转角度
+#define DEGREES_TO_RADIANS(angle) ((angle) / 180.0 * M_PI)
+
+
+
+#define RONGYUNAPPKEY @"dsfdsa"
+#define ViewBorderRadius(View, Radius, Width, Color)\
+\
+[View.layer setCornerRadius:(Radius)];\
+[View.layer setMasksToBounds:YES];\
+[View.layer setBorderWidth:(Width)];\
+View.layer.rasterizationScale = View.layer.contentsScale;\
+[View.layer setBorderColor:[Color CGColor]]
+
+//剧场
+#define THEATER_FONT_NAME @"Bauhaus93"
+
+#define LocalizedOtherStr(name) NSLocalizedStringFromTable(name, @"OtherLocalizable", nil)
+#define LocalizedStr(name) NSLocalizedString(name,nil)
+
+#define dispatch_sync_main_safe(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_sync(dispatch_get_main_queue(), block);\
+}
+
+#define dispatch_async_main_safe(block)\
+if ([NSThread isMainThread]) {\
+block();\
+} else {\
+dispatch_async(dispatch_get_main_queue(), block);\
+}
+
+/* weakSelf strongSelf reference */
+#define WEAK_SELF(weakSelf) __weak __typeof(&*self) weakSelf = self;
+#define STRONG_SELF(strongSelf) __strong __typeof(&*weakSelf) strongSelf = weakSelf;
+#define Message_Font_Size   14        // 普通聊天文字大小
+#define Notification_Font_Size   10   // 通知文字大小
+#define Chatroom_Message_Font_Size 16 // 聊天室聊天文字大小
+

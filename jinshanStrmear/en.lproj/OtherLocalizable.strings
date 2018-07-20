@@ -1,0 +1,87 @@
+/* 
+  OtherLocalizable.strings
+  jinshanStrmear
+
+  Created by panhongliu on 2018/3/19.
+  Copyright © 2018年 王森. All rights reserved.
+*/
+"Sunday" = "SUN";
+"Saturday" = "SAT";
+"Friday" = "FRL";
+"Thursday" = "THU";
+"Wednesday" = "WED";
+"Tuesday" = "TUS";
+"Monday" = "MON";
+
+"January" = "January";
+"February" = "February";
+"March" = "March";
+"April" = "April";
+"May" = "May";
+"June" = "June";
+"July" = "July";
+"August" = "August";
+"September" = "September";
+"October" = "October";
+"November" = "November";
+"December" = "December";
+
+"Fetter" = "Fetter";
+"SignRules" = "Sign-in rules";
+"loading..." = "loading...";
+"error" = "error";
+"downloading..." = "downloading...";
+"success" = "success";
+"fail" = "fail";
+"just now" = "Just now";
+"Minutes ago" = "minutes ago";
+"Hours ago" = "hours ago";
+"Days ago" = "days ago";
+"Months ago" = "months ago";
+"Years ago" = "years ago";
+"Around" = "Around";
+"ExChange" = "ExChange";
+"NotAddIssuer" = "No issuer click add";
+"Activity" = "Activity";
+
+"Depth" = "Depth";
+"Clinch" = "Clinch";
+"Introduction" = "Introduction";
+"Hight" = "Hight";
+"Low" = "Low";
+"Buy" = "Buy";
+"Sell" = "Sell";
+"Price" = "Price";
+"Number" = "Number";
+"To customize" = "To customize";
+"Delate" = "Delate";
+"Volume" = "Volume";
+"Closed" = "Closed";
+"Indicators" = "Index";
+"Time" = "Time";
+"1m" = "1m";
+"5m" = "5m";
+"30m" = "30m";
+"60m" = "60m";
+"Day line" = "Day";
+"Weekly" = "Week";
+"Artists" = "Artists";
+"Optional" = "Optional";
+
+"Sign in" = "Sign in";
+"Following" = "Following";
+"Stars in focus" = "Stars in focus";
+"Personal information" = "Personal information";
+"Purchasing list" = "Purchasing list";
+"APP settings" = "APP settings";
+"About Idol" = "About Idol";
+"Head portrait" = "Head portrait";
+"Date of birth" = "Date of birth";
+"Gender" = "Gender";
+"Mobile phone no" = "Mobile phone no";
+"Done" = "Done";
+
+"The person's image" = "The person's image";
+"Person Center" = "Person Center";
+
+"Log out" = "Log out";

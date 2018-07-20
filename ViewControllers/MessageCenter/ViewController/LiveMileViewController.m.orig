@@ -1,0 +1,154 @@
+//
+//  LiveMileViewController.m
+//  jinshanStrmear
+//
+//  Created by lalala on 16/6/6.
+//  Copyright © 2016年 王森. All rights reserved.
+//
+
+#import "LiveMileViewController.h"
+#import "LiveNotificationCell.h"
+#import "UIButton+Block.h"
+#import "UIView+WZLBadge.h"
+#import "CommonDefin.h"
+#import "ViewModel.h"
+
+@interface LiveMileViewController ()
+@property(nonatomic,strong)ViewModel *modelData;
+@property(nonatomic,strong)NSArray *modelarray;
+
+@end
+
+@implementation LiveMileViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+   
+    self.view.backgroundColor=UIColorFromRGB(0xf5f5f5);
+    self.title=@"系统消息";
+    [self addBackBtn];
+    [self configUI];
+    _modelData=[[ViewModel alloc]init];
+  
+    [self loadData:NO];
+    __weak typeof(self)weakSelf=self;
+
+[self setTableHeaderRefresh:^{
+    weakSelf.currentIndex=1;
+    
+    [weakSelf loadData:YES];
+
+}];
+    
+    [self setFooterfresh:^{
+        weakSelf.currentIndex++;
+
+        [weakSelf loadData:NO];
+ 
+    }];
+    
+    
+//    restMessageListApiurl
+}
+
+
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self hiddenTabBar];
+    
+}
+-(void)loadData:(BOOL)fresh
+{
+    
+    
+      [_modelData restMessageListApiurl:nil parmters:@{@"pageIndex":cunrrenIndex} isShuaXin:fresh succees:^(id responseProject) {
+          
+          _modelarray=responseProject;
+          
+          [self.tableview reloadData];
+          
+      } fail:^(NSString *error) {
+          
+      }];
+    
+}
+//布局UI界面
+-(void)configUI
+{
+    [self customTableView];
+    self.tableview.frame=CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    [self registerNib:@"LiveNotificationCell"];
+    
+    //self.automaticallyAdjustsScrollViewInsets = YES;
+    
+ }
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    ALLOC(UIView, headView);
+    headView.frame=CGRectMake(0, 0,kScreenWidth , 10);
+    headView.backgroundColor=[UIColor whiteColor];
+    if (section==0)
+    {
+        return headView;
+    }
+    return nil;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 10;
+}
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if (self.modelarray.count<=0)
+    {
+<<<<<<< HEAD
+        [self addPromptViewWithFrame:CGRectMake(0, 40*SHIJI_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT-64) ImageName:@"weishoudaoxiaoxi" andLabel:@"没有消息"];
+=======
+        [self addPromptViewWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64) ImageName:@"weishoudaoxiaoxi" andLabel:@"没有消息"];
+>>>>>>> 2ac8a3f4ff8298ac6ca47c3ee7a90bc69f7f5a87
+    }
+    
+    return   self.modelarray.count;
+}
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 75;
+}
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (tableView==self.tableview)
+    {
+        LiveNotificationCell *cell=[tableView dequeueReusableCellWithIdentifier:@"LiveNotificationCell"];
+        cell.LabelDeatil.text=self.dataArray[indexPath.row];
+        cell.selectionStyle=UITableViewCellSelectionStyleNone;
+        return cell;
+    }
+    return nil;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end

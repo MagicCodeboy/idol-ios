@@ -1,0 +1,259 @@
+//
+//  danmuView.m
+//  pxy弹幕
+//
+//  Created by 裴雪阳 on 16/5/31.
+//  Copyright © 2016年 裴雪阳. All rights reserved.
+//
+
+#import "danmuView.h"
+#import <QuartzCore/QuartzCore.h>
+#import "FXLabel.h"
+#import "UIImageView+WebCache.h"
+
+#define endposition  10
+
+#define UIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0x0000FF))/255.0 \
+alpha:1.0]
+
+@interface danmuView()
+{
+    int gift_type;
+}
+
+@end
+
+@implementation danmuView
+
+
+
+-(instancetype)initWithContent:(Customize *)content{
+    if ([super init]) {
+        //创建子视图
+        _background = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"guanzhongsongli_caitiao_feiwen"]];
+        [_background setFrame:CGRectMake(0, 0, 285*SHIJI_WIDTH, 65*SHIJI_HEIGHT)];
+
+        _image = [[UIImageView alloc]init];
+        
+        [_image sd_setImageWithURL:[NSURL URLWithString:content.head_url]];
+    
+        [_image setFrame:CGRectMake(10*SHIJI_WIDTH, 10*SHIJI_HEIGHT, 45*SHIJI_WIDTH, 45*SHIJI_HEIGHT)];
+        _image.layer.cornerRadius = _image.height/2; //宽度／2
+        _image.layer.masksToBounds = YES;
+        
+        _GiftImage = [[UIImageView alloc]init];
+         [_GiftImage setFrame:CGRectMake(150*SHIJI_WIDTH, 5*SHIJI_HEIGHT, 54*SHIJI_WIDTH, 54*SHIJI_HEIGHT)];
+        
+        
+        _lable = [[UILabel alloc] init];
+        _lable.font = [UIFont systemFontOfSize:14];
+        _lable.textColor  = UIColorFromRGB(0xFFFFFF);
+        _lable.text  = @"送了一个";
+        switch (content.gift_type) {
+            case OneGift:
+                //_lable.text  = [content.nickname stringByAppendingString:@"送了一个"];
+                  _background.image = [UIImage imageNamed:@"guanzhongsongli_caitiao_feiwen"];
+                _GiftImage.hidden=NO;
+                _GiftImage.image = [UIImage imageNamed:@"guzhang"];
+                
+                break;
+            case TwoGift:
+                //_lable.text  = [content.nickname stringByAppendingString:@"送了一个"];
+                  _background.image = [UIImage imageNamed:@"guanzhongsongli_caitiao_guzhang"];
+                _GiftImage.hidden=NO;
+                 _GiftImage.image = [UIImage imageNamed:@"rock"];
+                break;
+            case threeGift:
+                //_lable.text  = [content.nickname stringByAppendingString:@"送了一个欢呼"];
+                  _background.image = [UIImage imageNamed:@"guanzhongsongli_caitiao_huanhu"];
+                _GiftImage.hidden=YES;
+                break;
+            case FourGift:
+                //_lable.text  = [content.nickname stringByAppendingString:@"送了一个lala"];
+                 _background.image = [UIImage imageNamed:@"guanzhongsongli_caitiao_rock"];
+                _GiftImage.hidden=YES;
+                break;
+            default:
+                break;
+        }
+
+
+        
+        NSDictionary *attributes = @{
+                                     NSFontAttributeName:[UIFont systemFontOfSize:14]
+                                     };
+        float width = [_lable.text sizeWithAttributes:attributes].width;
+        _lable.frame = CGRectMake(60*SHIJI_WIDTH, 30*SHIJI_HEIGHT, width, 30*SHIJI_HEIGHT);
+        
+//        //http://blog.sina.com.cn/s/blog_8d1bc23f0101etmr.html
+        _doubleLable = [[UILabel alloc]init];//WithFrame:CGRectMake(100, 20, 70, 30)];
+        _doubleLable.frame = CGRectMake(220, 5, 100, 50);
+        _doubleLable.textColor = [UIColor orangeColor];
+        _doubleLable.font = [UIFont systemFontOfSize:50];
+
+//        NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+//        
+//        NSDictionary  *dict = @{NSFontAttributeName:[UIFont systemFontOfSize:30],NSParagraphStyleAttributeName:paragraph,NSForegroundColorAttributeName:[UIColor redColor],NSStrokeWidthAttributeName:@-3,
+//                                NSStrokeColorAttributeName:[UIColor greenColor]};
+//        
+//        [_doubleLable.text drawInRect:self.bounds withAttributes:dict];
+//
+
+       
+        
+        _namelable = [[UILabel alloc]init];
+        _namelable.font = [UIFont systemFontOfSize:14];
+        _namelable.textColor  = UIColorFromRGB(0xFFFFFF);
+        _namelable.text  = content.nickname;
+
+        float width2 = [_namelable.text sizeWithAttributes:attributes].width;
+<<<<<<< HEAD
+              _namelable.frame = CGRectMake(60, 5, width2, 30);
+=======
+              _namelable.frame = CGRectMake(60*SHIJI_WIDTH, 5*SHIJI_HEIGHT, width2, 30*SHIJI_HEIGHT);
+>>>>>>> e6c06bae2e082cb9bf0f4da0862df5a87d09600c
+        
+        [self addSubview:_background];
+        [self addSubview:_doubleLable];
+        [self addSubview:_lable];
+        [self addSubview:_image];
+        [self addSubview:_namelable];
+        [self addSubview:_GiftImage];
+
+        gift_type=content.gift_type;
+        
+        // [self comeAnimation];
+    
+    }
+    return self;
+    
+}
+
+
+-(void)ShowBigGifts
+{
+    NSMutableArray *images = [NSMutableArray array];
+    UIImageView *BigGift;
+    if(gift_type==threeGift)
+    {
+        
+        for (int i = 1; i<=13; i++) {
+            [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"feiwen%02d.png",i]]];
+        }
+        BigGift = [[UIImageView alloc]initWithFrame:CGRectMake(100*SHIJI_WIDTH, -130*SHIJI_HEIGHT, 203*SHIJI_WIDTH, 203*SHIJI_HEIGHT)];
+    }else{
+        for (int i = 1; i<=14; i++) {
+            [images addObject:[UIImage imageNamed:[NSString stringWithFormat:@"huanhu-%d.png",i]]];
+        }
+        BigGift = [[UIImageView alloc]initWithFrame:CGRectMake(110*SHIJI_WIDTH, -130*SHIJI_HEIGHT, 219*SHIJI_WIDTH, 185*SHIJI_HEIGHT)];
+    }
+    
+    [self addSubview:BigGift];
+    [BigGift setAnimationImages:images];
+    [BigGift setAnimationRepeatCount:1];
+    [BigGift setAnimationDuration:5*0.5];
+    //开始动画
+    [BigGift startAnimating];
+    [images removeAllObjects];
+    images = nil;
+}
+
+/*移入动画 切换*/
+-(void)comeAnimation:(int)priceNum
+{
+     __block CGRect frame = self.frame;
+    [UIView animateWithDuration:0.1 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        frame.origin.x = endposition;
+        self.frame = frame;
+    } completion:^(BOOL finished) {
+        if(gift_type==threeGift || gift_type==FourGift)
+        {
+            [self ShowBigGifts];
+        }
+        [ self doubleLableAnimation:priceNum];
+    }];
+
+}
+
+/*移除动画 秒数增加*/
+-(void)outAnimation:(int)numTime
+{
+    __block CGRect frame = self.frame;
+    [UIView animateWithDuration:0.2 delay:numTime-0.3 options:UIViewAnimationOptionCurveLinear animations:^{
+        frame.origin.x = -endposition;
+        self.frame = frame;
+        self.alpha =0.0;
+        
+    } completion:^(BOOL finished) {
+        if (_FanishBlock) {
+            self.FanishBlock();
+        }
+        
+        [self removeFromSuperview];
+    }];
+    
+}
+-(void)doubleLableAnimation:(int)priceNum
+{
+    if(gift_type==threeGift || gift_type==FourGift)
+    {
+        if (_doubleLableAnimationFanishBlock) {
+            self.doubleLableAnimationFanishBlock();
+        }
+    }else{
+        NSString *string = [@"X" stringByAppendingFormat:@"%li", (long)priceNum];
+        _doubleLable.text = string;
+        _doubleLable.shadowColor=NULL;
+        _doubleLable.shadowOffset = CGSizeMake(0.0f, 2.0f);
+        _doubleLable.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.9f];
+        _doubleLable.shadowBlur = 5.0f;
+    
+//
+//    NSString *string2 = _doubleLable.text;
+//    NSUInteger length = [string length];
+//
+//    const CGFloat fontSize = 16.0;
+//    NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:string2];
+//    UIFont *baseFont = [UIFont systemFontOfSize:fontSize];
+//    [attrString addAttribute:NSFontAttributeName value:baseFont range:NSMakeRange(0, length)];
+//    
+////    UIFont *italicFont = GetVariationOfFontWithTrait(baseFont,
+////                                                     kCTFontTraitItalic);
+////    [attrString addAttribute:NSFontAttributeName value:italicFont
+////                       range:[string rangeOfString:@"Label"]];
+//    [attrString addAttribute:NSStrokeColorAttributeName value:[UIColor blueColor] range:[string rangeOfString:@"is"]];//设置文字描边颜色，需要和NSStrokeWidthAttributeName设置描边宽度，这样就能使文字空心
+//    [attrString addAttribute:NSStrokeWidthAttributeName value:@2 range:[string rangeOfString:@"is"]];//空心字，文字边框描述
+//    _doubleLable.attributedText = attrString;
+    
+
+    
+        CABasicAnimation * animation = [CABasicAnimation animationWithKeyPath:@"transform.scale"];
+        [animation setFromValue:[NSNumber numberWithFloat:4]];
+        [animation setToValue:[NSNumber numberWithFloat:.8]];
+        [animation setDuration:0.2];
+        [animation setTimingFunction:[CAMediaTimingFunction functionWithControlPoints:.2f :1.3f :1.f :1.f]];
+        [_doubleLable.layer addAnimation:animation forKey:@"bounceAnimation"];
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+            //[self outAnimation];
+        
+            if (_doubleLableAnimationFanishBlock) {
+                self.doubleLableAnimationFanishBlock();
+            }
+        });
+    }
+    
+}
+
+
+
+-(void)animationDidStop
+{
+    NSLog(@"---------------stop=======");
+}
+
+
+@end
