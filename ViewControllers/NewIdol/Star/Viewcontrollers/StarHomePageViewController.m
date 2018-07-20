@@ -305,18 +305,12 @@
             case 2000:
                  //视频
             {
-//                ALLOC(TVViewController, viewC);
-//                viewC.personId=model.personId;
-//                [weakSelf pushNextViewController: viewC];
                 [weakSelf pushToTheAllVCControllerWithModel:model andCurrentSelect:0];
             }
                 break;
             case 2001:
                 //动态
             {
-//                ALLOC(DynamicListViewController, viewC);
-//                viewC.personId=model.personId;
-//                [weakSelf pushNextViewController: viewC];
                 [weakSelf pushToTheAllVCControllerWithModel:model andCurrentSelect:1];
             }
                 break;
@@ -366,9 +360,6 @@
             case 2006:
                 //图集
             {
-//                 ALLOC(FetterViewController, fetterVc);
-//                fetterVc.model = model;
-//                 [weakSelf pushNextViewController: fetterVc];
                 if (model.mallFlag) {
                     [weakSelf pushToTheAllVCControllerWithModel:model andCurrentSelect:2];
                 } else {
@@ -412,12 +403,6 @@
         make.width.equalTo(@20);
     }];
     [self.mineViewButton addActionHandler:^(NSInteger tag) {
-//        [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-//            weakSelf.myMineView.frame = CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
-//            [weakSelf.view layoutIfNeeded];
-//        } completion:^(BOOL finished) {
-//
-//        }];
         ALLOC(MyMineViewController, myMineVc);
         [weakSelf pushNextViewController: myMineVc];
     }];
@@ -545,10 +530,10 @@
 {
     return CGSizeMake(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
--(UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
     return UIEdgeInsetsMake(0, 0, 0, 0);
 }
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (scrollView == self.collectionView) {
         // 将collectionView在控制器view的中心点转化成collectionView上的坐标
         CGPoint pInView = [self.view convertPoint:self.collectionView.center toView:self.collectionView];
@@ -567,9 +552,7 @@
                         if (self.currentCellIndex - 1 >= 0) {
                             self.collectionView.contentOffset = CGPointMake(SCREEN_WIDTH *(self.currentCellIndex - 1), SCREEN_HEIGHT);
                             self.currentCellIndex = self.currentCellIndex - 1;
-//                            NSLog(@"当前的下标%ld",self.currentCellIndex);
-//                            [self signRulesMethoned];
-                            //                            });
+
                         }
                     } else {
                        
@@ -588,45 +571,32 @@
     }
 }
 
--(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     if (scrollView == self.collectionView) {
         lastContentOffset = scrollView.contentOffset.x;
     }
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
     [self didScrolDellocObjc];
 }
--(void)viewWillAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     
     [self.navigationController setNavigationBarHidden:YES animated:YES];
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//
-//        [[NIMSDK sharedSDK].teamManager quitTeam:@"436381041" completion:^(NSError * _Nullable error) {
-//
-//        }];
-//
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(20 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [[NIMSDK sharedSDK].teamManager applyToTeam:@"436381041" message:@"" completion:^(NSError * _Nullable error, NIMTeamApplyStatus applyStatus) {
-//
-//            }];
-//        });
 
-//    });
     self.picIndex = 0;
 }
 
--(void)viewDidAppear:(BOOL)animated{
+- (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     if (self.dataDidLoad) {
         [self signRulesMethoned];
     }
 }
--(void)signRulesMethoned{
+- (void)signRulesMethoned{
     if (self.userAttenStarsArray.count <= 0) {
         return;
     }
@@ -658,8 +628,6 @@
 -(void)showCollectionCellAnimation:(PersonModel *)model{
     [self didScrolDellocObjc];
     
-//    NSArray *array = [self.collectionView visibleCells];
-//    StarHomeCollectionViewCell *starCell = [array firstObject];
     NSIndexPath *indexpath = [NSIndexPath indexPathForItem:self.currentCellIndex inSection:0];
     StarHomeCollectionViewCell *starCell = (StarHomeCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:indexpath];
     if (model.sign) {
@@ -680,7 +648,7 @@
         }
     }
 }
--(void)playCurrentCellVideoWithCell:(StarHomeCollectionViewCell *)starCell andCellModel:(PersonSignVideoModel *)model{
+- (void)playCurrentCellVideoWithCell:(StarHomeCollectionViewCell *)starCell andCellModel:(PersonSignVideoModel *)model{
     [self setVideoPlayerWithString:model.playUrl];
     [self.player prepareToPlay];
     self.player.view.frame = starCell.playerView.bounds;
@@ -688,7 +656,7 @@
     [starCell.playerView addSubview:self.player.view];
     self.isMoiveOrpic = YES;
 }
--(void)animationPicWithCell:(StarHomeCollectionViewCell *)starCell andCellModel:(NSMutableArray *)picArray{
+- (void)animationPicWithCell:(StarHomeCollectionViewCell *)starCell andCellModel:(NSMutableArray *)picArray{
     self.picArray = picArray;
     if (self.timer) {
         [_timer invalidate];
@@ -703,7 +671,7 @@
     [self.timer fire];
     self.isMoiveOrpic = NO;
 }
--(void)mainThreadTimerDidFire:(MSWeakTimer *)timer{
+- (void)mainThreadTimerDidFire:(MSWeakTimer *)timer{
     NSArray *cellArray = [self.collectionView visibleCells];
     StarHomeCollectionViewCell *cell = [cellArray firstObject];
     PersonModel *model = self.userAttenStarsArray[self.currentCellIndex];
@@ -711,11 +679,11 @@
         [cell setbottomImage:self.picArray andIndex:self.picIndex++];
     }
 }
--(void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     [self didScrolDellocObjc];
 }
--(void)didScrolDellocObjc{
+- (void)didScrolDellocObjc{
     NSArray *cellArray = [self.collectionView visibleCells];
     for (int i = 0; i < cellArray.count; i++) {
         StarHomeCollectionViewCell *cell = cellArray[i];
@@ -732,7 +700,7 @@
         }
     }
 }
--(void)showSignViewWithModel:(PersonPlotModel *)plotModel{
+- (void)showSignViewWithModel:(PersonPlotModel *)plotModel{
     if (_signView == nil) {
         _signView = [[SignInView alloc] init];
         self.signView.frame = self.view.bounds;
@@ -756,7 +724,7 @@
         }];
     }];
 }
--(void)showStarGameViewModel:(PersonModel *)model{
+- (void)showStarGameViewModel:(PersonModel *)model{
     if (_showGameView == nil) {
         _showGameView = [[SignShowGameView alloc] init];
         _showGameView.frame = self.view.bounds;
