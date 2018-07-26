@@ -90,6 +90,13 @@
 		CD8F1F7D20DBA71F00737F5D /* UIButton+CZHExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8F1F7820DBA71E00737F5D /* UIButton+CZHExtension.m */; };
 		CD8F1F7E20DBA71F00737F5D /* UIView+CZHExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8F1F7A20DBA71E00737F5D /* UIView+CZHExtension.m */; };
 		CD8F80141DACD6D700CA6877 /* AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD8F80131DACD6D700CA6877 /* AttributedLabel.m */; };
+		CD9264A72109D872002E261E /* BRAddressModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264962109D872002E261E /* BRAddressModel.m */; };
+		CD9264A82109D872002E261E /* BRAddressPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264982109D872002E261E /* BRAddressPickerView.m */; };
+		CD9264A92109D872002E261E /* BRPickerView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CD9264992109D872002E261E /* BRPickerView.bundle */; };
+		CD9264AA2109D872002E261E /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD92649C2109D872002E261E /* BRBaseView.m */; };
+		CD9264AB2109D872002E261E /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A12109D872002E261E /* BRDatePickerView.m */; };
+		CD9264AC2109D872002E261E /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A32109D872002E261E /* NSDate+BRPickerView.m */; };
+		CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A62109D872002E261E /* BRStringPickerView.m */; };
 		CD99A7531D3DD7EC00839B29 /* MyRtmpMD.m in Sources */ = {isa = PBXBuildFile; fileRef = CD99A7521D3DD7EC00839B29 /* MyRtmpMD.m */; };
 		CD9B07DE2105AC0200EDF439 /* PopuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B07DD2105AC0200EDF439 /* PopuView.m */; };
 		CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA898001F5530540013CB0C /* OSSImageUploader.m */; };
@@ -294,6 +301,21 @@
 		CD8F1F7A20DBA71E00737F5D /* UIView+CZHExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+CZHExtension.m"; sourceTree = "<group>"; };
 		CD8F80121DACD6D700CA6877 /* AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AttributedLabel.h; sourceTree = "<group>"; };
 		CD8F80131DACD6D700CA6877 /* AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AttributedLabel.m; sourceTree = "<group>"; };
+		CD9264952109D872002E261E /* BRAddressModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressModel.h; sourceTree = "<group>"; };
+		CD9264962109D872002E261E /* BRAddressModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressModel.m; sourceTree = "<group>"; };
+		CD9264972109D872002E261E /* BRAddressPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAddressPickerView.h; sourceTree = "<group>"; };
+		CD9264982109D872002E261E /* BRAddressPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAddressPickerView.m; sourceTree = "<group>"; };
+		CD9264992109D872002E261E /* BRPickerView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = BRPickerView.bundle; sourceTree = "<group>"; };
+		CD92649B2109D872002E261E /* BRBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
+		CD92649C2109D872002E261E /* BRBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
+		CD92649D2109D872002E261E /* BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		CD92649E2109D872002E261E /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
+		CD9264A02109D872002E261E /* BRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRDatePickerView.h; sourceTree = "<group>"; };
+		CD9264A12109D872002E261E /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
+		CD9264A22109D872002E261E /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
+		CD9264A32109D872002E261E /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
+		CD9264A52109D872002E261E /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
+		CD9264A62109D872002E261E /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
 		CD99A7511D3DD7EC00839B29 /* MyRtmpMD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRtmpMD.h; sourceTree = "<group>"; };
 		CD99A7521D3DD7EC00839B29 /* MyRtmpMD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRtmpMD.m; sourceTree = "<group>"; };
 		CD9B07DC2105AC0200EDF439 /* PopuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopuView.h; sourceTree = "<group>"; };
@@ -704,6 +726,60 @@
 			path = AddressPickerView;
 			sourceTree = "<group>";
 		};
+		CD9264932109D872002E261E /* BRPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				CD9264942109D872002E261E /* AddressPickerView */,
+				CD92649A2109D872002E261E /* Base */,
+				CD92649D2109D872002E261E /* BRPickerView.h */,
+				CD92649E2109D872002E261E /* BRPickerViewMacro.h */,
+				CD92649F2109D872002E261E /* DatePickerView */,
+				CD9264A42109D872002E261E /* StringPickerView */,
+			);
+			path = BRPickerView;
+			sourceTree = "<group>";
+		};
+		CD9264942109D872002E261E /* AddressPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				CD9264952109D872002E261E /* BRAddressModel.h */,
+				CD9264962109D872002E261E /* BRAddressModel.m */,
+				CD9264972109D872002E261E /* BRAddressPickerView.h */,
+				CD9264982109D872002E261E /* BRAddressPickerView.m */,
+				CD9264992109D872002E261E /* BRPickerView.bundle */,
+			);
+			path = AddressPickerView;
+			sourceTree = "<group>";
+		};
+		CD92649A2109D872002E261E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				CD92649B2109D872002E261E /* BRBaseView.h */,
+				CD92649C2109D872002E261E /* BRBaseView.m */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		CD92649F2109D872002E261E /* DatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				CD9264A02109D872002E261E /* BRDatePickerView.h */,
+				CD9264A12109D872002E261E /* BRDatePickerView.m */,
+				CD9264A22109D872002E261E /* NSDate+BRPickerView.h */,
+				CD9264A32109D872002E261E /* NSDate+BRPickerView.m */,
+			);
+			path = DatePickerView;
+			sourceTree = "<group>";
+		};
+		CD9264A42109D872002E261E /* StringPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				CD9264A52109D872002E261E /* BRStringPickerView.h */,
+				CD9264A62109D872002E261E /* BRStringPickerView.m */,
+			);
+			path = StringPickerView;
+			sourceTree = "<group>";
+		};
 		CD9B07DB2105AC0200EDF439 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -766,6 +842,7 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CD9264932109D872002E261E /* BRPickerView */,
 				CD9B07DB2105AC0200EDF439 /* Popup */,
 				CD8F1F7220DBA71E00737F5D /* AddressPickerView */,
 				CD8B5C301CE994EA00692FE0 /* SystemConfiguration.framework */,
@@ -1036,6 +1113,7 @@
 				0457DE6E1CE814A700880796 /* Assets.xcassets in Resources */,
 				11A0B8BF1DF6B03600660F15 /* STXINWEI.ttf in Resources */,
 				11FA1E07205F6B7B007AC2C0 /* InfoPlist.strings in Resources */,
+				CD9264A92109D872002E261E /* BRPickerView.bundle in Resources */,
 				CD60954D1E5A988300FE36D7 /* zan0005.png in Resources */,
 				14DD38BB2074D3BC00F05158 /* NIMKitResource.bundle in Resources */,
 				CDEF93FA1CF3E46B00F7D845 /* tab_me_press@2x.png in Resources */,
@@ -1125,17 +1203,20 @@
 				CDE0AE202060F00600E9248B /* BPPCalendarModel.m in Sources */,
 				CD8F1F7E20DBA71F00737F5D /* UIView+CZHExtension.m in Sources */,
 				117BC88B1D77C22D009D8F68 /* UIView+Toast.m in Sources */,
+				CD9264AA2109D872002E261E /* BRBaseView.m in Sources */,
 				1170D2B31DAB885F00F5648D /* NSArray+Safe.m in Sources */,
 				11FA1DF5205F5CB4007AC2C0 /* UIColor+Category.m in Sources */,
 				11F1F2FC1D2D136400559B65 /* NSString+RegexCategory.m in Sources */,
 				112B0A9F1D36515C00DD9831 /* MJChiBaoZiHeader.m in Sources */,
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
 				CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */,
+				CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */,
 				81003F181D01495C00DBB5AE /* UIImage+Blur.m in Sources */,
 				149B9F2620898F0300CA9C3A /* UIViewController+Swizzled.m in Sources */,
 				A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */,
 				81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */,
 				114885A61D67269A00CDB483 /* MBProgressHUD+LJ.m in Sources */,
+				CD9264A82109D872002E261E /* BRAddressPickerView.m in Sources */,
 				CD8F80141DACD6D700CA6877 /* AttributedLabel.m in Sources */,
 				1170D2B41DAB885F00F5648D /* NSDictionary+Safe.m in Sources */,
 				1170D2B81DAB890D00F5648D /* NSObject+DSKVO.m in Sources */,
@@ -1156,6 +1237,7 @@
 				CD99A7531D3DD7EC00839B29 /* MyRtmpMD.m in Sources */,
 				CD8F1F7D20DBA71F00737F5D /* UIButton+CZHExtension.m in Sources */,
 				14838B5120639FBC0041A8A7 /* CommentView.m in Sources */,
+				CD9264AC2109D872002E261E /* NSDate+BRPickerView.m in Sources */,
 				CD8F1F7C20DBA71F00737F5D /* CZHAddressPickerView.m in Sources */,
 				CD2BFF7B205F895F008BEE6D /* StarHomePageViewController.m in Sources */,
 				1483DE462065FF540023F88B /* NewModel.m in Sources */,
@@ -1169,7 +1251,9 @@
 				11AD8DAC1D1138B300D3106C /* NSString+UrlEncode.m in Sources */,
 				0457DE631CE814A700880796 /* main.m in Sources */,
 				81D1A36C1CFFF71C006EACA8 /* UIView+BlockGesture.m in Sources */,
+				CD9264A72109D872002E261E /* BRAddressModel.m in Sources */,
 				CD2BFF72205F57E0008BEE6D /* SignInView.m in Sources */,
+				CD9264AB2109D872002E261E /* BRDatePickerView.m in Sources */,
 				CDCD2DCC1CF69FC600480D74 /* UIColor+NetColor.m in Sources */,
 				CDD63EF81E65423700BFD4D6 /* FL_Button.m in Sources */,
 				CDD046B61DED69D4008324DF /* AnimationTransitioning.m in Sources */,
