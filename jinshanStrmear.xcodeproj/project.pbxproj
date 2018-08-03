@@ -97,6 +97,8 @@
 		CD9264AB2109D872002E261E /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A12109D872002E261E /* BRDatePickerView.m */; };
 		CD9264AC2109D872002E261E /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A32109D872002E261E /* NSDate+BRPickerView.m */; };
 		CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9264A62109D872002E261E /* BRStringPickerView.m */; };
+		CD92D7312114422D00D1C9F6 /* DAConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = CD92D72E2114422D00D1C9F6 /* DAConfig.m */; };
+		CD92D7322114422D00D1C9F6 /* NSBundle+DAUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = CD92D7302114422D00D1C9F6 /* NSBundle+DAUtils.m */; };
 		CD99A7531D3DD7EC00839B29 /* MyRtmpMD.m in Sources */ = {isa = PBXBuildFile; fileRef = CD99A7521D3DD7EC00839B29 /* MyRtmpMD.m */; };
 		CD9B07DE2105AC0200EDF439 /* PopuView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD9B07DD2105AC0200EDF439 /* PopuView.m */; };
 		CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA898001F5530540013CB0C /* OSSImageUploader.m */; };
@@ -316,6 +318,10 @@
 		CD9264A32109D872002E261E /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
 		CD9264A52109D872002E261E /* BRStringPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRStringPickerView.h; sourceTree = "<group>"; };
 		CD9264A62109D872002E261E /* BRStringPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRStringPickerView.m; sourceTree = "<group>"; };
+		CD92D72D2114422D00D1C9F6 /* DAConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DAConfig.h; sourceTree = "<group>"; };
+		CD92D72E2114422D00D1C9F6 /* DAConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DAConfig.m; sourceTree = "<group>"; };
+		CD92D72F2114422D00D1C9F6 /* NSBundle+DAUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+DAUtils.h"; sourceTree = "<group>"; };
+		CD92D7302114422D00D1C9F6 /* NSBundle+DAUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+DAUtils.m"; sourceTree = "<group>"; };
 		CD99A7511D3DD7EC00839B29 /* MyRtmpMD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyRtmpMD.h; sourceTree = "<group>"; };
 		CD99A7521D3DD7EC00839B29 /* MyRtmpMD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyRtmpMD.m; sourceTree = "<group>"; };
 		CD9B07DC2105AC0200EDF439 /* PopuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PopuView.h; sourceTree = "<group>"; };
@@ -780,6 +786,17 @@
 			path = StringPickerView;
 			sourceTree = "<group>";
 		};
+		CD92D72C2114422D00D1C9F6 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				CD92D72D2114422D00D1C9F6 /* DAConfig.h */,
+				CD92D72E2114422D00D1C9F6 /* DAConfig.m */,
+				CD92D72F2114422D00D1C9F6 /* NSBundle+DAUtils.h */,
+				CD92D7302114422D00D1C9F6 /* NSBundle+DAUtils.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
 		CD9B07DB2105AC0200EDF439 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -842,6 +859,7 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CD92D72C2114422D00D1C9F6 /* Language */,
 				CD9264932109D872002E261E /* BRPickerView */,
 				CD9B07DB2105AC0200EDF439 /* Popup */,
 				CD8F1F7220DBA71E00737F5D /* AddressPickerView */,
@@ -1206,6 +1224,7 @@
 				CD9264AA2109D872002E261E /* BRBaseView.m in Sources */,
 				1170D2B31DAB885F00F5648D /* NSArray+Safe.m in Sources */,
 				11FA1DF5205F5CB4007AC2C0 /* UIColor+Category.m in Sources */,
+				CD92D7312114422D00D1C9F6 /* DAConfig.m in Sources */,
 				11F1F2FC1D2D136400559B65 /* NSString+RegexCategory.m in Sources */,
 				112B0A9F1D36515C00DD9831 /* MJChiBaoZiHeader.m in Sources */,
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
@@ -1215,6 +1234,7 @@
 				149B9F2620898F0300CA9C3A /* UIViewController+Swizzled.m in Sources */,
 				A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */,
 				81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */,
+				CD92D7322114422D00D1C9F6 /* NSBundle+DAUtils.m in Sources */,
 				114885A61D67269A00CDB483 /* MBProgressHUD+LJ.m in Sources */,
 				CD9264A82109D872002E261E /* BRAddressPickerView.m in Sources */,
 				CD8F80141DACD6D700CA6877 /* AttributedLabel.m in Sources */,
