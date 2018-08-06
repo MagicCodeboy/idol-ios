@@ -74,6 +74,10 @@
 		81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 81D1A3B31CFFFAE3006EACA8 /* UIView+Frame.m */; };
 		A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A60C2AFD1D89298B0030C4E0 /* QJXLivePageHelper.m */; };
 		CD15EA801E780289002E11E9 /* Bauhaus94.otf in Resources */ = {isa = PBXBuildFile; fileRef = CD15EA7F1E780289002E11E9 /* Bauhaus94.otf */; };
+		CD20B00D21183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CD20B00621183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m */; };
+		CD20B00E21183D2F00D02F09 /* YJTagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD20B00821183D2F00D02F09 /* YJTagCollectionViewCell.m */; };
+		CD20B00F21183D2F00D02F09 /* YJTagCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD20B00921183D2F00D02F09 /* YJTagCollectionViewCell.xib */; };
+		CD20B01021183D2F00D02F09 /* YJTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD20B00B21183D2F00D02F09 /* YJTagView.m */; };
 		CD2BFF72205F57E0008BEE6D /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2BFF71205F57E0008BEE6D /* SignInView.m */; };
 		CD2BFF7B205F895F008BEE6D /* StarHomePageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2BFF7A205F895F008BEE6D /* StarHomePageViewController.m */; };
 		CD2BFF7F205F8A02008BEE6D /* StarHomeCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2BFF7D205F8A02008BEE6D /* StarHomeCollectionViewCell.m */; };
@@ -276,6 +280,14 @@
 		A952D3322736C35317EB4B55 /* Pods-jinshanStrmear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jinshanStrmear.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jinshanStrmear/Pods-jinshanStrmear.debug.xcconfig"; sourceTree = "<group>"; };
 		BC92E93EEDBEE5697D21069C /* libPods-jinshanStrmear.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jinshanStrmear.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD15EA7F1E780289002E11E9 /* Bauhaus94.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bauhaus94.otf; sourceTree = "<group>"; };
+		CD20B00521183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
+		CD20B00621183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
+		CD20B00721183D2F00D02F09 /* YJTagCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTagCollectionViewCell.h; sourceTree = "<group>"; };
+		CD20B00821183D2F00D02F09 /* YJTagCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTagCollectionViewCell.m; sourceTree = "<group>"; };
+		CD20B00921183D2F00D02F09 /* YJTagCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = YJTagCollectionViewCell.xib; sourceTree = "<group>"; };
+		CD20B00A21183D2F00D02F09 /* YJTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTagView.h; sourceTree = "<group>"; };
+		CD20B00B21183D2F00D02F09 /* YJTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YJTagView.m; sourceTree = "<group>"; };
+		CD20B00C21183D2F00D02F09 /* YJTagViewProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YJTagViewProtocol.h; sourceTree = "<group>"; };
 		CD2BFF70205F57E0008BEE6D /* SignInView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SignInView.h; sourceTree = "<group>"; };
 		CD2BFF71205F57E0008BEE6D /* SignInView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SignInView.m; sourceTree = "<group>"; };
 		CD2BFF79205F895F008BEE6D /* StarHomePageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StarHomePageViewController.h; sourceTree = "<group>"; };
@@ -662,6 +674,21 @@
 			path = helpers;
 			sourceTree = "<group>";
 		};
+		CD20B00421183D2F00D02F09 /* YJTagView */ = {
+			isa = PBXGroup;
+			children = (
+				CD20B00521183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.h */,
+				CD20B00621183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m */,
+				CD20B00721183D2F00D02F09 /* YJTagCollectionViewCell.h */,
+				CD20B00821183D2F00D02F09 /* YJTagCollectionViewCell.m */,
+				CD20B00921183D2F00D02F09 /* YJTagCollectionViewCell.xib */,
+				CD20B00A21183D2F00D02F09 /* YJTagView.h */,
+				CD20B00B21183D2F00D02F09 /* YJTagView.m */,
+				CD20B00C21183D2F00D02F09 /* YJTagViewProtocol.h */,
+			);
+			path = YJTagView;
+			sourceTree = "<group>";
+		};
 		CD20CB81205B986000394A5D /* NewIdol */ = {
 			isa = PBXGroup;
 			children = (
@@ -859,6 +886,7 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CD20B00421183D2F00D02F09 /* YJTagView */,
 				CD92D72C2114422D00D1C9F6 /* Language */,
 				CD9264932109D872002E261E /* BRPickerView */,
 				CD9B07DB2105AC0200EDF439 /* Popup */,
@@ -1145,6 +1173,7 @@
 				CDEF93F81CF3E46B00F7D845 /* tab_buddy_press@2x.png in Resources */,
 				114AE3421DE5C99300951FF9 /* Localizable.strings in Resources */,
 				CDCD2DE31CF70CC000480D74 /* xinxing-weiguanzhu-xianshitupian@3x.png in Resources */,
+				CD20B00F21183D2F00D02F09 /* YJTagCollectionViewCell.xib in Resources */,
 				CDF331FB1DBFAC890051D544 /* KSYGPUResource.bundle in Resources */,
 				11FA1E0F205F6D3B007AC2C0 /* OtherLocalizable.strings in Resources */,
 			);
@@ -1225,6 +1254,7 @@
 				1170D2B31DAB885F00F5648D /* NSArray+Safe.m in Sources */,
 				11FA1DF5205F5CB4007AC2C0 /* UIColor+Category.m in Sources */,
 				CD92D7312114422D00D1C9F6 /* DAConfig.m in Sources */,
+				CD20B01021183D2F00D02F09 /* YJTagView.m in Sources */,
 				11F1F2FC1D2D136400559B65 /* NSString+RegexCategory.m in Sources */,
 				112B0A9F1D36515C00DD9831 /* MJChiBaoZiHeader.m in Sources */,
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
@@ -1250,6 +1280,7 @@
 				14460ECD20665A4D00F08FFA /* CALayer+XIBConfig.m in Sources */,
 				0457DE661CE814A700880796 /* AppDelegate.m in Sources */,
 				113F1D3B1D24043400DDF2E1 /* UIView+Visuals.m in Sources */,
+				CD20B00D21183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m in Sources */,
 				11FA1E292060A8F3007AC2C0 /* UINavigationController+Cloudox.m in Sources */,
 				CDE0AE1E2060F00600E9248B /* BPPCalendar.m in Sources */,
 				1170D2BB1DACACC200F5648D /* UILabel+Tool.m in Sources */,
@@ -1276,6 +1307,7 @@
 				CD9264AB2109D872002E261E /* BRDatePickerView.m in Sources */,
 				CDCD2DCC1CF69FC600480D74 /* UIColor+NetColor.m in Sources */,
 				CDD63EF81E65423700BFD4D6 /* FL_Button.m in Sources */,
+				CD20B00E21183D2F00D02F09 /* YJTagCollectionViewCell.m in Sources */,
 				CDD046B61DED69D4008324DF /* AnimationTransitioning.m in Sources */,
 				CDF4315A20650AD30002A50F /* PersonModel.m in Sources */,
 				CD2BFF7F205F8A02008BEE6D /* StarHomeCollectionViewCell.m in Sources */,
