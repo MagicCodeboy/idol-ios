@@ -125,6 +125,31 @@
 		CDEF93FA1CF3E46B00F7D845 /* tab_me_press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDEF93F01CF3E46B00F7D845 /* tab_me_press@2x.png */; };
 		CDF331FB1DBFAC890051D544 /* KSYGPUResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CDF331FA1DBFAC880051D544 /* KSYGPUResource.bundle */; };
 		CDF4315A20650AD30002A50F /* PersonModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF4315920650AD30002A50F /* PersonModel.m */; };
+		CDF9B698211C27BA00DFD48A /* _JZ-objc-internal.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF9B691211C27BA00DFD48A /* _JZ-objc-internal.m */; };
+		CDF9B699211C27BA00DFD48A /* _JZNavigationDelegating.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF9B693211C27BA00DFD48A /* _JZNavigationDelegating.m */; };
+		CDF9B69A211C27BA00DFD48A /* UINavigationController+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF9B695211C27BA00DFD48A /* UINavigationController+JZExtension.m */; };
+		CDF9B69B211C27BA00DFD48A /* UIViewController+JZExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF9B697211C27BA00DFD48A /* UIViewController+JZExtension.m */; };
+		CDFA566E211AEBE100516E60 /* Y_StockChartGlobalVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5635211AEBE100516E60 /* Y_StockChartGlobalVariable.m */; };
+		CDFA566F211AEBE100516E60 /* UIColor+Y_StockChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5638211AEBE100516E60 /* UIColor+Y_StockChart.m */; };
+		CDFA5670211AEBE100516E60 /* Y_AccessoryMAView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA563C211AEBE100516E60 /* Y_AccessoryMAView.m */; };
+		CDFA5671211AEBE100516E60 /* Y_KLineAccessory.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5640211AEBE100516E60 /* Y_KLineAccessory.m */; };
+		CDFA5672211AEBE100516E60 /* Y_KLineAccessoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5642211AEBE100516E60 /* Y_KLineAccessoryView.m */; };
+		CDFA5673211AEBE100516E60 /* Y_KLineMAView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5645211AEBE100516E60 /* Y_KLineMAView.m */; };
+		CDFA5674211AEBE100516E60 /* Y_KLine.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5649211AEBE100516E60 /* Y_KLine.m */; };
+		CDFA5675211AEBE100516E60 /* Y_MALine.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA564B211AEBE100516E60 /* Y_MALine.m */; };
+		CDFA5676211AEBE100516E60 /* Y_KLineMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA564D211AEBE100516E60 /* Y_KLineMainView.m */; };
+		CDFA5677211AEBE100516E60 /* Y_KLineGroupModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5651211AEBE100516E60 /* Y_KLineGroupModel.m */; };
+		CDFA5678211AEBE100516E60 /* Y_KLineModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5653211AEBE100516E60 /* Y_KLineModel.m */; };
+		CDFA5679211AEBE100516E60 /* Y_KLinePositionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5655211AEBE100516E60 /* Y_KLinePositionModel.m */; };
+		CDFA567A211AEBE100516E60 /* Y_KLineVolumePositionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5657211AEBE100516E60 /* Y_KLineVolumePositionModel.m */; };
+		CDFA567B211AEBE100516E60 /* Y_StockChartRightYView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA565A211AEBE100516E60 /* Y_StockChartRightYView.m */; };
+		CDFA567C211AEBE100516E60 /* Y_StockChartSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA565D211AEBE100516E60 /* Y_StockChartSegmentView.m */; };
+		CDFA567D211AEBE100516E60 /* Y_VolumeMAView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5660211AEBE100516E60 /* Y_VolumeMAView.m */; };
+		CDFA567E211AEBE100516E60 /* Y_KLineVolume.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5664211AEBE100516E60 /* Y_KLineVolume.m */; };
+		CDFA567F211AEBE100516E60 /* Y_KLineVolumeView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5666211AEBE100516E60 /* Y_KLineVolumeView.m */; };
+		CDFA5680211AEBE100516E60 /* Y_KLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA5668211AEBE100516E60 /* Y_KLineView.m */; };
+		CDFA5681211AEBE100516E60 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA566B211AEBE100516E60 /* NetWorking.m */; };
+		CDFA5682211AEBE100516E60 /* Y_StockChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA566D211AEBE100516E60 /* Y_StockChartView.m */; };
 		CDFD60EE1CFDB550009A390F /* ColorUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFD60DF1CFDB54F009A390F /* ColorUtility.m */; };
 /* End PBXBuildFile section */
 
@@ -370,6 +395,58 @@
 		CDF331FA1DBFAC880051D544 /* KSYGPUResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = KSYGPUResource.bundle; path = ../KSYGPUResource.bundle; sourceTree = "<group>"; };
 		CDF4315820650AD30002A50F /* PersonModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonModel.h; sourceTree = "<group>"; };
 		CDF4315920650AD30002A50F /* PersonModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonModel.m; sourceTree = "<group>"; };
+		CDF9B68E211C27BA00DFD48A /* JZNavigationExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JZNavigationExtension.h; sourceTree = "<group>"; };
+		CDF9B690211C27BA00DFD48A /* _JZ-objc-internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "_JZ-objc-internal.h"; sourceTree = "<group>"; };
+		CDF9B691211C27BA00DFD48A /* _JZ-objc-internal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "_JZ-objc-internal.m"; sourceTree = "<group>"; };
+		CDF9B692211C27BA00DFD48A /* _JZNavigationDelegating.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _JZNavigationDelegating.h; sourceTree = "<group>"; };
+		CDF9B693211C27BA00DFD48A /* _JZNavigationDelegating.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _JZNavigationDelegating.m; sourceTree = "<group>"; };
+		CDF9B694211C27BA00DFD48A /* UINavigationController+JZExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+JZExtension.h"; sourceTree = "<group>"; };
+		CDF9B695211C27BA00DFD48A /* UINavigationController+JZExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+JZExtension.m"; sourceTree = "<group>"; };
+		CDF9B696211C27BA00DFD48A /* UIViewController+JZExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+JZExtension.h"; sourceTree = "<group>"; };
+		CDF9B697211C27BA00DFD48A /* UIViewController+JZExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+JZExtension.m"; sourceTree = "<group>"; };
+		CDFA5632211AEBE100516E60 /* Y_StockChartConstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_StockChartConstant.h; sourceTree = "<group>"; };
+		CDFA5634211AEBE100516E60 /* Y_StockChartGlobalVariable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_StockChartGlobalVariable.h; sourceTree = "<group>"; };
+		CDFA5635211AEBE100516E60 /* Y_StockChartGlobalVariable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_StockChartGlobalVariable.m; sourceTree = "<group>"; };
+		CDFA5637211AEBE100516E60 /* UIColor+Y_StockChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Y_StockChart.h"; sourceTree = "<group>"; };
+		CDFA5638211AEBE100516E60 /* UIColor+Y_StockChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Y_StockChart.m"; sourceTree = "<group>"; };
+		CDFA563B211AEBE100516E60 /* Y_AccessoryMAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_AccessoryMAView.h; sourceTree = "<group>"; };
+		CDFA563C211AEBE100516E60 /* Y_AccessoryMAView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_AccessoryMAView.m; sourceTree = "<group>"; };
+		CDFA563F211AEBE100516E60 /* Y_KLineAccessory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineAccessory.h; sourceTree = "<group>"; };
+		CDFA5640211AEBE100516E60 /* Y_KLineAccessory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineAccessory.m; sourceTree = "<group>"; };
+		CDFA5641211AEBE100516E60 /* Y_KLineAccessoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineAccessoryView.h; sourceTree = "<group>"; };
+		CDFA5642211AEBE100516E60 /* Y_KLineAccessoryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineAccessoryView.m; sourceTree = "<group>"; };
+		CDFA5644211AEBE100516E60 /* Y_KLineMAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineMAView.h; sourceTree = "<group>"; };
+		CDFA5645211AEBE100516E60 /* Y_KLineMAView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineMAView.m; sourceTree = "<group>"; };
+		CDFA5648211AEBE100516E60 /* Y_KLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLine.h; sourceTree = "<group>"; };
+		CDFA5649211AEBE100516E60 /* Y_KLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLine.m; sourceTree = "<group>"; };
+		CDFA564A211AEBE100516E60 /* Y_MALine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_MALine.h; sourceTree = "<group>"; };
+		CDFA564B211AEBE100516E60 /* Y_MALine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_MALine.m; sourceTree = "<group>"; };
+		CDFA564C211AEBE100516E60 /* Y_KLineMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineMainView.h; sourceTree = "<group>"; };
+		CDFA564D211AEBE100516E60 /* Y_KLineMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineMainView.m; sourceTree = "<group>"; };
+		CDFA5650211AEBE100516E60 /* Y_KLineGroupModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineGroupModel.h; sourceTree = "<group>"; };
+		CDFA5651211AEBE100516E60 /* Y_KLineGroupModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineGroupModel.m; sourceTree = "<group>"; };
+		CDFA5652211AEBE100516E60 /* Y_KLineModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineModel.h; sourceTree = "<group>"; };
+		CDFA5653211AEBE100516E60 /* Y_KLineModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineModel.m; sourceTree = "<group>"; };
+		CDFA5654211AEBE100516E60 /* Y_KLinePositionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLinePositionModel.h; sourceTree = "<group>"; };
+		CDFA5655211AEBE100516E60 /* Y_KLinePositionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLinePositionModel.m; sourceTree = "<group>"; };
+		CDFA5656211AEBE100516E60 /* Y_KLineVolumePositionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineVolumePositionModel.h; sourceTree = "<group>"; };
+		CDFA5657211AEBE100516E60 /* Y_KLineVolumePositionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineVolumePositionModel.m; sourceTree = "<group>"; };
+		CDFA5659211AEBE100516E60 /* Y_StockChartRightYView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_StockChartRightYView.h; sourceTree = "<group>"; };
+		CDFA565A211AEBE100516E60 /* Y_StockChartRightYView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_StockChartRightYView.m; sourceTree = "<group>"; };
+		CDFA565C211AEBE100516E60 /* Y_StockChartSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_StockChartSegmentView.h; sourceTree = "<group>"; };
+		CDFA565D211AEBE100516E60 /* Y_StockChartSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_StockChartSegmentView.m; sourceTree = "<group>"; };
+		CDFA565F211AEBE100516E60 /* Y_VolumeMAView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_VolumeMAView.h; sourceTree = "<group>"; };
+		CDFA5660211AEBE100516E60 /* Y_VolumeMAView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_VolumeMAView.m; sourceTree = "<group>"; };
+		CDFA5663211AEBE100516E60 /* Y_KLineVolume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineVolume.h; sourceTree = "<group>"; };
+		CDFA5664211AEBE100516E60 /* Y_KLineVolume.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineVolume.m; sourceTree = "<group>"; };
+		CDFA5665211AEBE100516E60 /* Y_KLineVolumeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineVolumeView.h; sourceTree = "<group>"; };
+		CDFA5666211AEBE100516E60 /* Y_KLineVolumeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineVolumeView.m; sourceTree = "<group>"; };
+		CDFA5667211AEBE100516E60 /* Y_KLineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_KLineView.h; sourceTree = "<group>"; };
+		CDFA5668211AEBE100516E60 /* Y_KLineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_KLineView.m; sourceTree = "<group>"; };
+		CDFA566A211AEBE100516E60 /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
+		CDFA566B211AEBE100516E60 /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
+		CDFA566C211AEBE100516E60 /* Y_StockChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Y_StockChartView.h; sourceTree = "<group>"; };
+		CDFA566D211AEBE100516E60 /* Y_StockChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Y_StockChartView.m; sourceTree = "<group>"; };
 		CDFD60DE1CFDB54F009A390F /* ColorUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorUtility.h; path = ../ViewControllers/Star/Controllerss/ColorUtility.h; sourceTree = "<group>"; };
 		CDFD60DF1CFDB54F009A390F /* ColorUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorUtility.m; path = ../ViewControllers/Star/Controllerss/ColorUtility.m; sourceTree = "<group>"; };
 		EC4998A3B8785D249AC73071 /* Pods-jinshanStrmear.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jinshanStrmear.release.xcconfig"; path = "Pods/Target Support Files/Pods-jinshanStrmear/Pods-jinshanStrmear.release.xcconfig"; sourceTree = "<group>"; };
@@ -886,6 +963,8 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CDF9B68D211C27BA00DFD48A /* JZNavigationExtension */,
+				CDFA562F211AEBE100516E60 /* BTC_K线图 */,
 				CD20B00421183D2F00D02F09 /* YJTagView */,
 				CD92D72C2114422D00D1C9F6 /* Language */,
 				CD9264932109D872002E261E /* BRPickerView */,
@@ -931,6 +1010,232 @@
 				CD20CB81205B986000394A5D /* NewIdol */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CDF9B68D211C27BA00DFD48A /* JZNavigationExtension */ = {
+			isa = PBXGroup;
+			children = (
+				CDF9B68E211C27BA00DFD48A /* JZNavigationExtension.h */,
+				CDF9B68F211C27BA00DFD48A /* Private */,
+				CDF9B694211C27BA00DFD48A /* UINavigationController+JZExtension.h */,
+				CDF9B695211C27BA00DFD48A /* UINavigationController+JZExtension.m */,
+				CDF9B696211C27BA00DFD48A /* UIViewController+JZExtension.h */,
+				CDF9B697211C27BA00DFD48A /* UIViewController+JZExtension.m */,
+			);
+			path = JZNavigationExtension;
+			sourceTree = "<group>";
+		};
+		CDF9B68F211C27BA00DFD48A /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				CDF9B690211C27BA00DFD48A /* _JZ-objc-internal.h */,
+				CDF9B691211C27BA00DFD48A /* _JZ-objc-internal.m */,
+				CDF9B692211C27BA00DFD48A /* _JZNavigationDelegating.h */,
+				CDF9B693211C27BA00DFD48A /* _JZNavigationDelegating.m */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		CDFA562F211AEBE100516E60 /* BTC_K线图 */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5630211AEBE100516E60 /* Config */,
+				CDFA5639211AEBE100516E60 /* KLine */,
+				CDFA5669211AEBE100516E60 /* NetWorking */,
+				CDFA566C211AEBE100516E60 /* Y_StockChartView.h */,
+				CDFA566D211AEBE100516E60 /* Y_StockChartView.m */,
+			);
+			path = "BTC_K线图";
+			sourceTree = "<group>";
+		};
+		CDFA5630211AEBE100516E60 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5631211AEBE100516E60 /* Constant */,
+				CDFA5633211AEBE100516E60 /* GlobalVariable */,
+				CDFA5636211AEBE100516E60 /* Theme */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		CDFA5631211AEBE100516E60 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5632211AEBE100516E60 /* Y_StockChartConstant.h */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		CDFA5633211AEBE100516E60 /* GlobalVariable */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5634211AEBE100516E60 /* Y_StockChartGlobalVariable.h */,
+				CDFA5635211AEBE100516E60 /* Y_StockChartGlobalVariable.m */,
+			);
+			path = GlobalVariable;
+			sourceTree = "<group>";
+		};
+		CDFA5636211AEBE100516E60 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5637211AEBE100516E60 /* UIColor+Y_StockChart.h */,
+				CDFA5638211AEBE100516E60 /* UIColor+Y_StockChart.m */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		CDFA5639211AEBE100516E60 /* KLine */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA563A211AEBE100516E60 /* Accessory_MAView */,
+				CDFA563D211AEBE100516E60 /* AccessoryView */,
+				CDFA5643211AEBE100516E60 /* KLine_MAView */,
+				CDFA5646211AEBE100516E60 /* MainKLineView */,
+				CDFA564E211AEBE100516E60 /* Model */,
+				CDFA5658211AEBE100516E60 /* PriceView */,
+				CDFA565B211AEBE100516E60 /* SegmentView */,
+				CDFA565E211AEBE100516E60 /* Volume_MAView */,
+				CDFA5661211AEBE100516E60 /* VolumeView */,
+				CDFA5667211AEBE100516E60 /* Y_KLineView.h */,
+				CDFA5668211AEBE100516E60 /* Y_KLineView.m */,
+			);
+			path = KLine;
+			sourceTree = "<group>";
+		};
+		CDFA563A211AEBE100516E60 /* Accessory_MAView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA563B211AEBE100516E60 /* Y_AccessoryMAView.h */,
+				CDFA563C211AEBE100516E60 /* Y_AccessoryMAView.m */,
+			);
+			path = Accessory_MAView;
+			sourceTree = "<group>";
+		};
+		CDFA563D211AEBE100516E60 /* AccessoryView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA563E211AEBE100516E60 /* Line */,
+				CDFA5641211AEBE100516E60 /* Y_KLineAccessoryView.h */,
+				CDFA5642211AEBE100516E60 /* Y_KLineAccessoryView.m */,
+			);
+			path = AccessoryView;
+			sourceTree = "<group>";
+		};
+		CDFA563E211AEBE100516E60 /* Line */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA563F211AEBE100516E60 /* Y_KLineAccessory.h */,
+				CDFA5640211AEBE100516E60 /* Y_KLineAccessory.m */,
+			);
+			path = Line;
+			sourceTree = "<group>";
+		};
+		CDFA5643211AEBE100516E60 /* KLine_MAView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5644211AEBE100516E60 /* Y_KLineMAView.h */,
+				CDFA5645211AEBE100516E60 /* Y_KLineMAView.m */,
+			);
+			path = KLine_MAView;
+			sourceTree = "<group>";
+		};
+		CDFA5646211AEBE100516E60 /* MainKLineView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5647211AEBE100516E60 /* Line */,
+				CDFA564C211AEBE100516E60 /* Y_KLineMainView.h */,
+				CDFA564D211AEBE100516E60 /* Y_KLineMainView.m */,
+			);
+			path = MainKLineView;
+			sourceTree = "<group>";
+		};
+		CDFA5647211AEBE100516E60 /* Line */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5648211AEBE100516E60 /* Y_KLine.h */,
+				CDFA5649211AEBE100516E60 /* Y_KLine.m */,
+				CDFA564A211AEBE100516E60 /* Y_MALine.h */,
+				CDFA564B211AEBE100516E60 /* Y_MALine.m */,
+			);
+			path = Line;
+			sourceTree = "<group>";
+		};
+		CDFA564E211AEBE100516E60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA564F211AEBE100516E60 /* KLineModel */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		CDFA564F211AEBE100516E60 /* KLineModel */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5650211AEBE100516E60 /* Y_KLineGroupModel.h */,
+				CDFA5651211AEBE100516E60 /* Y_KLineGroupModel.m */,
+				CDFA5652211AEBE100516E60 /* Y_KLineModel.h */,
+				CDFA5653211AEBE100516E60 /* Y_KLineModel.m */,
+				CDFA5654211AEBE100516E60 /* Y_KLinePositionModel.h */,
+				CDFA5655211AEBE100516E60 /* Y_KLinePositionModel.m */,
+				CDFA5656211AEBE100516E60 /* Y_KLineVolumePositionModel.h */,
+				CDFA5657211AEBE100516E60 /* Y_KLineVolumePositionModel.m */,
+			);
+			path = KLineModel;
+			sourceTree = "<group>";
+		};
+		CDFA5658211AEBE100516E60 /* PriceView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5659211AEBE100516E60 /* Y_StockChartRightYView.h */,
+				CDFA565A211AEBE100516E60 /* Y_StockChartRightYView.m */,
+			);
+			path = PriceView;
+			sourceTree = "<group>";
+		};
+		CDFA565B211AEBE100516E60 /* SegmentView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA565C211AEBE100516E60 /* Y_StockChartSegmentView.h */,
+				CDFA565D211AEBE100516E60 /* Y_StockChartSegmentView.m */,
+			);
+			path = SegmentView;
+			sourceTree = "<group>";
+		};
+		CDFA565E211AEBE100516E60 /* Volume_MAView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA565F211AEBE100516E60 /* Y_VolumeMAView.h */,
+				CDFA5660211AEBE100516E60 /* Y_VolumeMAView.m */,
+			);
+			path = Volume_MAView;
+			sourceTree = "<group>";
+		};
+		CDFA5661211AEBE100516E60 /* VolumeView */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5662211AEBE100516E60 /* Line */,
+				CDFA5665211AEBE100516E60 /* Y_KLineVolumeView.h */,
+				CDFA5666211AEBE100516E60 /* Y_KLineVolumeView.m */,
+			);
+			path = VolumeView;
+			sourceTree = "<group>";
+		};
+		CDFA5662211AEBE100516E60 /* Line */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA5663211AEBE100516E60 /* Y_KLineVolume.h */,
+				CDFA5664211AEBE100516E60 /* Y_KLineVolume.m */,
+			);
+			path = Line;
+			sourceTree = "<group>";
+		};
+		CDFA5669211AEBE100516E60 /* NetWorking */ = {
+			isa = PBXGroup;
+			children = (
+				CDFA566A211AEBE100516E60 /* NetWorking.h */,
+				CDFA566B211AEBE100516E60 /* NetWorking.m */,
+			);
+			path = NetWorking;
 			sourceTree = "<group>";
 		};
 		D3D9D6221D3FB2C4DE4E4072 /* Frameworks */ = {
@@ -1244,49 +1549,70 @@
 			files = (
 				14DD38B12074B11100F05158 /* ViewModel.m in Sources */,
 				CDB5AA2E206359C100F4DAFD /* SignShowGameView.m in Sources */,
+				CDF9B69B211C27BA00DFD48A /* UIViewController+JZExtension.m in Sources */,
 				813738AE1D06D4D6009B4322 /* UITextView+PlaceHolder.m in Sources */,
 				81D1A3691CFFF712006EACA8 /* UIButton+Block.m in Sources */,
+				CDFA5677211AEBE100516E60 /* Y_KLineGroupModel.m in Sources */,
 				1170D2AC1DAB3D9A00F5648D /* CacheTool.m in Sources */,
 				CDE0AE202060F00600E9248B /* BPPCalendarModel.m in Sources */,
+				CDFA5681211AEBE100516E60 /* NetWorking.m in Sources */,
 				CD8F1F7E20DBA71F00737F5D /* UIView+CZHExtension.m in Sources */,
 				117BC88B1D77C22D009D8F68 /* UIView+Toast.m in Sources */,
 				CD9264AA2109D872002E261E /* BRBaseView.m in Sources */,
+				CDF9B698211C27BA00DFD48A /* _JZ-objc-internal.m in Sources */,
 				1170D2B31DAB885F00F5648D /* NSArray+Safe.m in Sources */,
 				11FA1DF5205F5CB4007AC2C0 /* UIColor+Category.m in Sources */,
 				CD92D7312114422D00D1C9F6 /* DAConfig.m in Sources */,
+				CDFA567F211AEBE100516E60 /* Y_KLineVolumeView.m in Sources */,
 				CD20B01021183D2F00D02F09 /* YJTagView.m in Sources */,
 				11F1F2FC1D2D136400559B65 /* NSString+RegexCategory.m in Sources */,
 				112B0A9F1D36515C00DD9831 /* MJChiBaoZiHeader.m in Sources */,
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
 				CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */,
+				CDFA567C211AEBE100516E60 /* Y_StockChartSegmentView.m in Sources */,
 				CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */,
 				81003F181D01495C00DBB5AE /* UIImage+Blur.m in Sources */,
+				CDFA567E211AEBE100516E60 /* Y_KLineVolume.m in Sources */,
 				149B9F2620898F0300CA9C3A /* UIViewController+Swizzled.m in Sources */,
+				CDFA5680211AEBE100516E60 /* Y_KLineView.m in Sources */,
 				A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */,
 				81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */,
+				CDF9B69A211C27BA00DFD48A /* UINavigationController+JZExtension.m in Sources */,
+				CDF9B699211C27BA00DFD48A /* _JZNavigationDelegating.m in Sources */,
 				CD92D7322114422D00D1C9F6 /* NSBundle+DAUtils.m in Sources */,
 				114885A61D67269A00CDB483 /* MBProgressHUD+LJ.m in Sources */,
 				CD9264A82109D872002E261E /* BRAddressPickerView.m in Sources */,
 				CD8F80141DACD6D700CA6877 /* AttributedLabel.m in Sources */,
 				1170D2B41DAB885F00F5648D /* NSDictionary+Safe.m in Sources */,
 				1170D2B81DAB890D00F5648D /* NSObject+DSKVO.m in Sources */,
+				CDFA5673211AEBE100516E60 /* Y_KLineMAView.m in Sources */,
 				14189598206CC33B00680D91 /* NSTimer+WeakTimer.m in Sources */,
 				CDFD60EE1CFDB550009A390F /* ColorUtility.m in Sources */,
 				81D1A3631CFFF453006EACA8 /* UIViewController+WRBNavigationItemExtension.m in Sources */,
+				CDFA5678211AEBE100516E60 /* Y_KLineModel.m in Sources */,
+				CDFA5672211AEBE100516E60 /* Y_KLineAccessoryView.m in Sources */,
 				CDE0AE262061082500E9248B /* MyCalendarCell.m in Sources */,
 				CDE0AE232060F07600E9248B /* SignCalendarView.m in Sources */,
+				CDFA5674211AEBE100516E60 /* Y_KLine.m in Sources */,
 				14838B4E20639EF20041A8A7 /* WSTextView.m in Sources */,
 				049A90661D0D61510031D0B6 /* BaseModel.m in Sources */,
 				14460ECD20665A4D00F08FFA /* CALayer+XIBConfig.m in Sources */,
+				CDFA5676211AEBE100516E60 /* Y_KLineMainView.m in Sources */,
 				0457DE661CE814A700880796 /* AppDelegate.m in Sources */,
+				CDFA5675211AEBE100516E60 /* Y_MALine.m in Sources */,
 				113F1D3B1D24043400DDF2E1 /* UIView+Visuals.m in Sources */,
 				CD20B00D21183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m in Sources */,
 				11FA1E292060A8F3007AC2C0 /* UINavigationController+Cloudox.m in Sources */,
 				CDE0AE1E2060F00600E9248B /* BPPCalendar.m in Sources */,
+				CDFA567D211AEBE100516E60 /* Y_VolumeMAView.m in Sources */,
 				1170D2BB1DACACC200F5648D /* UILabel+Tool.m in Sources */,
+				CDFA5671211AEBE100516E60 /* Y_KLineAccessory.m in Sources */,
 				119406CE1D98DB5600793C33 /* NSArray+SafeAccess.m in Sources */,
+				CDFA567B211AEBE100516E60 /* Y_StockChartRightYView.m in Sources */,
 				CD99A7531D3DD7EC00839B29 /* MyRtmpMD.m in Sources */,
+				CDFA567A211AEBE100516E60 /* Y_KLineVolumePositionModel.m in Sources */,
 				CD8F1F7D20DBA71F00737F5D /* UIButton+CZHExtension.m in Sources */,
+				CDFA5670211AEBE100516E60 /* Y_AccessoryMAView.m in Sources */,
 				14838B5120639FBC0041A8A7 /* CommentView.m in Sources */,
 				CD9264AC2109D872002E261E /* NSDate+BRPickerView.m in Sources */,
 				CD8F1F7C20DBA71F00737F5D /* CZHAddressPickerView.m in Sources */,
@@ -1299,20 +1625,24 @@
 				CDCD2DCB1CF69FC600480D74 /* TabView.m in Sources */,
 				1170D2B51DAB885F00F5648D /* NSNull+Safe.m in Sources */,
 				CD2BFFA2205FD0A9008BEE6D /* StarMenuView.m in Sources */,
+				CDFA5682211AEBE100516E60 /* Y_StockChartView.m in Sources */,
 				11AD8DAC1D1138B300D3106C /* NSString+UrlEncode.m in Sources */,
 				0457DE631CE814A700880796 /* main.m in Sources */,
 				81D1A36C1CFFF71C006EACA8 /* UIView+BlockGesture.m in Sources */,
+				CDFA566E211AEBE100516E60 /* Y_StockChartGlobalVariable.m in Sources */,
 				CD9264A72109D872002E261E /* BRAddressModel.m in Sources */,
 				CD2BFF72205F57E0008BEE6D /* SignInView.m in Sources */,
 				CD9264AB2109D872002E261E /* BRDatePickerView.m in Sources */,
 				CDCD2DCC1CF69FC600480D74 /* UIColor+NetColor.m in Sources */,
 				CDD63EF81E65423700BFD4D6 /* FL_Button.m in Sources */,
+				CDFA566F211AEBE100516E60 /* UIColor+Y_StockChart.m in Sources */,
 				CD20B00E21183D2F00D02F09 /* YJTagCollectionViewCell.m in Sources */,
 				CDD046B61DED69D4008324DF /* AnimationTransitioning.m in Sources */,
 				CDF4315A20650AD30002A50F /* PersonModel.m in Sources */,
 				CD2BFF7F205F8A02008BEE6D /* StarHomeCollectionViewCell.m in Sources */,
 				1196964F1DAA12330083B5AD /* UIButton+EnlargeEdge.m in Sources */,
 				81D1A3641CFFF453006EACA8 /* WRBButton.m in Sources */,
+				CDFA5679211AEBE100516E60 /* Y_KLinePositionModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
