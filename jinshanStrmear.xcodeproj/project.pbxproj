@@ -117,6 +117,15 @@
 		CDCD2DE31CF70CC000480D74 /* xinxing-weiguanzhu-xianshitupian@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDCD2DE11CF70CC000480D74 /* xinxing-weiguanzhu-xianshitupian@3x.png */; };
 		CDD046B61DED69D4008324DF /* AnimationTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD046B51DED69D4008324DF /* AnimationTransitioning.m */; };
 		CDD63EF81E65423700BFD4D6 /* FL_Button.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD63EF71E65423700BFD4D6 /* FL_Button.m */; };
+		CDD714142137BDB400A610A7 /* MWCaptionView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714002137BDB400A610A7 /* MWCaptionView.m */; };
+		CDD714152137BDB400A610A7 /* MWGridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714032137BDB400A610A7 /* MWGridCell.m */; };
+		CDD714162137BDB400A610A7 /* MWGridViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714052137BDB400A610A7 /* MWGridViewController.m */; };
+		CDD714172137BDB400A610A7 /* MWPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714072137BDB400A610A7 /* MWPhoto.m */; };
+		CDD714182137BDB400A610A7 /* MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714092137BDB400A610A7 /* MWPhotoBrowser.m */; };
+		CDD714192137BDB400A610A7 /* MWTapDetectingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD7140D2137BDB400A610A7 /* MWTapDetectingImageView.m */; };
+		CDD7141A2137BDB400A610A7 /* MWTapDetectingView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD7140F2137BDB400A610A7 /* MWTapDetectingView.m */; };
+		CDD7141B2137BDB400A610A7 /* MWZoomingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714112137BDB400A610A7 /* MWZoomingScrollView.m */; };
+		CDD7141C2137BDB400A610A7 /* UIImage+MWPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = CDD714132137BDB400A610A7 /* UIImage+MWPhotoBrowser.m */; };
 		CDE0AE1E2060F00600E9248B /* BPPCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE0AE192060F00600E9248B /* BPPCalendar.m */; };
 		CDE0AE202060F00600E9248B /* BPPCalendarModel.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE0AE1D2060F00600E9248B /* BPPCalendarModel.m */; };
 		CDE0AE232060F07600E9248B /* SignCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDE0AE222060F07600E9248B /* SignCalendarView.m */; };
@@ -382,6 +391,27 @@
 		CDD046B51DED69D4008324DF /* AnimationTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnimationTransitioning.m; sourceTree = "<group>"; };
 		CDD63EF61E65423700BFD4D6 /* FL_Button.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FL_Button.h; sourceTree = "<group>"; };
 		CDD63EF71E65423700BFD4D6 /* FL_Button.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FL_Button.m; sourceTree = "<group>"; };
+		CDD713FF2137BDB400A610A7 /* MWCaptionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCaptionView.h; sourceTree = "<group>"; };
+		CDD714002137BDB400A610A7 /* MWCaptionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWCaptionView.m; sourceTree = "<group>"; };
+		CDD714012137BDB400A610A7 /* MWCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWCommon.h; sourceTree = "<group>"; };
+		CDD714022137BDB400A610A7 /* MWGridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridCell.h; sourceTree = "<group>"; };
+		CDD714032137BDB400A610A7 /* MWGridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridCell.m; sourceTree = "<group>"; };
+		CDD714042137BDB400A610A7 /* MWGridViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWGridViewController.h; sourceTree = "<group>"; };
+		CDD714052137BDB400A610A7 /* MWGridViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWGridViewController.m; sourceTree = "<group>"; };
+		CDD714062137BDB400A610A7 /* MWPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhoto.h; sourceTree = "<group>"; };
+		CDD714072137BDB400A610A7 /* MWPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhoto.m; sourceTree = "<group>"; };
+		CDD714082137BDB400A610A7 /* MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowser.h; sourceTree = "<group>"; };
+		CDD714092137BDB400A610A7 /* MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWPhotoBrowser.m; sourceTree = "<group>"; };
+		CDD7140A2137BDB400A610A7 /* MWPhotoBrowserPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoBrowserPrivate.h; sourceTree = "<group>"; };
+		CDD7140B2137BDB400A610A7 /* MWPhotoProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWPhotoProtocol.h; sourceTree = "<group>"; };
+		CDD7140C2137BDB400A610A7 /* MWTapDetectingImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingImageView.h; sourceTree = "<group>"; };
+		CDD7140D2137BDB400A610A7 /* MWTapDetectingImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingImageView.m; sourceTree = "<group>"; };
+		CDD7140E2137BDB400A610A7 /* MWTapDetectingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWTapDetectingView.h; sourceTree = "<group>"; };
+		CDD7140F2137BDB400A610A7 /* MWTapDetectingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWTapDetectingView.m; sourceTree = "<group>"; };
+		CDD714102137BDB400A610A7 /* MWZoomingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWZoomingScrollView.h; sourceTree = "<group>"; };
+		CDD714112137BDB400A610A7 /* MWZoomingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWZoomingScrollView.m; sourceTree = "<group>"; };
+		CDD714122137BDB400A610A7 /* UIImage+MWPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MWPhotoBrowser.h"; sourceTree = "<group>"; };
+		CDD714132137BDB400A610A7 /* UIImage+MWPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MWPhotoBrowser.m"; sourceTree = "<group>"; };
 		CDE0AE182060F00600E9248B /* BPPCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPPCalendar.h; sourceTree = "<group>"; };
 		CDE0AE192060F00600E9248B /* BPPCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPPCalendar.m; sourceTree = "<group>"; };
 		CDE0AE1C2060F00600E9248B /* BPPCalendarModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPPCalendarModel.h; sourceTree = "<group>"; };
@@ -947,6 +977,35 @@
 			path = ../MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		CDD713FE2137BDB400A610A7 /* MWPhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				CDD713FF2137BDB400A610A7 /* MWCaptionView.h */,
+				CDD714002137BDB400A610A7 /* MWCaptionView.m */,
+				CDD714012137BDB400A610A7 /* MWCommon.h */,
+				CDD714022137BDB400A610A7 /* MWGridCell.h */,
+				CDD714032137BDB400A610A7 /* MWGridCell.m */,
+				CDD714042137BDB400A610A7 /* MWGridViewController.h */,
+				CDD714052137BDB400A610A7 /* MWGridViewController.m */,
+				CDD714062137BDB400A610A7 /* MWPhoto.h */,
+				CDD714072137BDB400A610A7 /* MWPhoto.m */,
+				CDD714082137BDB400A610A7 /* MWPhotoBrowser.h */,
+				CDD714092137BDB400A610A7 /* MWPhotoBrowser.m */,
+				CDD7140A2137BDB400A610A7 /* MWPhotoBrowserPrivate.h */,
+				CDD7140B2137BDB400A610A7 /* MWPhotoProtocol.h */,
+				CDD7140C2137BDB400A610A7 /* MWTapDetectingImageView.h */,
+				CDD7140D2137BDB400A610A7 /* MWTapDetectingImageView.m */,
+				CDD7140E2137BDB400A610A7 /* MWTapDetectingView.h */,
+				CDD7140F2137BDB400A610A7 /* MWTapDetectingView.m */,
+				CDD714102137BDB400A610A7 /* MWZoomingScrollView.h */,
+				CDD714112137BDB400A610A7 /* MWZoomingScrollView.m */,
+				CDD714122137BDB400A610A7 /* UIImage+MWPhotoBrowser.h */,
+				CDD714132137BDB400A610A7 /* UIImage+MWPhotoBrowser.m */,
+			);
+			name = MWPhotoBrowser;
+			path = "../../Desktop/区块链/Libs/MWPhotoBrowser";
+			sourceTree = "<group>";
+		};
 		CDE0AE172060F00600E9248B /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -963,6 +1022,7 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CDD713FE2137BDB400A610A7 /* MWPhotoBrowser */,
 				CDF9B68D211C27BA00DFD48A /* JZNavigationExtension */,
 				CDFA562F211AEBE100516E60 /* BTC_K线图 */,
 				CD20B00421183D2F00D02F09 /* YJTagView */,
@@ -1562,12 +1622,14 @@
 				CDF9B698211C27BA00DFD48A /* _JZ-objc-internal.m in Sources */,
 				1170D2B31DAB885F00F5648D /* NSArray+Safe.m in Sources */,
 				11FA1DF5205F5CB4007AC2C0 /* UIColor+Category.m in Sources */,
+				CDD714142137BDB400A610A7 /* MWCaptionView.m in Sources */,
 				CD92D7312114422D00D1C9F6 /* DAConfig.m in Sources */,
 				CDFA567F211AEBE100516E60 /* Y_KLineVolumeView.m in Sources */,
 				CD20B01021183D2F00D02F09 /* YJTagView.m in Sources */,
 				11F1F2FC1D2D136400559B65 /* NSString+RegexCategory.m in Sources */,
 				112B0A9F1D36515C00DD9831 /* MJChiBaoZiHeader.m in Sources */,
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
+				CDD714162137BDB400A610A7 /* MWGridViewController.m in Sources */,
 				CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */,
 				CDFA567C211AEBE100516E60 /* Y_StockChartSegmentView.m in Sources */,
 				CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */,
@@ -1575,6 +1637,7 @@
 				CDFA567E211AEBE100516E60 /* Y_KLineVolume.m in Sources */,
 				149B9F2620898F0300CA9C3A /* UIViewController+Swizzled.m in Sources */,
 				CDFA5680211AEBE100516E60 /* Y_KLineView.m in Sources */,
+				CDD714152137BDB400A610A7 /* MWGridCell.m in Sources */,
 				A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */,
 				81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */,
 				CDF9B69A211C27BA00DFD48A /* UINavigationController+JZExtension.m in Sources */,
@@ -1590,13 +1653,16 @@
 				CDFD60EE1CFDB550009A390F /* ColorUtility.m in Sources */,
 				81D1A3631CFFF453006EACA8 /* UIViewController+WRBNavigationItemExtension.m in Sources */,
 				CDFA5678211AEBE100516E60 /* Y_KLineModel.m in Sources */,
+				CDD714172137BDB400A610A7 /* MWPhoto.m in Sources */,
 				CDFA5672211AEBE100516E60 /* Y_KLineAccessoryView.m in Sources */,
 				CDE0AE262061082500E9248B /* MyCalendarCell.m in Sources */,
+				CDD714182137BDB400A610A7 /* MWPhotoBrowser.m in Sources */,
 				CDE0AE232060F07600E9248B /* SignCalendarView.m in Sources */,
 				CDFA5674211AEBE100516E60 /* Y_KLine.m in Sources */,
 				14838B4E20639EF20041A8A7 /* WSTextView.m in Sources */,
 				049A90661D0D61510031D0B6 /* BaseModel.m in Sources */,
 				14460ECD20665A4D00F08FFA /* CALayer+XIBConfig.m in Sources */,
+				CDD7141A2137BDB400A610A7 /* MWTapDetectingView.m in Sources */,
 				CDFA5676211AEBE100516E60 /* Y_KLineMainView.m in Sources */,
 				0457DE661CE814A700880796 /* AppDelegate.m in Sources */,
 				CDFA5675211AEBE100516E60 /* Y_MALine.m in Sources */,
@@ -1606,6 +1672,7 @@
 				CDE0AE1E2060F00600E9248B /* BPPCalendar.m in Sources */,
 				CDFA567D211AEBE100516E60 /* Y_VolumeMAView.m in Sources */,
 				1170D2BB1DACACC200F5648D /* UILabel+Tool.m in Sources */,
+				CDD7141C2137BDB400A610A7 /* UIImage+MWPhotoBrowser.m in Sources */,
 				CDFA5671211AEBE100516E60 /* Y_KLineAccessory.m in Sources */,
 				119406CE1D98DB5600793C33 /* NSArray+SafeAccess.m in Sources */,
 				CDFA567B211AEBE100516E60 /* Y_StockChartRightYView.m in Sources */,
@@ -1614,6 +1681,8 @@
 				CD8F1F7D20DBA71F00737F5D /* UIButton+CZHExtension.m in Sources */,
 				CDFA5670211AEBE100516E60 /* Y_AccessoryMAView.m in Sources */,
 				14838B5120639FBC0041A8A7 /* CommentView.m in Sources */,
+				CDD7141B2137BDB400A610A7 /* MWZoomingScrollView.m in Sources */,
+				CDD714192137BDB400A610A7 /* MWTapDetectingImageView.m in Sources */,
 				CD9264AC2109D872002E261E /* NSDate+BRPickerView.m in Sources */,
 				CD8F1F7C20DBA71F00737F5D /* CZHAddressPickerView.m in Sources */,
 				CD2BFF7B205F895F008BEE6D /* StarHomePageViewController.m in Sources */,
