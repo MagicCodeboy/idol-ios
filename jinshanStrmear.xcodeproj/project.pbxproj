@@ -73,6 +73,7 @@
 		81D1A3711CFFFA43006EACA8 /* MBProgressHUD.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 81D1A36F1CFFFA43006EACA8 /* MBProgressHUD.bundle */; };
 		81D1A3B41CFFFAE3006EACA8 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = 81D1A3B31CFFFAE3006EACA8 /* UIView+Frame.m */; };
 		A60C2AFE1D89298B0030C4E0 /* QJXLivePageHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A60C2AFD1D89298B0030C4E0 /* QJXLivePageHelper.m */; };
+		CD094D6F21757DC8009525FB /* ZWHScanImage.m in Sources */ = {isa = PBXBuildFile; fileRef = CD094D6E21757DC8009525FB /* ZWHScanImage.m */; };
 		CD15EA801E780289002E11E9 /* Bauhaus94.otf in Resources */ = {isa = PBXBuildFile; fileRef = CD15EA7F1E780289002E11E9 /* Bauhaus94.otf */; };
 		CD20B00D21183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CD20B00621183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m */; };
 		CD20B00E21183D2F00D02F09 /* YJTagCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CD20B00821183D2F00D02F09 /* YJTagCollectionViewCell.m */; };
@@ -313,6 +314,8 @@
 		A60C2AFD1D89298B0030C4E0 /* QJXLivePageHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QJXLivePageHelper.m; sourceTree = "<group>"; };
 		A952D3322736C35317EB4B55 /* Pods-jinshanStrmear.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-jinshanStrmear.debug.xcconfig"; path = "Pods/Target Support Files/Pods-jinshanStrmear/Pods-jinshanStrmear.debug.xcconfig"; sourceTree = "<group>"; };
 		BC92E93EEDBEE5697D21069C /* libPods-jinshanStrmear.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-jinshanStrmear.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD094D6D21757DC8009525FB /* ZWHScanImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZWHScanImage.h; sourceTree = "<group>"; };
+		CD094D6E21757DC8009525FB /* ZWHScanImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZWHScanImage.m; sourceTree = "<group>"; };
 		CD15EA7F1E780289002E11E9 /* Bauhaus94.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bauhaus94.otf; sourceTree = "<group>"; };
 		CD20B00521183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UICollectionViewLeftAlignedLayout.h; sourceTree = "<group>"; };
 		CD20B00621183D2F00D02F09 /* UICollectionViewLeftAlignedLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UICollectionViewLeftAlignedLayout.m; sourceTree = "<group>"; };
@@ -781,6 +784,15 @@
 			path = helpers;
 			sourceTree = "<group>";
 		};
+		CD094D6C21757DC8009525FB /* ZWHImgView */ = {
+			isa = PBXGroup;
+			children = (
+				CD094D6D21757DC8009525FB /* ZWHScanImage.h */,
+				CD094D6E21757DC8009525FB /* ZWHScanImage.m */,
+			);
+			path = ZWHImgView;
+			sourceTree = "<group>";
+		};
 		CD20B00421183D2F00D02F09 /* YJTagView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1022,6 +1034,7 @@
 		CDEBCCF51CF82DC50064A528 /* Libs */ = {
 			isa = PBXGroup;
 			children = (
+				CD094D6C21757DC8009525FB /* ZWHImgView */,
 				CDD713FE2137BDB400A610A7 /* MWPhotoBrowser */,
 				CDF9B68D211C27BA00DFD48A /* JZNavigationExtension */,
 				CDFA562F211AEBE100516E60 /* BTC_K线图 */,
@@ -1631,6 +1644,7 @@
 				709C2FE51E669B0D00685C9C /* UIProgressView+Radius.m in Sources */,
 				CDD714162137BDB400A610A7 /* MWGridViewController.m in Sources */,
 				CDA898011F5530540013CB0C /* OSSImageUploader.m in Sources */,
+				CD094D6F21757DC8009525FB /* ZWHScanImage.m in Sources */,
 				CDFA567C211AEBE100516E60 /* Y_StockChartSegmentView.m in Sources */,
 				CD9264AD2109D872002E261E /* BRStringPickerView.m in Sources */,
 				81003F181D01495C00DBB5AE /* UIImage+Blur.m in Sources */,
