@@ -11,14 +11,10 @@
 #import "YYCache+Cache.h"
 
 @implementation OSSImageUploader
-static NSString *const AccessKey = @"LTAIUngEP80CY9N0";
-static NSString *const SecretKey = @"YQEp8nJijiVomkE5MsKJ3Vsy9orRA5";
-static NSString *const BucketName = @"joustar";
-static NSString *const AliYunHost = @"http://oss-cn-beijing.aliyuncs.com";
-//static NSString *const AccessKey = @"your-key";
-//static NSString *const SecretKey = @"your-secret";
-//static NSString *const BucketName = @"your-bucket";
-//static NSString *const AliYunHost = @"http://oss-cn-shenzhen.aliyuncs.com/";
+static NSString *const AccessKey = @"your-key";
+static NSString *const SecretKey = @"your-secret";
+static NSString *const BucketName = @"your-bucket";
+static NSString *const AliYunHost = @"http://oss-cn-shenzhen.aliyuncs.com/";
 static NSString *kTempFolder = @"temp";
 
 
